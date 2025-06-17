@@ -411,6 +411,487 @@
             border-color: var(--border-color);
             color: var(--text-color);
         }
+        /* ===== ENHANCED PLATFORM-SPECIFIC STYLES ===== */
+
+/* Platform features base styles */
+.platform-features {
+    margin: 20px 0;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+    animation-delay: 0.3s;
+}
+
+.feature-card {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    transform: translateY(-2px);
+}
+
+.platform-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(0,0,0,0.05);
+}
+
+/* Platform-specific accent colors */
+.ios-feature {
+    border-left: 4px solid #007AFF;
+}
+.ios-feature .platform-badge {
+    background: #007AFF;
+    color: white;
+}
+
+.android-feature {
+    border-left: 4px solid #4CAF50;
+}
+.android-feature .platform-badge {
+    background: #4CAF50;
+    color: white;
+}
+
+.windows-feature {
+    border-left: 4px solid #0078D4;
+}
+.windows-feature .platform-badge {
+    background: #0078D4;
+    color: white;
+}
+
+.mac-feature {
+    border-left: 4px solid #000000;
+}
+.mac-feature .platform-badge {
+    background: #000000;
+    color: white;
+}
+
+/* Enhanced button styles */
+.platform-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 12px;
+    background: #f5f5f5;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.platform-btn:hover {
+    background: #e8e8e8;
+    transform: translateX(4px);
+}
+
+.platform-btn.primary-action {
+    background: #1976d2;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+.platform-btn.primary-action:hover {
+    background: #1565c0;
+}
+
+.btn-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.btn-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+}
+
+.btn-title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.btn-subtitle {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-top: 2px;
+}
+
+/* Feature tip styles */
+.feature-tip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 12px 16px;
+    background: rgba(25, 118, 210, 0.1);
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.tip-icon {
+    font-size: 18px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 2px 12px rgba(25, 118, 210, 0.2);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 4px 20px rgba(25, 118, 210, 0.3);
+    }
+}
+
+.animate-in {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Onboarding tour styles */
+.onboarding-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.onboarding-content {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    animation: slideIn 0.4s ease;
+}
+
+.onboarding-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #f5f5f5;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.onboarding-close:hover {
+    background: #e0e0e0;
+    transform: rotate(90deg);
+}
+
+.onboarding-step h2 {
+    margin: 0 0 20px 0;
+    font-size: 28px;
+}
+
+.onboarding-illustration {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.big-emoji {
+    font-size: 80px;
+    animation: bounce 2s infinite;
+}
+
+.onboarding-btn {
+    background: #1976d2;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.2s;
+}
+
+.onboarding-btn:hover {
+    background: #1565c0;
+    transform: translateY(-2px);
+}
+
+.onboarding-pointer {
+    position: absolute;
+    animation: pointBounce 1s infinite;
+}
+
+.pointer-arrow {
+    font-size: 24px;
+    display: block;
+    text-align: center;
+}
+
+.pointer-text {
+    background: #1976d2;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* Highlight during tour */
+.highlight-tour {
+    position: relative;
+    z-index: 10001;
+    box-shadow: 0 0 0 4px #1976d2, 0 0 20px rgba(25, 118, 210, 0.5);
+    animation: tourPulse 1s infinite;
+}
+
+@keyframes tourPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 4px #1976d2, 0 0 20px rgba(25, 118, 210, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 0 8px #1976d2, 0 0 40px rgba(25, 118, 210, 0.8);
+    }
+}
+
+/* Modal styles */
+.platform-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideIn 0.4s ease;
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #f5f5f5;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.modal-close:hover {
+    background: #e0e0e0;
+    transform: rotate(90deg);
+}
+
+/* Achievement popup */
+.achievement-popup {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+    z-index: 10000;
+}
+
+.achievement-popup.achievement-show {
+    bottom: 30px;
+}
+
+.achievement-icon {
+    font-size: 24px;
+    animation: achievementBounce 0.6s ease;
+}
+
+.achievement-text {
+    font-weight: 600;
+}
+
+@keyframes achievementBounce {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.2) rotate(-10deg); }
+    75% { transform: scale(1.2) rotate(10deg); }
+}
+
+/* Ripple effect */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: rippleEffect 0.6s ease;
+    pointer-events: none;
+}
+
+@keyframes rippleEffect {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .feature-card {
+    background: var(--card-bg);
+}
+
+[data-theme="dark"] .platform-btn {
+    background: var(--prompt-bg);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .platform-btn.primary-action {
+    background: #1976d2;
+    color: white;
+}
+
+[data-theme="dark"] .onboarding-content,
+[data-theme="dark"] .modal-content {
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .modal-close,
+[data-theme="dark"] .onboarding-close {
+    background: var(--prompt-bg);
+    color: var(--text-color);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .feature-card {
+        padding: 20px;
+    }
+    
+    .platform-btn {
+        padding: 14px 16px;
+    }
+    
+    .btn-icon {
+        font-size: 20px;
+    }
+    
+    .btn-title {
+        font-size: 15px;
+    }
+    
+    .btn-subtitle {
+        font-size: 12px;
+    }
+    
+    .onboarding-content,
+    .modal-content {
+        padding: 24px;
+        width: 95%;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus styles for keyboard navigation */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #1976d2;
+    outline-offset: 2px;
+}
+
+/* Loading states */
+.loading {
+    position: relative;
+    color: transparent;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #1976d2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
     </style>
 </head>
 <!-- Cloudflare Web Analytics -->
@@ -1138,6 +1619,742 @@
         document.addEventListener('DOMContentLoaded', function() {
             initTheme();
         });
+        // ===== ENHANCED UNIVERSAL DEVICE DETECTION & PLATFORM FEATURES =====
+const DeviceManager = {
+    // Detect user's platform
+    getPlatform: function() {
+        const ua = navigator.userAgent;
+        const platform = navigator.platform;
+        
+        if (/iPhone|iPad|iPod/.test(ua) && !window.MSStream) return 'ios';
+        if (/Android/.test(ua)) return 'android';
+        if (/Win/.test(platform)) return 'windows';
+        if (/Mac/.test(platform)) return 'mac';
+        if (/Linux/.test(platform)) return 'linux';
+        
+        return 'unknown';
+    },
+    
+    // Get browser type
+    getBrowser: function() {
+        const ua = navigator.userAgent;
+        
+        if (/Chrome/.test(ua) && !/Edg/.test(ua)) return 'chrome';
+        if (/Safari/.test(ua) && !/Chrome/.test(ua)) return 'safari';
+        if (/Firefox/.test(ua)) return 'firefox';
+        if (/Edg/.test(ua)) return 'edge';
+        
+        return 'other';
+    },
+    
+    // Initialize platform-specific features
+    init: function() {
+        const platform = this.getPlatform();
+        const browser = this.getBrowser();
+        
+        // Add platform class to body
+        document.body.classList.add(`platform-${platform}`);
+        document.body.classList.add(`browser-${browser}`);
+        
+        // Show platform-specific content
+        this.showPlatformFeatures(platform, browser);
+        
+        // Initialize platform-specific features
+        this.initPlatformFeatures(platform, browser);
+        
+        // Check for first-time visitor
+        if (!localStorage.getItem('hasVisited')) {
+            setTimeout(() => this.showOnboardingTour(platform), 1000);
+        }
+    },
+    
+    // Show relevant features for user's platform
+    showPlatformFeatures: function(platform, browser) {
+        const container = document.createElement('div');
+        container.className = 'platform-features';
+        container.id = 'platform-features';
+        container.innerHTML = this.getPlatformHTML(platform, browser);
+        
+        // Insert after prompt section
+        const promptSection = document.querySelector('.prompt-section');
+        promptSection.insertAdjacentElement('afterend', container);
+    },
+    
+    // Get platform-specific HTML with enhancements
+    getPlatformHTML: function(platform, browser) {
+        const features = {
+            'ios': `
+                <div class="feature-card ios-feature animate-in">
+                    <div class="platform-badge">iOS Optimized</div>
+                    <h3>📱 iOS Quick Actions</h3>
+                    <p>Enhance your experience on iPhone/iPad:</p>
+                    <div class="action-buttons">
+                        <button onclick="DeviceManager.installPWA()" class="platform-btn primary-action">
+                            <span class="btn-icon">📲</span>
+                            <span class="btn-text">
+                                <span class="btn-title">Add to Home Screen</span>
+                                <span class="btn-subtitle">One-tap access</span>
+                            </span>
+                        </button>
+                        <button onclick="DeviceManager.createIOSShortcut()" class="platform-btn">
+                            <span class="btn-icon">⚡</span>
+                            <span class="btn-text">
+                                <span class="btn-title">Create Siri Shortcut</span>
+                                <span class="btn-subtitle">Voice activation</span>
+                            </span>
+                        </button>
+                        <button onclick="DeviceManager.enableIOSFeatures()" class="platform-btn">
+                            <span class="btn-icon">🔔</span>
+                            <span class="btn-text">
+                                <span class="btn-title">Enable Notifications</span>
+                                <span class="btn-subtitle">Stay updated</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="feature-tip">
+                        <span class="tip-icon">💡</span>
+                        <span>Tip: Add to home screen for app-like experience!</span>
+                    </div>
+                </div>
+            `,
+            
+            'android': `
+                <div class="feature-card android-feature animate-in">
+                    <div class="platform-badge">Android Enhanced</div>
+                    <h3>🤖 Android Power Features</h3>
+                    <p>Get the most from your Android device:</p>
+                    <div class="action-buttons">
+                        <button onclick="DeviceManager.installPWA()" class="platform-btn primary-action">
+                            <span class="btn-icon">📲</span>
+                            <span class="btn-text">
+                                <span class="btn-title">Install App</span>
+                                <span class="btn-subtitle">Works offline</span>
+                            </span>
+                        </button>
+                        <button onclick="DeviceManager.createAndroidWidget()" class="platform-btn">
+                            <span class="btn-icon">📊</span>
+                            <span class="btn-text">
+                                <span class="btn-title">Add Widget</span>
+                                <span class="btn-subtitle">Quick access</span>
+                            </span>
+                        </button>
+                        <button onclick="DeviceManager.enableAndroidShare()" class="platform-btn">
+                            <span class="btn-icon">📤</span>
+                            <span class="btn-text">
+                                <span class="btn-title">Quick Share Setup</span>
+                                <span class="btn-subtitle">Share to AI apps</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="feature-tip">
+                        <span class="tip-icon">⚡</span>
+                        <span>Install for widgets and offline access!</span>
+                    </div>
+                </div>
+            `,
+            
+            'windows': `
+                <div class="feature-card windows-feature animate-in">
+                    <div class="platform-badge">Windows Ready</div>
+                    <h3>💻 Windows Desktop Features</h3>
+                    <p>Supercharge your desktop experience:</p>
+                    <div class="action-buttons">
+                        ${browser === 'chrome' || browser === 'edge' ? `
+                            <button onclick="DeviceManager.showExtensionGuide()" class="platform-btn primary-action">
+                                <span class="btn-icon">🧩</span>
+                                <span class="btn-text">
+                                    <span class="btn-title">Browser Extension</span>
+                                    <span class="btn-subtitle">Auto-inject prompts</span>
+                                </span>
+                            </button>
+                        ` : ''}
+                        <button onclick="DeviceManager.installPWA()" class="platform-btn">
+                            <span class="btn-icon">💾</span>
+                            <span class="btn-text">
+                                <span class="btn-title">Install Desktop App</span>
+                                <span class="btn-subtitle">Native experience</span>
+                            </span>
+                        </button>
+                        <button onclick="DeviceManager.setupKeyboardShortcuts()" class="platform-btn">
+                            <span class="btn-icon">⌨️</span>
+                            <span class="btn-text">
+                                <span class="btn-title">Keyboard Shortcuts</span>
+                                <span class="btn-subtitle">Ctrl+K to search</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="feature-tip">
+                        <span class="tip-icon">🚀</span>
+                        <span>Extension auto-fills prompts on all AI sites!</span>
+                    </div>
+                </div>
+            `,
+            
+            'mac': `
+                <div class="feature-card mac-feature animate-in">
+                    <div class="platform-badge">macOS Optimized</div>
+                    <h3>🍎 macOS Enhanced Features</h3>
+                    <p>Mac-optimized tools for power users:</p>
+                    <div class="action-buttons">
+                        ${browser === 'chrome' ? `
+                            <button onclick="DeviceManager.showExtensionGuide()" class="platform-btn primary-action">
+                                <span class="btn-icon">🧩</span>
+                                <span class="btn-text">
+                                    <span class="btn-title">Chrome Extension</span>
+                                    <span class="btn-subtitle">Smart injection</span>
+                                </span>
+                            </button>
+                        ` : ''}
+                        ${browser === 'safari' ? `
+                            <button onclick="DeviceManager.showSafariExtension()" class="platform-btn primary-action">
+                                <span class="btn-icon">🦁</span>
+                                <span class="btn-text">
+                                    <span class="btn-title">Safari Extension</span>
+                                    <span class="btn-subtitle">Native integration</span>
+                                </span>
+                            </button>
+                        ` : ''}
+                        <button onclick="DeviceManager.setupKeyboardShortcuts()" class="platform-btn">
+                            <span class="btn-icon">⌨️</span>
+                            <span class="btn-text">
+                                <span class="btn-title">Keyboard Shortcuts</span>
+                                <span class="btn-subtitle">⌘K to search</span>
+                            </span>
+                        </button>
+                        <button onclick="DeviceManager.addToDock()" class="platform-btn">
+                            <span class="btn-icon">🚀</span>
+                            <span class="btn-text">
+                                <span class="btn-title">Add to Dock</span>
+                                <span class="btn-subtitle">Quick launch</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="feature-tip">
+                        <span class="tip-icon">⌘</span>
+                        <span>Pro tip: Use ⌘K for instant agent search!</span>
+                    </div>
+                </div>
+            `
+        };
+        
+        return features[platform] || `
+            <div class="feature-card default-feature animate-in">
+                <h3>🌐 Web Features</h3>
+                <p>Using ${browser} browser on ${platform}</p>
+                <button onclick="DeviceManager.installPWA()" class="platform-btn">
+                    Install Web App
+                </button>
+            </div>
+        `;
+    },
+    
+    // Show onboarding tour for first-time users
+    showOnboardingTour: function(platform) {
+        const tour = document.createElement('div');
+        tour.className = 'onboarding-overlay';
+        tour.innerHTML = `
+            <div class="onboarding-content">
+                <button class="onboarding-close" onclick="DeviceManager.closeOnboarding()">×</button>
+                <div class="onboarding-step" id="onboarding-step-1">
+                    <h2>👋 Welcome to AI Agent Hub!</h2>
+                    <p>Your universal gateway to all free AI assistants.</p>
+                    <div class="onboarding-illustration">
+                        <span class="big-emoji">🤖</span>
+                    </div>
+                    <p>We've detected you're using <strong>${platform}</strong> - let's optimize your experience!</p>
+                    <button class="onboarding-btn" onclick="DeviceManager.nextOnboardingStep(2)">
+                        Get Started →
+                    </button>
+                </div>
+                
+                <div class="onboarding-step" id="onboarding-step-2" style="display: none;">
+                    <h2>📝 Save Your Prompts</h2>
+                    <div class="onboarding-pointer" style="top: 100px; left: 50%;">
+                        <span class="pointer-arrow">↑</span>
+                        <span class="pointer-text">Type your prompt here</span>
+                    </div>
+                    <p>Write once, use everywhere! Your prompts work across all AI platforms.</p>
+                    <button class="onboarding-btn" onclick="DeviceManager.nextOnboardingStep(3)">
+                        Next →
+                    </button>
+                </div>
+                
+                <div class="onboarding-step" id="onboarding-step-3" style="display: none;">
+                    <h2>🚀 Platform Features</h2>
+                    <div class="onboarding-pointer" style="top: 300px; left: 50%;">
+                        <span class="pointer-arrow">↓</span>
+                        <span class="pointer-text">Your ${platform} features are here!</span>
+                    </div>
+                    <p>We've prepared special features just for ${platform} users.</p>
+                    <button class="onboarding-btn" onclick="DeviceManager.completeOnboarding()">
+                        Start Using →
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(tour);
+        
+        // Track onboarding start
+        this.trackFeature('onboarding_started', platform);
+    },
+    
+    // Onboarding navigation
+    nextOnboardingStep: function(step) {
+        document.querySelectorAll('.onboarding-step').forEach(s => s.style.display = 'none');
+        document.getElementById(`onboarding-step-${step}`).style.display = 'block';
+        
+        // Highlight relevant UI elements
+        if (step === 2) {
+            document.querySelector('.prompt-section').classList.add('highlight-tour');
+        } else if (step === 3) {
+            document.querySelector('.platform-features').classList.add('highlight-tour');
+        }
+    },
+    
+    closeOnboarding: function() {
+        document.querySelector('.onboarding-overlay').remove();
+        document.querySelectorAll('.highlight-tour').forEach(el => {
+            el.classList.remove('highlight-tour');
+        });
+    },
+    
+    completeOnboarding: function() {
+        localStorage.setItem('hasVisited', 'true');
+        this.closeOnboarding();
+        this.trackFeature('onboarding_completed', this.getPlatform());
+        showNotification('🎉 Welcome aboard! Explore your personalized features below.');
+    },
+    
+    // Enhanced feature tracking
+    trackFeature: function(feature, platform, details = {}) {
+        // Track with analytics if available
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'feature_interaction', {
+                'feature_name': feature,
+                'platform': platform,
+                'browser': this.getBrowser(),
+                'timestamp': new Date().toISOString(),
+                ...details
+            });
+        }
+        
+        // Local tracking for feature adoption
+        const adoption = JSON.parse(localStorage.getItem('feature_adoption') || '{}');
+        if (!adoption[feature]) {
+            adoption[feature] = {
+                first_used: new Date().toISOString(),
+                use_count: 0,
+                platform: platform
+            };
+        }
+        adoption[feature].use_count++;
+        adoption[feature].last_used = new Date().toISOString();
+        localStorage.setItem('feature_adoption', JSON.stringify(adoption));
+        
+        // Show achievement notifications for milestones
+        this.checkAchievements(feature, adoption);
+    },
+    
+    // Achievement system
+    checkAchievements: function(feature, adoption) {
+        const achievements = {
+            'first_install': {
+                condition: () => feature === 'pwa_installed',
+                message: '🏆 Achievement: App Installer!',
+                icon: '📲'
+            },
+            'power_user': {
+                condition: () => Object.keys(adoption).length >= 5,
+                message: '🏆 Achievement: Power User!',
+                icon: '💪'
+            },
+            'extension_master': {
+                condition: () => feature === 'extension_installed',
+                message: '🏆 Achievement: Extension Master!',
+                icon: '🧩'
+            },
+            'shortcut_ninja': {
+                condition: () => feature === 'shortcuts_enabled',
+                message: '🏆 Achievement: Shortcut Ninja!',
+                icon: '⚡'
+            }
+        };
+        
+        Object.entries(achievements).forEach(([key, achievement]) => {
+            if (!localStorage.getItem(`achievement_${key}`) && achievement.condition()) {
+                localStorage.setItem(`achievement_${key}`, 'true');
+                this.showAchievement(achievement);
+            }
+        });
+    },
+    
+    showAchievement: function(achievement) {
+        const popup = document.createElement('div');
+        popup.className = 'achievement-popup';
+        popup.innerHTML = `
+            <span class="achievement-icon">${achievement.icon}</span>
+            <span class="achievement-text">${achievement.message}</span>
+        `;
+        document.body.appendChild(popup);
+        
+        setTimeout(() => popup.classList.add('achievement-show'), 100);
+        setTimeout(() => {
+            popup.classList.remove('achievement-show');
+            setTimeout(() => popup.remove(), 500);
+        }, 3000);
+    },
+    
+    // Platform-specific feature implementations with tracking
+    installPWA: function() {
+        const platform = this.getPlatform();
+        
+        if (window.deferredPrompt) {
+            window.deferredPrompt.prompt();
+            window.deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    showNotification('🎉 App installed successfully!');
+                    this.trackFeature('pwa_installed', platform, { method: 'prompt' });
+                } else {
+                    this.trackFeature('pwa_declined', platform);
+                }
+            });
+        } else {
+            this.showInstallInstructions();
+            this.trackFeature('pwa_manual_instructions', platform);
+        }
+    },
+    
+    showInstallInstructions: function() {
+        const platform = this.getPlatform();
+        const browser = this.getBrowser();
+        const instructions = {
+            'ios': {
+                steps: [
+                    'Tap the Share button <span class="instruction-icon">⬆️</span> at the bottom',
+                    'Scroll down and tap "Add to Home Screen"',
+                    'Name it "AI Hub" and tap "Add"'
+                ],
+                visual: '📱'
+            },
+            'android': {
+                steps: [
+                    'Tap the menu button <span class="instruction-icon">⋮</span>',
+                    'Select "Add to Home screen" or "Install app"',
+                    'Confirm installation'
+                ],
+                visual: '🤖'
+            },
+            'windows': {
+                steps: [
+                    'Click the install icon in the address bar',
+                    'Or go to browser menu → Install AI Hub',
+                    'Click "Install" in the popup'
+                ],
+                visual: '💻'
+            },
+            'mac': {
+                steps: [
+                    'Click the install icon in the address bar',
+                    'Or use ' + (browser === 'safari' ? 'Share → Add to Dock' : 'Menu → Install'),
+                    'Confirm installation'
+                ],
+                visual: '🍎'
+            }
+        };
+        
+        const guide = instructions[platform] || instructions['windows'];
+        
+        const modal = document.createElement('div');
+        modal.className = 'platform-modal install-guide';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                <div class="install-visual">${guide.visual}</div>
+                <h3>Install AI Hub</h3>
+                <ol class="install-steps">
+                    ${guide.steps.map(step => `<li>${step}</li>`).join('')}
+                </ol>
+                <button class="modal-btn" onclick="this.parentElement.parentElement.remove()">
+                    Got it!
+                </button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    createIOSShortcut: function() {
+        this.trackFeature('ios_shortcut_guide', 'ios');
+        
+        const modal = document.createElement('div');
+        modal.className = 'platform-modal ios-shortcut-guide';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                <h3>⚡ Create Siri Shortcut</h3>
+                <div class="shortcut-preview">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234B7BEC'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40'%3E⚡%3C/text%3E%3C/svg%3E" alt="Shortcut icon">
+                    <span>AI Multi-Launch</span>
+                </div>
+                <ol class="shortcut-steps">
+                    <li>Copy your saved prompt using the button above</li>
+                    <li>Open the <strong>Shortcuts</strong> app</li>
+                    <li>Tap <strong>+</strong> to create new shortcut</li>
+                    <li>Add <strong>"Text"</strong> action with your prompt</li>
+                    <li>Add <strong>"Copy to Clipboard"</strong> action</li>
+                    <li>Add <strong>"Open App"</strong> or <strong>"Open URL"</strong> for each AI</li>
+                    <li>Name it <strong>"AI Multi-Launch"</strong></li>
+                    <li>Say "Hey Siri, AI Multi-Launch" to run!</li>
+                </ol>
+                <button class="modal-btn primary" onclick="DeviceManager.copyPromptAndClose(this)">
+                    Copy Prompt & Continue
+                </button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    copyPromptAndClose: function(button) {
+        const prompt = document.getElementById('universal-prompt').value;
+        navigator.clipboard.writeText(prompt).then(() => {
+            showNotification('📋 Prompt copied! Now open Shortcuts app');
+            button.parentElement.parentElement.remove();
+        });
+    },
+    
+    showExtensionGuide: function() {
+        const browser = this.getBrowser();
+        const platform = this.getPlatform();
+        this.trackFeature('extension_guide_opened', platform, { browser });
+        
+        const extensionUrl = browser === 'chrome' 
+            ? 'https://github.com/Viralith-Prime/you-agent-relay/tree/main/extension'
+            : 'https://microsoftedge.microsoft.com/addons/';
+            
+        const modal = document.createElement('div');
+        modal.className = 'platform-modal extension-guide';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                <div class="extension-hero">
+                    <span class="extension-icon">🧩</span>
+                    <h3>Browser Extension Setup</h3>
+                    <p>Auto-inject prompts into any AI chat!</p>
+                </div>
+                
+                <div class="extension-features">
+                    <div class="feature-item">
+                        <span>✓</span> Works on ChatGPT, Claude, Gemini
+                    </div>
+                    <div class="feature-item">
+                        <span>✓</span> One-click prompt injection
+                    </div>
+                    <div class="feature-item">
+                        <span>✓</span> Syncs with your saved prompts
+                    </div>
+                </div>
+                
+                <div class="extension-steps">
+                    <h4>Installation Steps:</h4>
+                    <ol>
+                        <li>Download the extension files</li>
+                        <li>Open <code>${browser}://extensions/</code></li>
+                        <li>Enable <strong>"Developer mode"</strong></li>
+                        <li>Click <strong>"Load unpacked"</strong></li>
+                        <li>Select the extension folder</li>
+                    </ol>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="modal-btn primary" onclick="window.open('${extensionUrl}'); DeviceManager.trackFeature('extension_download', '${platform}')">
+                        Download Extension
+                    </button>
+                    <button class="modal-btn" onclick="DeviceManager.showExtensionVideo()">
+                        Watch Tutorial
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    setupKeyboardShortcuts: function() {
+        const platform = this.getPlatform();
+        this.trackFeature('keyboard_shortcuts_viewed', platform);
+        
+        const isMac = platform === 'mac';
+        const mod = isMac ? '⌘' : 'Ctrl';
+        
+        const modal = document.createElement('div');
+        modal.className = 'platform-modal shortcuts-guide';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                <h3>⌨️ Keyboard Shortcuts</h3>
+                <div class="shortcuts-list">
+                    <div class="shortcut-item">
+                        <kbd>${mod}</kbd> + <kbd>K</kbd>
+                        <span>Quick search agents</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>${mod}</kbd> + <kbd>S</kbd>
+                        <span>Save current prompt</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>${mod}</kbd> + <kbd>C</kbd>
+                        <span>Copy prompt</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>${mod}</kbd> + <kbd>/</kbd>
+                        <span>Focus prompt input</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Tab</kbd>
+                        <span>Navigate between agents</span>
+                    </div>
+                </div>
+                <button class="modal-btn primary" onclick="DeviceManager.enableShortcuts(this)">
+                    Enable Shortcuts
+                </button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    enableShortcuts: function(button) {
+        this.trackFeature('shortcuts_enabled', this.getPlatform());
+        localStorage.setItem('shortcuts_enabled', 'true');
+        showNotification('⌨️ Keyboard shortcuts enabled!');
+        button.parentElement.parentElement.remove();
+    },
+    
+    // Initialize platform-specific features with enhancements
+    initPlatformFeatures: function(platform, browser) {
+        // iOS specific
+        if (platform === 'ios') {
+            // Prevent zoom on input focus
+            document.querySelectorAll('input, textarea').forEach(el => {
+                el.addEventListener('focus', () => {
+                    document.querySelector('meta[name="viewport"]').content = 
+                        'width=device-width, initial-scale=1, maximum-scale=1';
+                });
+            });
+            
+            // Add haptic feedback
+            if ('vibrate' in navigator) {
+                document.querySelectorAll('button').forEach(btn => {
+                    btn.addEventListener('touchstart', () => navigator.vibrate(10));
+                });
+            }
+        }
+        
+        // Android specific
+        if (platform === 'android') {
+            // Enable pull-to-refresh
+            let startY = 0;
+            document.addEventListener('touchstart', e => {
+                startY = e.touches[0].pageY;
+            });
+            document.addEventListener('touchmove', e => {
+                const y = e.touches[0].pageY;
+                if (document.scrollingElement.scrollTop === 0 && y > startY + 50) {
+                    location.reload();
+                }
+            });
+        }
+        
+        // Desktop keyboard shortcuts
+        if ((platform === 'windows' || platform === 'mac') && localStorage.getItem('shortcuts_enabled')) {
+            document.addEventListener('keydown', (e) => {
+                const isMac = platform === 'mac';
+                const modKey = isMac ? e.metaKey : e.ctrlKey;
+                
+                if (modKey) {
+                    switch(e.key) {
+                        case 'k':
+                            e.preventDefault();
+                            document.querySelector('.history-search')?.focus();
+                            this.trackFeature('shortcut_used', platform, { key: 'search' });
+                            break;
+                        case 's':
+                            e.preventDefault();
+                            savePrompt();
+                            this.trackFeature('shortcut_used', platform, { key: 'save' });
+                            break;
+                        case '/':
+                            e.preventDefault();
+                            document.getElementById('universal-prompt')?.focus();
+                            this.trackFeature('shortcut_used', platform, { key: 'focus' });
+                            break;
+                    }
+                }
+            });
+        }
+        
+        // Progressive enhancement for all platforms
+        this.addMicrointeractions();
+    },
+    
+    // Add micro-interactions
+    addMicrointeractions: function() {
+        // Button click effects
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Ripple effect
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                ripple.style.left = e.offsetX + 'px';
+                ripple.style.top = e.offsetY + 'px';
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+        
+        // Card hover effects
+        document.querySelectorAll('.agent-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    }
+};
+
+// Success tracking wrapper
+const FeatureAdoption = {
+    track: function(feature, platform, success = true) {
+        DeviceManager.trackFeature(feature, platform, { success });
+    },
+    
+    getStats: function() {
+        const adoption = JSON.parse(localStorage.getItem('feature_adoption') || '{}');
+        return {
+            total_features_used: Object.keys(adoption).length,
+            most_used: Object.entries(adoption).sort((a, b) => b[1].use_count - a[1].use_count)[0],
+            last_feature: Object.entries(adoption).sort((a, b) => 
+                new Date(b[1].last_used) - new Date(a[1].last_used))[0]
+        };
+    }
+};
+
+// PWA install prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    // Add install button to UI
+    const installBtn = document.querySelector('.pwa-install-btn');
+    if (installBtn) {
+        installBtn.style.display = 'block';
+    }
+});
+
+// Initialize everything on load
+document.addEventListener('DOMContentLoaded', function() {
+    DeviceManager.init();
+});
+
     </script>
 </body>
 </html>
