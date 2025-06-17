@@ -953,8 +953,12 @@ textarea:focus-visible {
       <button class="tab-btn" onclick="showCategory('research')" id="tab-research">Research</button>
       <button class="tab-btn" onclick="showCategory('creative')" id="tab-creative">Creative</button>
     </div>
-
-    <div class="comparison-table">
+    
+    <h2 style="margin-top: 40px;">🤖 Agent Directory</h2>
+    <div id="agent-grid" class="agent-grid" aria-live="polite">
+        <!-- Agent cards will be inserted here -->
+    </div>
+        <div class="comparison-table">
       <h3>Quick Comparison</h3>
       <table>
         <thead>
@@ -969,12 +973,8 @@ textarea:focus-visible {
           <!-- Dynamically populated -->
         </tbody>
       </table>
-    </div>
-
-    <h2 style="margin-top: 40px;">🤖 Agent Directory</h2>
-    <div id="agent-grid" class="agent-grid" aria-live="polite">
-        <!-- Agent cards will be inserted here -->
-    </div>
+    </div>       
+       
 
     <!-- Agent Recommendation Quick-Pick -->
     <div style="margin: 32px 0 10px 0;">
