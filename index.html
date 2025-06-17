@@ -304,6 +304,113 @@
             background: #ffc107;
             color: #333;
         }
+
+        /* Prompt History Styles */
+        .prompt-history-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .history-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .history-item:hover {
+            border-color: #1976d2;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.1);
+        }
+
+        .history-prompt {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .history-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .history-btn {
+            padding: 4px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .history-btn:hover {
+            background: #f5f5f5;
+            border-color: #1976d2;
+        }
+
+        .history-search {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .history-search:focus {
+            outline: none;
+            border-color: #1976d2;
+        }
+
+        .history-empty {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+        }
+
+        /* Dark mode support for history */
+        [data-theme="dark"] .prompt-history-section {
+            background: var(--card-bg);
+        }
+
+        [data-theme="dark"] .history-item {
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .history-item:hover {
+            border-color: #1976d2;
+        }
+
+        [data-theme="dark"] .history-prompt {
+            color: var(--text-color);
+        }
+
+        [data-theme="dark"] .history-btn {
+            background: var(--prompt-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+
+        [data-theme="dark"] .history-search {
+            background: var(--prompt-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
     </style>
 </head>
 <!-- Cloudflare Web Analytics -->
@@ -339,6 +446,21 @@
         
         <div id="saved-indicator" style="margin-top: 10px; color: #4caf50; display: none;">
             ✓ Prompt saved locally
+        </div>
+    </div>
+
+    <!-- Prompt History Section -->
+    <div class="prompt-history-section" id="prompt-history-section">
+        <h3>📜 Prompt History</h3>
+        <input 
+            type="text" 
+            class="history-search" 
+            id="history-search" 
+            placeholder="Search your prompt history..."
+            onkeyup="filterHistory()"
+        />
+        <div id="history-container">
+            <!-- History items will be populated here -->
         </div>
     </div>
 
@@ -622,6 +744,8 @@
           }
           // Recommendation on load
           showRecommendation();
+          // Render prompt history on load
+          PromptHistory.render();
         });
 
         // Render agent cards
@@ -664,7 +788,7 @@
         }
 
         // For launching by name (IDs are not unique across merged arrays)
-        function launchAgentByName(name) {
+        let originalLaunchAgentByName = function(name) {
           const all = getAllAgents();
           const agent = all.find(a => a.name === name);
           const prompt = document.getElementById('universal-prompt').value;
@@ -687,7 +811,7 @@
           } else {
               showNotification(`${agent.name} opened in new tab!`);
           }
-        }
+        };
 
         // ---- COMPARISON TABLE (Snippet 2) ----
         function renderComparisonTable(category) {
@@ -711,13 +835,13 @@
         }
 
         // ---- PROMPT RELAY LOGIC ----
-        function savePrompt() {
+        let originalSavePrompt = function() {
             const prompt = document.getElementById('universal-prompt').value;
             localStorage.setItem('relay-prompt', prompt);
             localStorage.setItem('relay-timestamp', Date.now());
             document.getElementById('saved-indicator').style.display = prompt ? 'block' : 'none';
             showNotification('✓ Prompt saved! Ready for relay to agents.');
-        }
+        };
         function copyPrompt() {
             const prompt = document.getElementById('universal-prompt').value;
             if (navigator.clipboard) {
@@ -831,10 +955,188 @@
             icon.textContent = theme === 'dark' ? '☀️' : '🌙';
         }
 
+        // ===== PROMPT HISTORY MANAGEMENT =====
+        const PromptHistory = {
+            maxItems: 50, // Keep last 50 prompts
+            
+            // Get all history
+            getAll: function() {
+                const history = localStorage.getItem('prompt-history');
+                return history ? JSON.parse(history) : [];
+            },
+            
+            // Add new prompt to history
+            add: function(prompt, agentName) {
+                if (!prompt.trim()) return;
+                
+                const history = this.getAll();
+                const newEntry = {
+                    id: Date.now(),
+                    prompt: prompt,
+                    agent: agentName || 'Not launched',
+                    timestamp: new Date().toISOString(),
+                    uses: 1
+                };
+                
+                // Check if prompt already exists
+                const existingIndex = history.findIndex(h => h.prompt === prompt);
+                if (existingIndex !== -1) {
+                    // Update use count and move to top
+                    history[existingIndex].uses++;
+                    history[existingIndex].timestamp = new Date().toISOString();
+                    history[existingIndex].agent = agentName || history[existingIndex].agent;
+                    const existing = history.splice(existingIndex, 1)[0];
+                    history.unshift(existing);
+                } else {
+                    // Add new prompt to beginning
+                    history.unshift(newEntry);
+                }
+                
+                // Keep only last N items
+                if (history.length > this.maxItems) {
+                    history.length = this.maxItems;
+                }
+                
+                localStorage.setItem('prompt-history', JSON.stringify(history));
+                this.render();
+            },
+            
+            // Delete a prompt from history
+            delete: function(id) {
+                const history = this.getAll();
+                const filtered = history.filter(h => h.id !== id);
+                localStorage.setItem('prompt-history', JSON.stringify(filtered));
+                this.render();
+            },
+            
+            // Use a prompt from history
+            use: function(id) {
+                const history = this.getAll();
+                const item = history.find(h => h.id === id);
+                if (item) {
+                    document.getElementById('universal-prompt').value = item.prompt;
+                    savePrompt();
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    showNotification('📜 Prompt loaded from history!');
+                }
+            },
+            
+            // Render history list
+            render: function(filter = '') {
+                const container = document.getElementById('history-container');
+                const history = this.getAll();
+                
+                // Filter if search term provided
+                const filtered = filter 
+                    ? history.filter(h => 
+                        h.prompt.toLowerCase().includes(filter.toLowerCase()) ||
+                        h.agent.toLowerCase().includes(filter.toLowerCase())
+                      )
+                    : history;
+                
+                if (filtered.length === 0) {
+                    container.innerHTML = `
+                        <div class="history-empty">
+                            ${filter ? 'No prompts match your search.' : 'No prompt history yet. Start by saving a prompt!'}
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = filtered.map(item => {
+                    const date = new Date(item.timestamp);
+                    const timeAgo = this.getTimeAgo(date);
+                    const truncatedPrompt = item.prompt.length > 150 
+                        ? item.prompt.substring(0, 150) + '...' 
+                        : item.prompt;
+                    
+                    return `
+                        <div class="history-item">
+                            <div class="history-prompt">${this.escapeHtml(truncatedPrompt)}</div>
+                            <div class="history-meta">
+                                <div>
+                                    <span>🤖 ${item.agent}</span> • 
+                                    <span>🕒 ${timeAgo}</span> • 
+                                    <span>🔄 Used ${item.uses}x</span>
+                                </div>
+                                <div class="history-actions">
+                                    <button class="history-btn" onclick="PromptHistory.use(${item.id})">
+                                        Use
+                                    </button>
+                                    <button class="history-btn" onclick="PromptHistory.delete(${item.id})">
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+            
+            // Helper: Get relative time
+            getTimeAgo: function(date) {
+                const seconds = Math.floor((new Date() - date) / 1000);
+                
+                let interval = seconds / 31536000;
+                if (interval > 1) return Math.floor(interval) + " years ago";
+                
+                interval = seconds / 2592000;
+                if (interval > 1) return Math.floor(interval) + " months ago";
+                
+                interval = seconds / 86400;
+                if (interval > 1) return Math.floor(interval) + " days ago";
+                
+                interval = seconds / 3600;
+                if (interval > 1) return Math.floor(interval) + " hours ago";
+                
+                interval = seconds / 60;
+                if (interval > 1) return Math.floor(interval) + " minutes ago";
+                
+                return "Just now";
+            },
+            
+            // Helper: Escape HTML
+            escapeHtml: function(text) {
+                const map = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                };
+                return text.replace(/[&<>"']/g, m => map[m]);
+            }
+        };
+
+        // Filter history based on search
+        function filterHistory() {
+            const searchTerm = document.getElementById('history-search').value;
+            PromptHistory.render(searchTerm);
+        }
+
+        // Update the existing savePrompt function to include history
+        let savePrompt = function() {
+            originalSavePrompt();
+            const prompt = document.getElementById('universal-prompt').value;
+            if (prompt.trim()) {
+                // Don't add agent name yet - will be added when launching
+                PromptHistory.add(prompt, null);
+            }
+        };
+
+        // Update launchAgentByName to track which agent was used
+        let launchAgentByName = function(name) {
+            const prompt = document.getElementById('universal-prompt').value;
+            if (prompt.trim()) {
+                PromptHistory.add(prompt, name);
+            }
+            originalLaunchAgentByName(name);
+        };
+
         // Initialize theme on page load
         document.addEventListener('DOMContentLoaded', function() {
             initTheme();
-            // Your existing DOMContentLoaded code...
         });
     </script>
 </body>
