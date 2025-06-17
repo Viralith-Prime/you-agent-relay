@@ -412,86 +412,85 @@
             }
           ],
           youcom: [
-            // Using factual URLs/IDs as examples (replace with actual IDs as needed)
-            {
-              name: "Research Assistant",
-              provider: "You.com (Custom)",
-              url: "https://you.com/agents/user_mode_38977fec-fd18-4446-8494-9bdfab5727d1?chatMode=user_mode_38977fec-fd18-4446-8494-9bdfab5727d1",
-              icon: "🔬",
-              description: "Academic research and citation helper",
-              features: ["Research", "Citations", "Fact checking"],
-              limitations: ["You.com account optional", "Web UI only"],
-              type: "custom",
-              bestFor: ["research"],
-              loginRequired: "No",
-              dailyLimit: "Unknown"
-            },
-            {
-              name: "Code Helper",
-              provider: "You.com (Custom)",
-              url: "https://you.com/agents/user_mode_2ab61571-8ae6-4316-af42-42f6b1f135e8?chatMode=user_mode_2ab61571-8ae6-4316-af42-42f6b1f135e8",
-              icon: "💻",
-              description: "Programming assistant and debugger",
-              features: ["Code help", "Debugging", "Code explanations"],
-              limitations: ["You.com account optional", "Web UI only"],
-              type: "custom",
-              bestFor: ["coding"],
-              loginRequired: "No",
-              dailyLimit: "Unknown"
-            },
-            {
-              name: "Writing Coach",
-              provider: "You.com (Custom)",
-              url: "https://you.com/agents/user_mode_88c342e3-fa3a-457a-bad3-bcd3a56395c2?chatMode=user_mode_88c342e3-fa3a-457a-bad3-bcd3a56395c2",
-              icon: "✍️",
-              description: "Creative writing and editing support",
-              features: ["Writing", "Editing", "Story ideas"],
-              limitations: ["You.com account optional", "Web UI only"],
-              type: "custom",
-              bestFor: ["creative"],
-              loginRequired: "No",
-              dailyLimit: "Unknown"
-            },
-            {
-              name: "Smart Routing",
-              provider: "You.com (Premade)",
-              url: "https://you.com/agents/smart_routing?chatMode=smart_routing",
-              icon: "🧠",
-              description: "Intelligent query routing",
-              features: ["Smart routing", "Auto agent selection"],
-              limitations: ["You.com account optional"],
-              type: "premade",
-              bestFor: ["general"],
-              loginRequired: "No",
-              dailyLimit: "Unknown"
-            },
-            {
-              name: "Research Mode",
-              provider: "You.com (Premade)",
-              url: "https://you.com/agents/research?chatMode=research",
-              icon: "📚",
-              description: "Deep research with citations",
-              features: ["Research", "Citations"],
-              limitations: ["You.com account optional"],
-              type: "premade",
-              bestFor: ["research"],
-              loginRequired: "No",
-              dailyLimit: "Unknown"
-            },
-            {
-              name: "GPT-4o",
-              provider: "You.com (Premade)",
-              url: "https://you.com/agents/gpt_4o?chatMode=custom",
-              icon: "🤖",
-              description: "Advanced GPT-4 model",
-              features: ["General chat", "Code generation", "Creative writing"],
-              limitations: ["You.com account optional"],
-              type: "premade",
-              bestFor: ["general", "coding", "creative"],
-              loginRequired: "No",
-              dailyLimit: "Unknown"
-            }
-          ]
+                {
+                    name: "You.com Research",
+                    provider: "You.com",
+                    url: "https://you.com/agents/user_mode_38977fec-fd18-4446-8494-9bdfab5727d1?chatMode=user_mode_38977fec-fd18-4446-8494-9bdfab5727d1",
+                    icon: "🔬",
+                    description: "Advanced academic research assistant providing paper summaries, source citations, and fact-checking for scholarly queries.",
+                    features: ["Academic research", "Paper summarization", "Source citations", "Fact checking"],
+                    limitations: ["You.com account optional", "Web UI only"],
+                    type: "custom",
+                    bestFor: ["research"],
+                    loginRequired: "No",
+                    dailyLimit: "Unknown"
+                },
+                {
+                    name: "You.com Code Helper",
+                    provider: "You.com",
+                    url: "https://you.com/agents/user_mode_2ab61571-8ae6-4316-af42-42f6b1f135e8?chatMode=user_mode_2ab61571-8ae6-4316-af42-42f6b1f135e8",
+                    icon: "💻",
+                    description: "Coding-focused AI assistant for programming help, code debugging, and code explanations in multiple languages.",
+                    features: ["Programming help", "Debugging", "Code explanations", "Multi-language support"],
+                    limitations: ["You.com account optional", "Web UI only"],
+                    type: "custom",
+                    bestFor: ["coding"],
+                    loginRequired: "No",
+                    dailyLimit: "Unknown"
+                },
+                {
+                    name: "You.com Writing Coach",
+                    provider: "You.com",
+                    url: "https://you.com/agents/user_mode_88c342e3-fa3a-457a-bad3-bcd3a56395c2?chatMode=user_mode_88c342e3-fa3a-457a-bad3-bcd3a56395c2",
+                    icon: "✍️",
+                    description: "Creative writing and editing assistant for brainstorming, drafting, and refining stories, essays, or articles.",
+                    features: ["Writing assistance", "Editing", "Story ideas", "Content improvement"],
+                    limitations: ["You.com account optional", "Web UI only"],
+                    type: "custom",
+                    bestFor: ["creative"],
+                    loginRequired: "No",
+                    dailyLimit: "Unknown"
+                },
+                {
+                    name: "You.com Smart Routing",
+                    provider: "You.com",
+                    url: "https://you.com/agents/smart_routing?chatMode=smart_routing",
+                    icon: "🧠",
+                    description: "AI-powered smart routing agent that automatically chooses the best specialized agent for your query within You.com.",
+                    features: ["Smart routing", "Automatic agent selection", "Adaptive responses"],
+                    limitations: ["You.com account optional"],
+                    type: "premade",
+                    bestFor: ["general"],
+                    loginRequired: "No",
+                    dailyLimit: "Unknown"
+                },
+                {
+                    name: "You.com Research Mode",
+                    provider: "You.com",
+                    url: "https://you.com/agents/research?chatMode=research",
+                    icon: "📚",
+                    description: "Research mode leverages real-time web information to answer in-depth questions and provide direct citations.",
+                    features: ["Web research", "Direct citations", "Up-to-date information"],
+                    limitations: ["You.com account optional"],
+                    type: "premade",
+                    bestFor: ["research"],
+                    loginRequired: "No",
+                    dailyLimit: "Unknown"
+                },
+                {
+                    name: "You.com GPT-4o",
+                    provider: "You.com",
+                    url: "https://you.com/agents/gpt_4o?chatMode=custom",
+                    icon: "🤖",
+                    description: "Powered by OpenAI's GPT-4o for advanced general chat, coding, and creative writing with You.com integration.",
+                    features: ["General chat", "Code generation", "Creative writing", "GPT-4o model"],
+                    limitations: ["You.com account optional"],
+                    type: "premade",
+                    bestFor: ["general", "coding", "creative"],
+                    loginRequired: "No",
+                    dailyLimit: "Unknown"
+                }
+            ]
         };
 
         // ---- CATEGORY FILTER LOGIC (Snippet 2) ----
