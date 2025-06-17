@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>You.com Multi-Agent Relay</title>
+    <title>Universal Free AI Agent Hub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -39,13 +39,21 @@
             font-size: 12px;
             font-weight: 600;
         }
-        .type-custom {
+        .type-mainstream {
             background: #e3f2fd;
             color: #1976d2;
         }
-        .type-premade {
+        .type-specialized {
             background: #f3e5f5;
             color: #7b1fa2;
+        }
+        .type-custom {
+            background: #ffe082;
+            color: #ff6f00;
+        }
+        .type-premade {
+            background: #c8e6c9;
+            color: #388e3c;
         }
         .url-display {
             font-family: monospace;
@@ -151,6 +159,47 @@
                 opacity: 0;
             }
         }
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            margin: 40px 0 10px 0;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            border: none;
+            background: #e0e0e0;
+            color: #333;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .tab-btn.active {
+            background: #1976d2;
+            color: white;
+        }
+        .comparison-table {
+            margin: 30px 0 0 0;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 10px 8px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .comparison-table th {
+            background: #f5f5f5;
+        }
         @media (max-width: 600px) {
             .url-display {
                 font-size: 9px;
@@ -159,6 +208,18 @@
             .prompt-section {
                 padding: 10px;
             }
+            .category-tabs {
+                flex-direction: column;
+                gap: 4px;
+            }
+        }
+        /* Visually hidden utility for accessibility */
+        .visually-hidden {
+            position: absolute !important;
+            height: 1px; width: 1px;
+            overflow: hidden;
+            clip: rect(1px, 1px, 1px, 1px);
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -166,7 +227,7 @@
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3aebc7040ae5458e90aa4e6059bc20af"}'></script>
 <!-- End Cloudflare Web Analytics -->
 <body>
-    <h1>🚀 You.com Multi-Agent Relay Dashboard</h1>
+    <h1>🚀 Universal Free AI Agent Hub</h1>
     
     <div class="prompt-section">
         <h2>📝 Universal Prompt Relay</h2>
@@ -194,97 +255,377 @@
             ✓ Prompt saved locally
         </div>
     </div>
-    
+
+    <!-- CATEGORY TABS (Snippet 2) -->
+    <div class="category-tabs" id="category-tabs">
+      <button class="tab-btn active" onclick="showCategory('all')" id="tab-all">All Agents</button>
+      <button class="tab-btn" onclick="showCategory('general')" id="tab-general">General Purpose</button>
+      <button class="tab-btn" onclick="showCategory('coding')" id="tab-coding">Coding</button>
+      <button class="tab-btn" onclick="showCategory('research')" id="tab-research">Research</button>
+      <button class="tab-btn" onclick="showCategory('creative')" id="tab-creative">Creative</button>
+    </div>
+
+    <div class="comparison-table">
+      <h3>Quick Comparison</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>Best For</th>
+            <th>Login Required</th>
+            <th>Daily Limit</th>
+          </tr>
+        </thead>
+        <tbody id="comparison-body">
+          <!-- Dynamically populated -->
+        </tbody>
+      </table>
+    </div>
+
     <h2 style="margin-top: 40px;">🤖 Agent Directory</h2>
     <div id="agent-grid" class="agent-grid" aria-live="polite">
         <!-- Agent cards will be inserted here -->
     </div>
 
-    <script>
-        // Agent configuration with correct URLs
-        const myAgents = [
-            // Custom agents
-            {
-                name: "Research Assistant",
-                url: "https://you.com/agents/user_mode_38977fec-fd18-4446-8494-9bdfab5727d1?chatMode=user_mode_38977fec-fd18-4446-8494-9bdfab5727d1",
-                type: "custom",
-                icon: "🔬",
-                description: "Academic research and citation helper"
-            },
-            {
-                name: "Code Helper",
-                url: "https://you.com/agents/user_mode_2ab61571-8ae6-4316-af42-42f6b1f135e8?chatMode=user_mode_2ab61571-8ae6-4316-af42-42f6b1f135e8",
-                type: "custom",
-                icon: "💻",
-                description: "Programming assistant and debugger"
-            },
-            {
-                name: "Writing Coach",
-                url: "https://you.com/agents/user_mode_88c342e3-fa3a-457a-bad3-bcd3a56395c2?chatMode=user_mode_88c342e3-fa3a-457a-bad3-bcd3a56395c2",
-                type: "custom",
-                icon: "✍️",
-                description: "Creative writing and editing support"
-            },
-            // Premade agents
-            {
-                name: "Smart Routing",
-                url: "https://you.com/agents/smart_routing?chatMode=smart_routing",
-                type: "premade",
-                icon: "🧠",
-                description: "Intelligent query routing"
-            },
-            {
-                name: "Research Mode",
-                url: "https://you.com/agents/research?chatMode=research",
-                type: "premade",
-                icon: "📚",
-                description: "Deep research with citations"
-            },
-            {
-                name: "GPT-4o",
-                url: "https://you.com/agents/gpt_4o?chatMode=custom",
-                type: "premade",
-                icon: "🤖",
-                description: "Advanced GPT-4 model"
-            }
-        ];
+    <!-- Agent Recommendation Quick-Pick -->
+    <div style="margin: 32px 0 10px 0;">
+      <label for="user-task" style="font-weight: 500;">Need help picking an agent? Tell us your task:</label>
+      <select id="user-task" style="margin-left: 10px; padding: 8px; font-size: 16px;" onchange="showRecommendation()">
+        <option value="general">General Purpose</option>
+        <option value="coding">Coding</option>
+        <option value="research">Research</option>
+        <option value="creative">Creative</option>
+      </select>
+      <span id="agent-recommendation" style="margin-left: 20px; font-weight: 600;"></span>
+    </div>
 
-        // Initialize dashboard
-        function initDashboard() {
-            const grid = document.getElementById('agent-grid');
-            grid.innerHTML = '';
-            myAgents.forEach((agent, index) => {
-                const card = document.createElement('div');
-                card.className = 'agent-card';
-                card.innerHTML = `
-                    <span class="agent-type type-${agent.type}">${agent.type.toUpperCase()}</span>
-                    <h3 style="font-size: 24px; margin: 0 0 10px 0;">
-                        ${agent.icon} ${agent.name}
-                    </h3>
-                    <p style="color: #666; margin: 10px 0;">
-                        ${agent.description}
-                    </p>
-                    <div class="url-display" tabindex="0" aria-label="Agent URL (focus to expand)">
-                        ${agent.url}
-                    </div>
-                    <button class="btn btn-primary launch-btn" onclick="launchAgent(${index})" aria-label="Launch ${agent.name}">
-                        🚀 Launch Agent
-                    </button>
-                `;
-                grid.appendChild(card);
-            });
-            
-            // Load saved prompt
-            const savedPrompt = localStorage.getItem('relay-prompt');
-            if (savedPrompt) {
-                document.getElementById('universal-prompt').value = savedPrompt;
-                document.getElementById('saved-indicator').style.display = 'block';
-            } else {
-                document.getElementById('saved-indicator').style.display = 'none';
+    <script>
+        // ---- SNIPPET 1: Unified Agent Data Structure ----
+        // Custom and You.com agents, realistic URLs, plus mainstream & specialized from the provided list
+        const freeAIAgents = {
+          mainstream: [
+            {
+              name: "ChatGPT",
+              provider: "OpenAI",
+              url: "https://chatgpt.com",
+              icon: "🤖",
+              description: "GPT-4o free tier, no login required",
+              features: ["General chat", "Code generation", "Creative writing"],
+              limitations: ["Usage limits on GPT-4o", "No plugins in free tier"],
+              type: "mainstream",
+              bestFor: ["general", "coding", "creative"],
+              loginRequired: "No",
+              dailyLimit: "Unknown"
+            },
+            {
+              name: "Gemini", 
+              provider: "Google",
+              url: "https://gemini.google.com",
+              icon: "✨",
+              description: "Google's latest AI, free with Google account",
+              features: ["Web search integration", "Image understanding", "Long context"],
+              limitations: ["Requires Google account", "Some features Pro-only"],
+              type: "mainstream",
+              bestFor: ["general", "research"],
+              loginRequired: "Yes",
+              dailyLimit: "Unknown"
+            },
+            {
+              name: "Claude",
+              provider: "Anthropic",
+              url: "https://claude.ai",
+              icon: "🧠",
+              description: "100k token context window, privacy-focused",
+              features: ["Large documents", "Code analysis", "Research"],
+              limitations: ["Daily message limit", "Email signup required"],
+              type: "mainstream",
+              bestFor: ["research", "creative", "general"],
+              loginRequired: "Yes",
+              dailyLimit: "50 messages/day"
+            },
+            {
+              name: "Copilot",
+              provider: "Microsoft", 
+              url: "https://copilot.microsoft.com",
+              icon: "🎯",
+              description: "GPT-4 Turbo via Microsoft, completely free",
+              features: ["Web browsing", "Image generation", "No signup"],
+              limitations: ["Bing integration", "Microsoft branding"],
+              type: "mainstream",
+              bestFor: ["general", "creative"],
+              loginRequired: "No",
+              dailyLimit: "Unknown"
+            },
+            {
+              name: "Perplexity",
+              provider: "Perplexity AI",
+              url: "https://www.perplexity.ai",
+              icon: "🔍",
+              description: "AI-powered search with citations",
+              features: ["Real-time web search", "Source citations", "Follow-up questions"],
+              limitations: ["5 Pro searches/day", "Limited file uploads"],
+              type: "mainstream",
+              bestFor: ["research", "general"],
+              loginRequired: "No",
+              dailyLimit: "Unknown"
+            },
+            {
+              name: "Meta AI",
+              provider: "Meta",
+              url: "https://www.meta.ai",
+              icon: "📘",
+              description: "Meta's Llama-based assistant",
+              features: ["Image generation", "Social integration", "No account needed"],
+              limitations: ["US only", "Less capable than GPT-4"],
+              type: "mainstream",
+              bestFor: ["creative", "general"],
+              loginRequired: "No",
+              dailyLimit: "Unknown"
             }
+          ],
+          specialized: [
+            {
+              name: "HuggingChat",
+              provider: "Hugging Face",
+              url: "https://huggingface.co/chat",
+              icon: "🤗",
+              description: "Open source models including Llama, Mistral",
+              features: ["Multiple models", "Open source", "No tracking"],
+              limitations: ["Less polished UI", "Variable performance"],
+              type: "specialized",
+              bestFor: ["research", "general"],
+              loginRequired: "No",
+              dailyLimit: "Unknown"
+            },
+            {
+              name: "Phind",
+              provider: "Phind",
+              url: "https://www.phind.com",
+              icon: "👨‍💻",
+              description: "Developer-focused AI search",
+              features: ["Code examples", "Technical docs", "VS Code extension"],
+              limitations: ["Developer-focused only", "Limited general chat"],
+              type: "specialized",
+              bestFor: ["coding"],
+              loginRequired: "No",
+              dailyLimit: "Unknown"
+            }
+          ],
+          youcom: [
+            // Using factual URLs/IDs as examples (replace with actual IDs as needed)
+            {
+              name: "Research Assistant",
+              provider: "You.com (Custom)",
+              url: "https://you.com/agents/user_mode_38977fec-fd18-4446-8494-9bdfab5727d1?chatMode=user_mode_38977fec-fd18-4446-8494-9bdfab5727d1",
+              icon: "🔬",
+              description: "Academic research and citation helper",
+              features: ["Research", "Citations", "Fact checking"],
+              limitations: ["You.com account optional", "Web UI only"],
+              type: "custom",
+              bestFor: ["research"],
+              loginRequired: "No",
+              dailyLimit: "Unknown"
+            },
+            {
+              name: "Code Helper",
+              provider: "You.com (Custom)",
+              url: "https://you.com/agents/user_mode_2ab61571-8ae6-4316-af42-42f6b1f135e8?chatMode=user_mode_2ab61571-8ae6-4316-af42-42f6b1f135e8",
+              icon: "💻",
+              description: "Programming assistant and debugger",
+              features: ["Code help", "Debugging", "Code explanations"],
+              limitations: ["You.com account optional", "Web UI only"],
+              type: "custom",
+              bestFor: ["coding"],
+              loginRequired: "No",
+              dailyLimit: "Unknown"
+            },
+            {
+              name: "Writing Coach",
+              provider: "You.com (Custom)",
+              url: "https://you.com/agents/user_mode_88c342e3-fa3a-457a-bad3-bcd3a56395c2?chatMode=user_mode_88c342e3-fa3a-457a-bad3-bcd3a56395c2",
+              icon: "✍️",
+              description: "Creative writing and editing support",
+              features: ["Writing", "Editing", "Story ideas"],
+              limitations: ["You.com account optional", "Web UI only"],
+              type: "custom",
+              bestFor: ["creative"],
+              loginRequired: "No",
+              dailyLimit: "Unknown"
+            },
+            {
+              name: "Smart Routing",
+              provider: "You.com (Premade)",
+              url: "https://you.com/agents/smart_routing?chatMode=smart_routing",
+              icon: "🧠",
+              description: "Intelligent query routing",
+              features: ["Smart routing", "Auto agent selection"],
+              limitations: ["You.com account optional"],
+              type: "premade",
+              bestFor: ["general"],
+              loginRequired: "No",
+              dailyLimit: "Unknown"
+            },
+            {
+              name: "Research Mode",
+              provider: "You.com (Premade)",
+              url: "https://you.com/agents/research?chatMode=research",
+              icon: "📚",
+              description: "Deep research with citations",
+              features: ["Research", "Citations"],
+              limitations: ["You.com account optional"],
+              type: "premade",
+              bestFor: ["research"],
+              loginRequired: "No",
+              dailyLimit: "Unknown"
+            },
+            {
+              name: "GPT-4o",
+              provider: "You.com (Premade)",
+              url: "https://you.com/agents/gpt_4o?chatMode=custom",
+              icon: "🤖",
+              description: "Advanced GPT-4 model",
+              features: ["General chat", "Code generation", "Creative writing"],
+              limitations: ["You.com account optional"],
+              type: "premade",
+              bestFor: ["general", "coding", "creative"],
+              loginRequired: "No",
+              dailyLimit: "Unknown"
+            }
+          ]
+        };
+
+        // ---- CATEGORY FILTER LOGIC (Snippet 2) ----
+        // Supported categories and their mapping to agent "bestFor" tags
+        const categoryMap = {
+          all: null,
+          general: "general",
+          coding: "coding",
+          research: "research",
+          creative: "creative"
+        };
+
+        // Combine all agent arrays for unified listing/comparison
+        function getAllAgents() {
+          return [
+            ...freeAIAgents.mainstream,
+            ...freeAIAgents.specialized,
+            ...freeAIAgents.youcom
+          ];
         }
 
-        // Save prompt to localStorage
+        // Show agents by category
+        function showCategory(cat) {
+          // Set tab active state
+          Object.keys(categoryMap).forEach(key => {
+            const tab = document.getElementById('tab-' + key);
+            if (tab) tab.classList.toggle('active', cat === key);
+          });
+          renderAgents(cat);
+          renderComparisonTable(cat);
+        }
+
+        // Initial render on load
+        window.addEventListener('DOMContentLoaded', function() {
+          showCategory('all');
+          // Load saved prompt
+          const savedPrompt = localStorage.getItem('relay-prompt');
+          if (savedPrompt) {
+              document.getElementById('universal-prompt').value = savedPrompt;
+              document.getElementById('saved-indicator').style.display = 'block';
+          } else {
+              document.getElementById('saved-indicator').style.display = 'none';
+          }
+          // Recommendation on load
+          showRecommendation();
+        });
+
+        // Render agent cards
+        function renderAgents(category) {
+          const grid = document.getElementById('agent-grid');
+          grid.innerHTML = '';
+          let agents = getAllAgents();
+          if (categoryMap[category]) {
+            agents = agents.filter(a => a.bestFor && a.bestFor.includes(categoryMap[category]));
+          }
+          agents.forEach((agent, index) => {
+              const card = document.createElement('div');
+              card.className = 'agent-card';
+              card.innerHTML = `
+                  <span class="agent-type type-${agent.type}">${agent.type ? agent.type.toUpperCase() : ''}</span>
+                  <h3 style="font-size: 24px; margin: 0 0 10px 0;">
+                      ${agent.icon} ${agent.name}
+                  </h3>
+                  <p style="color: #666; margin: 10px 0;">
+                      ${agent.description}
+                  </p>
+                  <div style="margin-bottom: 8px;">
+                    <strong>Provider:</strong> ${agent.provider}
+                  </div>
+                  <div>
+                    <strong>Features:</strong> ${agent.features.join(", ")}
+                  </div>
+                  <div>
+                    <strong>Limitations:</strong> ${agent.limitations.join(", ")}
+                  </div>
+                  <div class="url-display" tabindex="0" aria-label="Agent URL (focus to expand)">
+                      ${agent.url}
+                  </div>
+                  <button class="btn btn-primary launch-btn" onclick="launchAgentByName('${agent.name}')" aria-label="Launch ${agent.name}">
+                      🚀 Launch Agent
+                  </button>
+              `;
+              grid.appendChild(card);
+          });
+        }
+
+        // For launching by name (IDs are not unique across merged arrays)
+        function launchAgentByName(name) {
+          const all = getAllAgents();
+          const agent = all.find(a => a.name === name);
+          const prompt = document.getElementById('universal-prompt').value;
+          // Save current state
+          if (prompt) {
+              savePrompt();
+          }
+          // Store launch metadata
+          localStorage.setItem('last-launched-agent', JSON.stringify({
+              name: agent.name,
+              url: agent.url,
+              timestamp: Date.now()
+          }));
+          // Save session context (Snippet 3)
+          saveSessionContext(agent.name);
+          // Open agent
+          window.open(agent.url, '_blank', 'noopener');
+          if (prompt) {
+              showNotification(`${agent.name} opened! Click "Copy to Clipboard" then paste in the chat.`);
+          } else {
+              showNotification(`${agent.name} opened in new tab!`);
+          }
+        }
+
+        // ---- COMPARISON TABLE (Snippet 2) ----
+        function renderComparisonTable(category) {
+          const tbody = document.getElementById('comparison-body');
+          tbody.innerHTML = '';
+          let agents = getAllAgents();
+          if (categoryMap[category]) {
+            agents = agents.filter(a => a.bestFor && a.bestFor.includes(categoryMap[category]));
+          }
+          agents.forEach(agent => {
+            // For demo, "best for" is joined, login/daily as in agent meta
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${agent.icon} ${agent.name}</td>
+              <td>${agent.bestFor ? agent.bestFor.map(cat => cat.charAt(0).toUpperCase() + cat.slice(1)).join(', ') : ''}</td>
+              <td>${agent.loginRequired || 'No'}</td>
+              <td>${agent.dailyLimit || 'Unknown'}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+
+        // ---- PROMPT RELAY LOGIC ----
         function savePrompt() {
             const prompt = document.getElementById('universal-prompt').value;
             localStorage.setItem('relay-prompt', prompt);
@@ -292,13 +633,11 @@
             document.getElementById('saved-indicator').style.display = prompt ? 'block' : 'none';
             showNotification('✓ Prompt saved! Ready for relay to agents.');
         }
-
-        // Copy prompt to clipboard (with fallback)
         function copyPrompt() {
             const prompt = document.getElementById('universal-prompt').value;
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(prompt).then(() => {
-                    showNotification('📋 Copied! Paste in the You.com agent chat.');
+                    showNotification('📋 Copied! Paste in the agent chat.');
                 }).catch(() => {
                     fallbackCopyTextToClipboard(prompt);
                 });
@@ -306,7 +645,6 @@
                 fallbackCopyTextToClipboard(prompt);
             }
         }
-        // Fallback copy function
         function fallbackCopyTextToClipboard(text) {
             const textarea = document.createElement("textarea");
             textarea.value = text;
@@ -317,48 +655,19 @@
             textarea.select();
             try {
                 document.execCommand('copy');
-                showNotification('📋 Copied! Paste in the You.com agent chat.');
+                showNotification('📋 Copied! Paste in the agent chat.');
             } catch (err) {
                 showNotification('❌ Copy failed. Please copy manually.');
             }
             document.body.removeChild(textarea);
         }
-
-        // Clear prompt
         function clearPrompt() {
             document.getElementById('universal-prompt').value = '';
             localStorage.removeItem('relay-prompt');
             document.getElementById('saved-indicator').style.display = 'none';
         }
 
-        // Launch agent in new tab
-        function launchAgent(index) {
-            const agent = myAgents[index];
-            const prompt = document.getElementById('universal-prompt').value;
-            // Save current state
-            if (prompt) {
-                savePrompt();
-            }
-            // Store launch metadata
-            localStorage.setItem('last-launched-agent', JSON.stringify({
-                name: agent.name,
-                url: agent.url,
-                timestamp: Date.now()
-            }));
-            // Open agent
-            window.open(agent.url, '_blank', 'noopener');
-            // Show instructions
-            if (prompt) {
-                showNotification(`
-                    ${agent.name} opened! 
-                    Click "Copy to Clipboard" then paste in You.com.
-                `, 5000);
-            } else {
-                showNotification(`${agent.name} opened in new tab!`);
-            }
-        }
-
-        // Notification system (proper exit animation)
+        // ---- NOTIFICATION SYSTEM ----
         function showNotification(message, duration = 3000) {
             const notification = document.createElement('div');
             notification.className = 'notification';
@@ -370,18 +679,42 @@
             }, duration);
         }
 
-        // Initialize on load
-        window.addEventListener('DOMContentLoaded', initDashboard);
+        // ---- AGENT RECOMMENDATION ENGINE (Snippet 3) ----
+        function recommendAgent(userTask) {
+          // Note: "GitHub Copilot" is not in the current agent list, so it will be omitted in recommendation output.
+          const recommendations = {
+            'coding': ['Phind', 'Code Helper', 'ChatGPT'],
+            'research': ['Perplexity', 'Claude', 'Gemini', 'Research Assistant'],
+            'creative': ['ChatGPT', 'Meta AI', 'Claude', 'Writing Coach'],
+            'general': ['ChatGPT', 'Gemini', 'Copilot', 'Smart Routing']
+          };
+          return recommendations[userTask] || recommendations['general'];
+        }
+
+        function showRecommendation() {
+          const select = document.getElementById('user-task');
+          const recs = recommendAgent(select.value);
+          // Filter to only agents present in the current agent list
+          const all = getAllAgents();
+          const validRecs = recs.filter(name => all.find(a => a.name === name));
+          document.getElementById('agent-recommendation').textContent = 
+            validRecs.length > 0 ? 
+              "Recommendation: " + validRecs.map(name => {
+                const agent = all.find(a => a.name === name);
+                return agent ? agent.icon + " " + agent.name : name;
+              }).join(", ")
+              : "";
+        }
+
+        // ---- SESSION CONTINUITY HELPER (Snippet 3) ----
+        function saveSessionContext(currentAgent) {
+          const context = {
+            lastAgent: currentAgent,
+            prompt: document.getElementById('universal-prompt').value,
+            timestamp: Date.now()
+          };
+          localStorage.setItem('agent-session', JSON.stringify(context));
+        }
     </script>
-    <style>
-    /* Visually hidden utility for accessibility */
-    .visually-hidden {
-        position: absolute !important;
-        height: 1px; width: 1px;
-        overflow: hidden;
-        clip: rect(1px, 1px, 1px, 1px);
-        white-space: nowrap;
-    }
-    </style>
 </body>
 </html>
