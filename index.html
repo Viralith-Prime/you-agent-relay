@@ -221,12 +221,98 @@
             clip: rect(1px, 1px, 1px, 1px);
             white-space: nowrap;
         }
+
+        /* Dark mode variables */
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --border-color: #333;
+            --shadow-color: rgba(255,255,255,0.1);
+            --prompt-bg: #2a2a2a;
+            --button-hover: #2a2a2a;
+        }
+
+        /* Apply dark mode */
+        [data-theme="dark"] body {
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        [data-theme="dark"] .agent-card {
+            background: var(--card-bg);
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        [data-theme="dark"] .prompt-section {
+            background: var(--card-bg);
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        [data-theme="dark"] .prompt-textarea {
+            background: var(--prompt-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+
+        [data-theme="dark"] .comparison-table {
+            background: var(--card-bg);
+        }
+
+        [data-theme="dark"] .comparison-table th {
+            background: var(--prompt-bg);
+        }
+
+        [data-theme="dark"] .url-display {
+            background: var(--prompt-bg);
+            color: #aaa;
+        }
+
+        [data-theme="dark"] .tab-btn {
+            background: var(--prompt-bg);
+            color: var(--text-color);
+        }
+
+        [data-theme="dark"] .btn-secondary {
+            background: var(--prompt-bg);
+            color: var(--text-color);
+        }
+
+        /* Dark mode toggle button */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 999;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            background: #ffc107;
+            color: #333;
+        }
     </style>
 </head>
 <!-- Cloudflare Web Analytics -->
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3aebc7040ae5458e90aa4e6059bc20af"}'></script>
 <!-- End Cloudflare Web Analytics -->
 <body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <span id="theme-icon">🌙</span>
+    </button>
     <h1>🚀 Universal Free AI Agent Hub</h1>
     
     <div class="prompt-section">
@@ -714,6 +800,42 @@
           };
           localStorage.setItem('agent-session', JSON.stringify(context));
         }
+
+        // Dark mode implementation
+        function initTheme() {
+            // Check for saved theme preference or default to 'light'
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            // Update DOM
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            // Save preference
+            localStorage.setItem('theme', newTheme);
+            
+            // Update icon
+            updateThemeIcon(newTheme);
+            
+            // Show notification
+            showNotification(`${newTheme === 'dark' ? '🌙 Dark' : '☀️ Light'} mode activated!`);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('theme-icon');
+            icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+            // Your existing DOMContentLoaded code...
+        });
     </script>
 </body>
 </html>
