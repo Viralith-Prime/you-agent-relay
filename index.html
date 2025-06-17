@@ -958,24 +958,61 @@ textarea:focus-visible {
     <div id="agent-grid" class="agent-grid" aria-live="polite">
         <!-- Agent cards will be inserted here -->
     </div>
-        <div class="comparison-table">
-      <h3>Quick Comparison</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Agent</th>
-            <th>Best For</th>
-            <th>Login Required</th>
-            <th>Daily Limit</th>
-          </tr>
-        </thead>
-        <tbody id="comparison-body">
-          <!-- Dynamically populated -->
-        </tbody>
-      </table>
-    </div>       
-       
+    
+        <!-- Accordion for Quick Comparison -->
+<div class="comparison-accordion">
+  <button
+    id="comparison-toggle"
+    class="btn btn-secondary"
+    style="margin-bottom: 12px;"
+    aria-expanded="false"
+    aria-controls="comparison-content"
+    onclick="toggleComparisonAccordion()"
+  >
+    Show Quick Comparison
+  </button>
+  <div
+    id="comparison-content"
+    class="comparison-table"
+    style="display: none;"
+    aria-hidden="true"
+  >
+    <h3>Quick Comparison</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Agent</th>
+          <th>Best For</th>
+          <th>Login Required</th>
+          <th>Daily Limit</th>
+        </tr>
+      </thead>
+      <tbody id="comparison-body">
+        <!-- Dynamically populated -->
+      </tbody>
+    </table>
+  </div>
+</div>
 
+<script>
+function toggleComparisonAccordion() {
+  const content = document.getElementById('comparison-content');
+  const toggle = document.getElementById('comparison-toggle');
+  const expanded = toggle.getAttribute('aria-expanded') === 'true';
+  if (expanded) {
+    content.style.display = 'none';
+    toggle.setAttribute('aria-expanded', 'false');
+    content.setAttribute('aria-hidden', 'true');
+    toggle.textContent = 'Show Quick Comparison';
+  } else {
+    content.style.display = '';
+    toggle.setAttribute('aria-expanded', 'true');
+    content.setAttribute('aria-hidden', 'false');
+    toggle.textContent = 'Hide Quick Comparison';
+  }
+}
+</script>       
+       
     <!-- Agent Recommendation Quick-Pick -->
     <div style="margin: 32px 0 10px 0;">
       <label for="user-task" style="font-weight: 500;">Need help picking an agent? Tell us your task:</label>
