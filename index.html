@@ -1,8 +1,9 @@
-html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>You.com Multi-Agent Relay</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -11,14 +12,12 @@ html
             padding: 20px;
             background: #f5f5f5;
         }
-        
         .agent-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             margin-top: 30px;
         }
-        
         .agent-card {
             background: white;
             border-radius: 12px;
@@ -27,12 +26,10 @@ html
             transition: all 0.3s;
             position: relative;
         }
-        
         .agent-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(0,0,0,0.15);
         }
-        
         .agent-type {
             position: absolute;
             top: 10px;
@@ -42,17 +39,14 @@ html
             font-size: 12px;
             font-weight: 600;
         }
-        
         .type-custom {
             background: #e3f2fd;
             color: #1976d2;
         }
-        
         .type-premade {
             background: #f3e5f5;
             color: #7b1fa2;
         }
-        
         .url-display {
             font-family: monospace;
             font-size: 11px;
@@ -62,15 +56,24 @@ html
             background: #f5f5f5;
             border-radius: 4px;
             overflow-x: auto;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 100%;
         }
-        
+        .url-display:focus,
+        .url-display:hover {
+            white-space: normal;
+            overflow-x: auto;
+            text-overflow: initial;
+            background: #e3e3e3;
+        }
         .prompt-section {
             background: white;
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        
         .prompt-textarea {
             width: 100%;
             min-height: 120px;
@@ -80,18 +83,15 @@ html
             font-size: 16px;
             resize: vertical;
         }
-        
         .prompt-textarea:focus {
             outline: none;
             border-color: #1976d2;
         }
-        
         .action-buttons {
             display: flex;
             gap: 10px;
             margin-top: 15px;
         }
-        
         .btn {
             padding: 10px 20px;
             border: none;
@@ -101,30 +101,24 @@ html
             cursor: pointer;
             transition: all 0.2s;
         }
-        
         .btn-primary {
             background: #1976d2;
             color: white;
         }
-        
         .btn-primary:hover {
             background: #1565c0;
         }
-        
         .btn-secondary {
             background: #e0e0e0;
             color: #424242;
         }
-        
         .btn-secondary:hover {
             background: #d0d0d0;
         }
-        
         .launch-btn {
             width: 100%;
             margin-top: 15px;
         }
-        
         .notification {
             position: fixed;
             top: 20px;
@@ -137,7 +131,6 @@ html
             z-index: 1000;
             animation: slideIn 0.3s ease-out;
         }
-        
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
@@ -148,28 +141,51 @@ html
                 opacity: 1;
             }
         }
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        @media (max-width: 600px) {
+            .url-display {
+                font-size: 9px;
+                padding: 4px;
+            }
+            .prompt-section {
+                padding: 10px;
+            }
+        }
     </style>
 </head>
-<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3aebc7040ae5458e90aa4e6059bc20af"}'></script><!-- End Cloudflare Web Analytics -->
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3aebc7040ae5458e90aa4e6059bc20af"}'></script>
+<!-- End Cloudflare Web Analytics -->
 <body>
     <h1>🚀 You.com Multi-Agent Relay Dashboard</h1>
     
     <div class="prompt-section">
         <h2>📝 Universal Prompt Relay</h2>
+        <label for="universal-prompt" class="visually-hidden">Universal Prompt</label>
         <textarea 
-            id="universal-prompt" 
+            id="universal-prompt"
             class="prompt-textarea"
             placeholder="Enter your prompt here. It will be available for copy/paste when you launch any agent..."
+            aria-label="Universal prompt to relay to agents"
         ></textarea>
         
         <div class="action-buttons">
-            <button class="btn btn-primary" onclick="savePrompt()">
+            <button class="btn btn-primary" onclick="savePrompt()" aria-label="Save prompt">
                 💾 Save Prompt
             </button>
-            <button class="btn btn-secondary" onclick="copyPrompt()">
+            <button class="btn btn-secondary" onclick="copyPrompt()" aria-label="Copy prompt to clipboard">
                 📋 Copy to Clipboard
             </button>
-            <button class="btn btn-secondary" onclick="clearPrompt()">
+            <button class="btn btn-secondary" onclick="clearPrompt()" aria-label="Clear prompt">
                 🗑️ Clear
             </button>
         </div>
@@ -180,7 +196,7 @@ html
     </div>
     
     <h2 style="margin-top: 40px;">🤖 Agent Directory</h2>
-    <div id="agent-grid" class="agent-grid">
+    <div id="agent-grid" class="agent-grid" aria-live="polite">
         <!-- Agent cards will be inserted here -->
     </div>
 
@@ -236,7 +252,7 @@ html
         // Initialize dashboard
         function initDashboard() {
             const grid = document.getElementById('agent-grid');
-            
+            grid.innerHTML = '';
             myAgents.forEach((agent, index) => {
                 const card = document.createElement('div');
                 card.className = 'agent-card';
@@ -248,10 +264,10 @@ html
                     <p style="color: #666; margin: 10px 0;">
                         ${agent.description}
                     </p>
-                    <div class="url-display">
+                    <div class="url-display" tabindex="0" aria-label="Agent URL (focus to expand)">
                         ${agent.url}
                     </div>
-                    <button class="btn btn-primary launch-btn" onclick="launchAgent(${index})">
+                    <button class="btn btn-primary launch-btn" onclick="launchAgent(${index})" aria-label="Launch ${agent.name}">
                         🚀 Launch Agent
                     </button>
                 `;
@@ -263,6 +279,8 @@ html
             if (savedPrompt) {
                 document.getElementById('universal-prompt').value = savedPrompt;
                 document.getElementById('saved-indicator').style.display = 'block';
+            } else {
+                document.getElementById('saved-indicator').style.display = 'none';
             }
         }
 
@@ -271,17 +289,39 @@ html
             const prompt = document.getElementById('universal-prompt').value;
             localStorage.setItem('relay-prompt', prompt);
             localStorage.setItem('relay-timestamp', Date.now());
-            
-            document.getElementById('saved-indicator').style.display = 'block';
+            document.getElementById('saved-indicator').style.display = prompt ? 'block' : 'none';
             showNotification('✓ Prompt saved! Ready for relay to agents.');
         }
 
-        // Copy prompt to clipboard
+        // Copy prompt to clipboard (with fallback)
         function copyPrompt() {
             const prompt = document.getElementById('universal-prompt').value;
-            navigator.clipboard.writeText(prompt).then(() => {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(prompt).then(() => {
+                    showNotification('📋 Copied! Paste in the You.com agent chat.');
+                }).catch(() => {
+                    fallbackCopyTextToClipboard(prompt);
+                });
+            } else {
+                fallbackCopyTextToClipboard(prompt);
+            }
+        }
+        // Fallback copy function
+        function fallbackCopyTextToClipboard(text) {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.style.position = "fixed";
+            textarea.style.left = "-9999px";
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            try {
+                document.execCommand('copy');
                 showNotification('📋 Copied! Paste in the You.com agent chat.');
-            });
+            } catch (err) {
+                showNotification('❌ Copy failed. Please copy manually.');
+            }
+            document.body.removeChild(textarea);
         }
 
         // Clear prompt
@@ -295,22 +335,18 @@ html
         function launchAgent(index) {
             const agent = myAgents[index];
             const prompt = document.getElementById('universal-prompt').value;
-            
             // Save current state
             if (prompt) {
                 savePrompt();
             }
-            
             // Store launch metadata
             localStorage.setItem('last-launched-agent', JSON.stringify({
                 name: agent.name,
                 url: agent.url,
                 timestamp: Date.now()
             }));
-            
             // Open agent
-            window.open(agent.url, '_blank');
-            
+            window.open(agent.url, '_blank', 'noopener');
             // Show instructions
             if (prompt) {
                 showNotification(`
@@ -322,15 +358,14 @@ html
             }
         }
 
-        // Notification system
+        // Notification system (proper exit animation)
         function showNotification(message, duration = 3000) {
             const notification = document.createElement('div');
             notification.className = 'notification';
             notification.textContent = message;
             document.body.appendChild(notification);
-            
             setTimeout(() => {
-                notification.style.animation = 'slideIn 0.3s ease-out reverse';
+                notification.style.animation = 'slideOut 0.3s forwards';
                 setTimeout(() => notification.remove(), 300);
             }, duration);
         }
@@ -338,5 +373,15 @@ html
         // Initialize on load
         window.addEventListener('DOMContentLoaded', initDashboard);
     </script>
+    <style>
+    /* Visually hidden utility for accessibility */
+    .visually-hidden {
+        position: absolute !important;
+        height: 1px; width: 1px;
+        overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+        white-space: nowrap;
+    }
+    </style>
 </body>
 </html>
