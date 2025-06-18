@@ -892,6 +892,80 @@ textarea:focus-visible {
     100% { transform: rotate(360deg); }
 }
 
+        .agent-search-bar-wrapper {
+  position: relative;
+  margin: 18px 0 0 0;
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.agent-search-bar {
+  width: 100%;
+  min-height: 44px;
+  padding-right: 40px;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+.agent-search-bar:focus {
+  border-color: #1976d2;
+  outline: none;
+}
+.agent-search-clear-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  transition: color 0.15s;
+  z-index: 2;
+}
+.agent-search-clear-btn:focus, .agent-search-clear-btn:hover {
+  color: #1976d2;
+}
+@media (max-width: 600px) {
+  .agent-search-bar-wrapper {
+    margin: 12px 0 0 0;
+  }
+  .agent-search-bar {
+    min-height: 36px;
+    font-size: 15px;
+    border-radius: 6px;
+    padding-right: 36px;
+  }
+}
+[data-theme="dark"] .agent-search-bar {
+  background: var(--prompt-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+[data-theme="dark"] .agent-search-clear-btn {
+  color: #bbb;
+}
+[data-theme="dark"] .agent-search-clear-btn:focus, [data-theme="dark"] .agent-search-clear-btn:hover {
+  color: #ffc107;
+}
+.agent-search-empty {
+  font-size: 18px;
+  color: #666;
+  margin-top: 30px;
+  padding: 60px 0;
+}
+[data-theme="dark"] .agent-search-empty {
+  color: #aaa;
+}
     </style>
 </head>
 <!-- Cloudflare Web Analytics -->
@@ -953,11 +1027,34 @@ textarea:focus-visible {
       <button class="tab-btn" onclick="showCategory('research')" id="tab-research">Research</button>
       <button class="tab-btn" onclick="showCategory('creative')" id="tab-creative">Creative</button>
     </div>
+
+    <div class="agent-search-bar-wrapper">
+  <input
+    type="text"
+    id="agent-search-bar"
+    class="prompt-textarea agent-search-bar"
+    placeholder="Search agents by name, provider, or features..."
+    autocomplete="off"
+    aria-label="Search agents"
+  />
+  <button
+    id="agent-search-clear"
+    class="agent-search-clear-btn"
+    type="button"
+    aria-label="Clear search"
+    onclick="clearAgentSearch()"
+    style="display:none"
+  >&#10005;</button>
+</div>
     
     <h2 style="margin-top: 40px;">🤖 Agent Directory</h2>
     <div id="agent-grid" class="agent-grid" aria-live="polite">
         <!-- Agent cards will be inserted here -->
     </div>
+
+    <div id="agent-search-empty" class="agent-search-empty" style="display:none;text-align:center;color:#666;padding:40px;">
+  No agents found
+</div>
     
         <!-- Accordion for Quick Comparison -->
 <div class="comparison-accordion">
@@ -1268,42 +1365,69 @@ function toggleComparisonAccordion() {
 
         // Render agent cards
         function renderAgents(category) {
-          const grid = document.getElementById('agent-grid');
-          grid.innerHTML = '';
-          let agents = getAllAgents();
-          if (categoryMap[category]) {
-            agents = agents.filter(a => a.bestFor && a.bestFor.includes(categoryMap[category]));
-          }
-          agents.forEach((agent, index) => {
-              const card = document.createElement('div');
-              card.className = 'agent-card';
-              card.innerHTML = `
-                  <span class="agent-type type-${agent.type}">${agent.type ? agent.type.toUpperCase() : ''}</span>
-                  <h3 style="font-size: 24px; margin: 0 0 10px 0;">
-                      ${agent.icon} ${agent.name}
-                  </h3>
-                  <p style="color: #666; margin: 10px 0;">
-                      ${agent.description}
-                  </p>
-                  <div style="margin-bottom: 8px;">
-                    <strong>Provider:</strong> ${agent.provider}
-                  </div>
-                  <div>
-                    <strong>Features:</strong> ${agent.features.join(", ")}
-                  </div>
-                  <div>
-                    <strong>Limitations:</strong> ${agent.limitations.join(", ")}
-                  </div>
-                  <div class="url-display" tabindex="0" aria-label="Agent URL (focus to expand)">
-                      ${agent.url}
-                  </div>
-                  <button class="btn btn-primary launch-btn" onclick="launchAgentByName('${agent.name}')" aria-label="Launch ${agent.name}">
-                      🚀 Launch Agent
-                  </button>
-              `;
-              grid.appendChild(card);
-          });
-        }
+  const grid = document.getElementById('agent-grid');
+  grid.innerHTML = '';
+  let agents = getAllAgents();
+
+  // CATEGORY filter
+  if (categoryMap[category]) {
+    agents = agents.filter(a => a.bestFor && a.bestFor.includes(categoryMap[category]));
+  }
+
+  // SEARCH filter
+  const searchInput = document.getElementById('agent-search-bar');
+  const filter = searchInput ? searchInput.value.trim().toLowerCase() : '';
+  if (filter) {
+    agents = agents.filter(agent => {
+      const haystack = [
+        agent.name,
+        agent.provider,
+        agent.description,
+        ...(agent.features || [])
+      ].join(' ').toLowerCase();
+      return haystack.includes(filter);
+    });
+  }
+
+  // NO AGENTS FOUND message
+  if (!agents.length) {
+    document.getElementById('agent-search-empty').style.display = 'block';
+    return;
+  } else {
+    document.getElementById('agent-search-empty').style.display = 'none';
+  }
+
+  // RENDER CARDS
+  agents.forEach((agent) => {
+    const card = document.createElement('div');
+    card.className = 'agent-card';
+    card.innerHTML = `
+      <span class="agent-type type-${agent.type}">${agent.type ? agent.type.toUpperCase() : ''}</span>
+      <h3 style="font-size: 24px; margin: 0 0 10px 0;">
+        ${agent.icon} ${agent.name}
+      </h3>
+      <p style="color: #666; margin: 10px 0;">
+        ${agent.description}
+      </p>
+      <div style="margin-bottom: 8px;">
+        <strong>Provider:</strong> ${agent.provider}
+      </div>
+      <div>
+        <strong>Features:</strong> ${agent.features.join(", ")}
+      </div>
+      <div>
+        <strong>Limitations:</strong> ${agent.limitations.join(", ")}
+      </div>
+      <div class="url-display" tabindex="0" aria-label="Agent URL (focus to expand)">
+        ${agent.url}
+      </div>
+      <button class="btn btn-primary launch-btn" onclick="launchAgentByName('${agent.name}')" aria-label="Launch ${agent.name}">
+        🚀 Launch Agent
+      </button>
+    `;
+    grid.appendChild(card);
+  });
+}
 
         // For launching by name (IDs are not unique across merged arrays)
         let originalLaunchAgentByName = function(name) {
@@ -1443,6 +1567,113 @@ function toggleComparisonAccordion() {
           localStorage.setItem('agent-session', JSON.stringify(context));
         }
 
+        // ---- AGENT SEARCH BAR LOGIC ----
+
+function getActiveCategory() {
+  const tabs = document.querySelectorAll('.tab-btn');
+  for (const tab of tabs) {
+    if (tab.classList.contains('active')) {
+      return tab.id.replace('tab-', '');
+    }
+  }
+  return 'all';
+}
+
+function filterAndRenderAgents() {
+  const searchInput = document.getElementById('agent-search-bar');
+  const filter = searchInput.value.trim().toLowerCase();
+  const clearBtn = document.getElementById('agent-search-clear');
+  const emptyMsg = document.getElementById('agent-search-empty');
+  clearBtn.style.display = filter ? 'flex' : 'none';
+
+  // Get the currently selected category
+  const activeCategory = getActiveCategory();
+
+  // Get all agents
+  let agents = getAllAgents();
+  // Filter by category if not "all"
+  if (categoryMap[activeCategory]) {
+    agents = agents.filter(a => a.bestFor && a.bestFor.includes(categoryMap[activeCategory]));
+  }
+  // Filter by search query
+  if (filter) {
+    agents = agents.filter(agent => {
+      const haystack = [
+        agent.name,
+        agent.provider,
+        agent.description,
+        ...(agent.features || [])
+      ].join(' ').toLowerCase();
+      return haystack.includes(filter);
+    });
+  }
+  // Render filtered agents
+  renderAgentsRaw(agents);
+
+  // Show/hide "No agents found" message
+  emptyMsg.style.display = (agents.length === 0) ? 'block' : 'none';
+}
+
+// Renders just the supplied agents array (no filtering)
+function renderAgentsRaw(agentArr) {
+  const grid = document.getElementById('agent-grid');
+  grid.innerHTML = '';
+  agentArr.forEach((agent, index) => {
+    const card = document.createElement('div');
+    card.className = 'agent-card';
+    card.innerHTML = `
+      <span class="agent-type type-${agent.type}">${agent.type ? agent.type.toUpperCase() : ''}</span>
+      <h3 style="font-size: 24px; margin: 0 0 10px 0;">
+        ${agent.icon} ${agent.name}
+      </h3>
+      <p style="color: #666; margin: 10px 0;">
+        ${agent.description}
+      </p>
+      <div style="margin-bottom: 8px;">
+        <strong>Provider:</strong> ${agent.provider}
+      </div>
+      <div>
+        <strong>Features:</strong> ${agent.features.join(", ")}
+      </div>
+      <div>
+        <strong>Limitations:</strong> ${agent.limitations.join(", ")}
+      </div>
+      <div class="url-display" tabindex="0" aria-label="Agent URL (focus to expand)">
+        ${agent.url}
+      </div>
+      <button class="btn btn-primary launch-btn" onclick="launchAgentByName('${agent.name}')" aria-label="Launch ${agent.name}">
+        🚀 Launch Agent
+      </button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// Clear search and re-render
+function clearAgentSearch() {
+  const searchInput = document.getElementById('agent-search-bar');
+  searchInput.value = '';
+  document.getElementById('agent-search-clear').style.display = 'none';
+  filterAndRenderAgents();
+  searchInput.focus();
+}
+
+// Hook up search event
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('agent-search-bar').addEventListener('input', filterAndRenderAgents);
+  document.getElementById('agent-search-clear').addEventListener('click', clearAgentSearch);
+});
+
+// Patch category tab logic to use new filter
+function showCategory(cat) {
+  Object.keys(categoryMap).forEach(key => {
+    const tab = document.getElementById('tab-' + key);
+    if (tab) tab.classList.toggle('active', cat === key);
+  });
+  filterAndRenderAgents();
+  renderComparisonTable(cat);
+}
+        
         // Dark mode implementation
         function initTheme() {
             // Check for saved theme preference or default to 'light'
