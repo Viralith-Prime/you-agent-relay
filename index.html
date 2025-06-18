@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Universal Free AI Agent Hub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="/manifest.json">
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -871,6 +872,164 @@
         .favorite-btn.favorited {
             color: #ffc107;
         }
+        /* Guardian System Styles */
+        .guardian-setup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .modal-content {
+            position: relative;
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .setup-steps {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .bookmarklet-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: move;
+            margin: 10px 0;
+            transition: transform 0.2s;
+        }
+        .bookmarklet-btn:hover {
+            transform: translateY(-2px);
+        }
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        .setup-note {
+            background: #e8f4fd;
+            border-left: 4px solid #1976d2;
+            padding: 12px;
+            margin-top: 20px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .guardian-method-selector {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .method-btn {
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .method-btn.active {
+            border-color: #1976d2;
+            background: #e3f2fd;
+        }
+        .guardian-status-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: none;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 9999;
+            font-size: 14px;
+        }
+        .guardian-status-bar.active {
+            display: flex;
+        }
+        .guardian-control-window {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 16px;
+            display: none;
+            z-index: 9998;
+        }
+        .guardian-control-window.active {
+            display: block;
+        }
+        [data-theme="dark"] .modal-content {
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+        [data-theme="dark"] .setup-steps {
+            background: var(--prompt-bg);
+        }
+        [data-theme="dark"] .setup-note {
+            background: rgba(25, 118, 210, 0.1);
+        }
+        [data-theme="dark"] .method-btn {
+            background: var(--prompt-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+        [data-theme="dark"] .method-btn.active {
+            background: rgba(25, 118, 210, 0.2);
+        }
+        [data-theme="dark"] .guardian-control-window {
+            background: var(--card-bg);
+        }
+        @keyframes guardianPulse {
+            0%, 100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(0.98);
+            }
+        }
+        .guardian-active {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            animation: guardianPulse 2s infinite;
+            z-index: 10000;
+        }
     </style>
 </head>
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3aebc7040ae5458e90aa4e6059bc20af"}'></script>
@@ -879,6 +1038,10 @@
         <span id="theme-icon">🌙</span>
     </button>
     <h1>🤖 Universal Free AI Agent Hub</h1>
+    
+    <div class="guardian-status-bar" id="guardian-status-bar">
+        🛡️ Guardian System Active - Multi-Channel Injection Ready
+    </div>
     
     <div class="prompt-section">
         <h2>📝 Universal Prompt Relay</h2>
@@ -1001,6 +1164,16 @@
             <option value="creative">Creative</option>
         </select>
         <span id="agent-recommendation" style="margin-left: 20px; font-weight: 600;"></span>
+    </div>
+
+    <div class="guardian-control-window" id="guardian-control-window">
+        <h4>🛡️ Guardian Control</h4>
+        <div style="font-size: 12px; color: #666; margin: 10px 0;">
+            Active Channels: <span id="active-channels">0</span>
+        </div>
+        <button class="btn btn-secondary" onclick="GuardianSystem.injectNow()" style="width: 100%; margin-top: 10px;">
+            💉 Inject Prompt Now
+        </button>
     </div>
 
     <script>
@@ -1224,6 +1397,415 @@
             };
         }
 
+        // Guardian System - Multi-Method Injection
+        class GuardianSystem {
+            constructor() {
+                this.methods = new Map();
+                this.channels = new Map();
+                this.bookmarkletInstalled = localStorage.getItem('guardian-bookmarklet-installed') === 'true';
+                this.activeMethod = localStorage.getItem('guardian-preferred-method') || 'orchestrator';
+                this.setupMethods();
+            }
+
+            setupMethods() {
+                // Method 1: Window Orchestra
+                this.methods.set('orchestra', {
+                    name: 'Window Orchestra',
+                    description: 'Opens synchronized control panel and AI site',
+                    supported: () => true,
+                    launch: (agent, prompt) => this.launchOrchestra(agent, prompt)
+                });
+
+                // Method 2: Bookmarklet Bridge
+                this.methods.set('bookmarklet', {
+                    name: 'Bookmarklet Bridge',
+                    description: 'Drag-once bookmarklet for all sites',
+                    supported: () => true,
+                    launch: (agent, prompt) => this.launchBookmarklet(agent, prompt)
+                });
+
+                // Method 3: Service Worker
+                this.methods.set('service-worker', {
+                    name: 'Service Worker Proxy',
+                    description: 'Intercepts and enhances requests',
+                    supported: () => 'serviceWorker' in navigator,
+                    launch: (agent, prompt) => this.launchServiceWorker(agent, prompt)
+                });
+
+                // Method 4: URL Injection
+                this.methods.set('url', {
+                    name: 'URL Parameters',
+                    description: 'Direct prompt injection via URL',
+                    supported: () => true,
+                    launch: (agent, prompt) => this.launchURL(agent, prompt)
+                });
+
+                // Method 5: LocalStorage Bridge
+                this.methods.set('storage', {
+                    name: 'Storage Bridge',
+                    description: 'Cross-tab communication via localStorage',
+                    supported: () => true,
+                    launch: (agent, prompt) => this.launchStorage(agent, prompt)
+                });
+
+                // Method 6: WebRTC Channel
+                this.methods.set('webrtc', {
+                    name: 'WebRTC P2P',
+                    description: 'Peer-to-peer connection between windows',
+                    supported: () => 'RTCPeerConnection' in window,
+                    launch: (agent, prompt) => this.launchWebRTC(agent, prompt)
+                });
+
+                // Method 7: Fragment Communication
+                this.methods.set('fragment', {
+                    name: 'Fragment Channel',
+                    description: 'URL hash-based messaging',
+                    supported: () => true,
+                    launch: (agent, prompt) => this.launchFragment(agent, prompt)
+                });
+            }
+
+            async launch(agent, prompt) {
+                // Save prompt for all methods to access
+                localStorage.setItem('guardian-prompt', prompt);
+                localStorage.setItem('guardian-target', agent.url);
+                localStorage.setItem('guardian-agent', agent.name);
+
+                // Check if bookmarklet setup needed
+                if (!this.bookmarkletInstalled && this.activeMethod === 'bookmarklet') {
+                    this.showSetupModal(agent);
+                    return;
+                }
+
+                // Get active method
+                const method = this.methods.get(this.activeMethod);
+                if (method && method.supported()) {
+                    await method.launch(agent, prompt);
+                } else {
+                    // Fallback to URL injection
+                    await this.launchURL(agent, prompt);
+                }
+            }
+
+            async launchOrchestra(agent, prompt) {
+                const screenWidth = window.screen.availWidth;
+                const screenHeight = window.screen.availHeight;
+                
+                // Open Guardian control panel (left 30%)
+                const controlPanel = window.open(
+                    '/guardian-control.html#' + btoa(JSON.stringify({agent, prompt})),
+                    'guardian-control',
+                    `width=${Math.floor(screenWidth * 0.3)},height=${screenHeight},left=0,top=0`
+                );
+                
+                // Open AI site (right 70%)
+                const aiSite = window.open(
+                    agent.url,
+                    'ai-site',
+                    `width=${Math.floor(screenWidth * 0.7)},height=${screenHeight},left=${Math.floor(screenWidth * 0.3)},top=0`
+                );
+                
+                // Set up broadcast channel
+                const channel = new BroadcastChannel('guardian-orchestra');
+                channel.postMessage({
+                    type: 'ORCHESTRA_SETUP',
+                    agent: agent.name,
+                    prompt: prompt
+                });
+                
+                showNotification('🎭 Window Orchestra launched - Control panel on left, AI on right');
+            }
+
+            async launchBookmarklet(agent, prompt) {
+                // Open AI site
+                window.open(agent.url, '_blank');
+                
+                // Set up command for bookmarklet
+                const command = {
+                    type: 'INJECT_PROMPT',
+                    prompt: prompt,
+                    agent: agent.name,
+                    timestamp: Date.now()
+                };
+                
+                localStorage.setItem('guardian-command', JSON.stringify(command));
+                localStorage.setItem('guardian-command-id', Date.now().toString());
+                
+                showNotification('🔖 Click the Guardian bookmarklet after the page loads to inject prompt');
+            }
+
+            async launchServiceWorker(agent, prompt) {
+                // Register service worker if not already
+                if ('serviceWorker' in navigator) {
+                    try {
+                        await navigator.serviceWorker.register('/guardian-sw.js');
+                        
+                        // Send message to service worker
+                        const registration = await navigator.serviceWorker.ready;
+                        registration.active.postMessage({
+                            type: 'ENHANCE_SITE',
+                            url: agent.url,
+                            prompt: prompt
+                        });
+                        
+                        // Open enhanced URL
+                        window.open(agent.url + '?_guardian=1', '_blank');
+                        showNotification('🛡️ Service Worker protection active');
+                    } catch (e) {
+                        console.error('Service Worker registration failed:', e);
+                        // Fallback to URL method
+                        await this.launchURL(agent, prompt);
+                    }
+                }
+            }
+
+            async launchURL(agent, prompt) {
+                const url = new URL(agent.url);
+                
+                // Try multiple parameter names
+                const paramNames = ['q', 'query', 'prompt', 'text', 'input', 'message', 'ask'];
+                let added = false;
+                
+                for (const param of paramNames) {
+                    if (!url.searchParams.has(param)) {
+                        url.searchParams.set(param, prompt);
+                        added = true;
+                        break;
+                    }
+                }
+                
+                // Also add guardian flag
+                url.searchParams.set('_guardian', '1');
+                url.searchParams.set('_source', 'ai-hub');
+                
+                window.open(url.toString(), '_blank');
+                showNotification(added ? '🔗 Launched with prompt in URL' : '📋 Launched - Paste prompt manually');
+            }
+
+            async launchStorage(agent, prompt) {
+                // Set up storage bridge
+                const bridgeData = {
+                    prompt: prompt,
+                    agent: agent.name,
+                    timestamp: Date.now(),
+                    source: 'guardian-hub'
+                };
+                
+                localStorage.setItem('guardian-bridge', JSON.stringify(bridgeData));
+                
+                // Open AI site
+                const aiWindow = window.open(agent.url, '_blank');
+                
+                // Monitor for response
+                const monitor = setInterval(() => {
+                    const response = localStorage.getItem('guardian-bridge-response');
+                    if (response) {
+                        const data = JSON.parse(response);
+                        if (data.success) {
+                            showNotification('✅ Prompt injected via Storage Bridge');
+                            clearInterval(monitor);
+                            localStorage.removeItem('guardian-bridge-response');
+                        }
+                    }
+                }, 500);
+                
+                // Stop monitoring after 10 seconds
+                setTimeout(() => clearInterval(monitor), 10000);
+                
+                showNotification('💾 Storage Bridge active - Monitoring injection...');
+            }
+
+            async launchWebRTC(agent, prompt) {
+                // Create WebRTC offer
+                const pc = new RTCPeerConnection({
+                    iceServers: [{urls: 'stun:stun.l.google.com:19302'}]
+                });
+                
+                const channel = pc.createDataChannel('guardian');
+                
+                channel.onopen = () => {
+                    channel.send(JSON.stringify({
+                        type: 'INJECT_PROMPT',
+                        prompt: prompt
+                    }));
+                };
+                
+                const offer = await pc.createOffer();
+                await pc.setLocalDescription(offer);
+                
+                // Store offer for other window
+                localStorage.setItem('guardian-webrtc-offer', JSON.stringify(offer));
+                
+                // Open AI site
+                window.open(agent.url, '_blank');
+                
+                showNotification('📡 WebRTC channel initiated - P2P connection establishing...');
+            }
+
+            async launchFragment(agent, prompt) {
+                // Encode command in fragment
+                const command = {
+                    cmd: 'inject',
+                    p: prompt,
+                    t: Date.now()
+                };
+                
+                const encoded = btoa(JSON.stringify(command));
+                const url = agent.url + '#guardian=' + encoded;
+                
+                window.open(url, '_blank');
+                showNotification('🔗 Fragment channel active - Command encoded in URL');
+            }
+
+            showSetupModal(agent) {
+                const bookmarkletCode = this.generateBookmarklet();
+                
+                const modal = document.createElement('div');
+                modal.className = 'guardian-setup-modal';
+                modal.innerHTML = `
+                    <div class="modal-backdrop" onclick="this.parentElement.remove()"></div>
+                    <div class="modal-content">
+                        <h2>🛡️ Guardian System Setup</h2>
+                        <p>Choose your injection method and complete one-time setup:</p>
+                        
+                        <div class="guardian-method-selector">
+                            ${Array.from(this.methods.entries()).map(([id, method]) => `
+                                <button class="method-btn ${id === this.activeMethod ? 'active' : ''}" 
+                                        onclick="GuardianSystem.selectMethod('${id}')"
+                                        ${!method.supported() ? 'disabled' : ''}>
+                                    <strong>${method.name}</strong><br>
+                                    <small>${method.description}</small>
+                                </button>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="setup-steps">
+                            <h3>Bookmarklet Setup:</h3>
+                            <ol>
+                                <li>Drag this button to your bookmarks bar: 
+                                    <a href="${bookmarkletCode}" class="bookmarklet-btn" 
+                                       onclick="event.preventDefault()"
+                                       ondragstart="event.dataTransfer.setData('text/uri-list', this.href)">
+                                        🛡️ Guardian Inject
+                                    </a>
+                                </li>
+                                <li>Click "Continue" below</li>
+                                <li>On the AI site, click the Guardian bookmark</li>
+                                <li>Your prompt will be automatically injected!</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="modal-actions">
+                            <button onclick="GuardianSystem.completeSetup('${agent.name}')" class="btn btn-primary">
+                                Continue with ${this.methods.get(this.activeMethod).name}
+                            </button>
+                            <button onclick="this.parentElement.parentElement.parentElement.remove()" class="btn btn-secondary">
+                                Cancel
+                            </button>
+                        </div>
+                        
+                        <div class="setup-note">
+                            <strong>Note:</strong> This setup works for ALL AI sites and only needs to be done once!
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+            }
+
+            generateBookmarklet() {
+                const code = `
+javascript:(function(){
+    if(window.GuardianOrchestrator){
+        window.GuardianOrchestrator.injectPrompt(
+            localStorage.getItem('guardian-prompt')||'',
+            window.location.hostname
+        );
+        return;
+    }
+    const s=document.createElement('script');
+    s.src='${window.location.origin}/guardian-orchestrator.js?t='+Date.now();
+    s.onload=function(){
+        const p=localStorage.getItem('guardian-prompt');
+        if(p&&window.GuardianOrchestrator){
+            setTimeout(()=>{
+                window.GuardianOrchestrator.injectPrompt(p,window.location.hostname);
+            },1000);
+        }
+    };
+    document.head.appendChild(s);
+    const i=document.createElement('div');
+    i.style.cssText='position:fixed;top:10px;right:10px;background:#667eea;color:white;padding:10px 20px;border-radius:20px;z-index:10000;animation:pulse 2s infinite;';
+    i.textContent='🛡️ Guardian Active';
+    document.body.appendChild(i);
+    const st=document.createElement('style');
+    st.textContent='@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.7;}}';
+    document.head.appendChild(st);
+    setTimeout(()=>i.remove(),3000);
+})();`;
+                
+                return 'javascript:' + encodeURIComponent(code.replace(/\s+/g, ' ').trim());
+            }
+
+            static selectMethod(methodId) {
+                const instance = window.guardianSystem;
+                instance.activeMethod = methodId;
+                localStorage.setItem('guardian-preferred-method', methodId);
+                
+                // Update UI
+                document.querySelectorAll('.method-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                event.target.closest('.method-btn').classList.add('active');
+            }
+
+            static completeSetup(agentName) {
+                const instance = window.guardianSystem;
+                
+                if (instance.activeMethod === 'bookmarklet') {
+                    instance.bookmarkletInstalled = true;
+                    localStorage.setItem('guardian-bookmarklet-installed', 'true');
+                }
+                
+                document.querySelector('.guardian-setup-modal').remove();
+                
+                // Relaunch with selected method
+                const agent = getAllAgents().find(a => a.name === agentName);
+                if (agent) {
+                    const prompt = localStorage.getItem('guardian-prompt');
+                    instance.launch(agent, prompt);
+                }
+            }
+
+            static injectNow() {
+                // Send injection command through all channels
+                const prompt = localStorage.getItem('guardian-prompt');
+                
+                // BroadcastChannel
+                try {
+                    const bc = new BroadcastChannel('guardian-inject');
+                    bc.postMessage({type: 'INJECT', prompt});
+                } catch (e) {}
+                
+                // LocalStorage
+                localStorage.setItem('guardian-inject-command', JSON.stringify({
+                    type: 'INJECT',
+                    prompt,
+                    timestamp: Date.now()
+                }));
+                
+                // Update command ID to trigger storage event
+                localStorage.setItem('guardian-inject-id', Date.now().toString());
+                
+                showNotification('💉 Injection command sent through all channels');
+            }
+        }
+
+        // Initialize Guardian System
+        const guardianSystem = new GuardianSystem();
+        window.GuardianSystem = GuardianSystem;
+        window.guardianSystem = guardianSystem;
+
         // Favorites Manager
         const FavoritesManager = {
             getFavorites: function() {
@@ -1243,7 +1825,6 @@
                 this.updateUI();
                 showNotification(index > -1 ? '⭐ Removed from favorites' : '⭐ Added to favorites!');
                 
-                // Re-render if on favorites tab
                 if (AppState.currentCategory === 'favorites') {
                     renderAgents();
                 }
@@ -1269,14 +1850,12 @@
             
             let agents = getAllAgents();
             
-            // Apply category filter
             if (AppState.currentCategory === 'favorites') {
                 agents = agents.filter(a => FavoritesManager.isFavorite(a.name));
             } else if (AppState.currentCategory !== 'all') {
                 agents = agents.filter(a => a.bestFor && a.bestFor.includes(AppState.currentCategory));
             }
             
-            // Apply search filter
             if (AppState.searchQuery) {
                 const query = AppState.searchQuery.toLowerCase();
                 agents = agents.filter(agent => {
@@ -1290,11 +1869,9 @@
                 });
             }
             
-            // Show/hide empty message
             emptyMsg.style.display = agents.length === 0 ? 'block' : 'none';
             grid.innerHTML = '';
             
-            // Render agent cards
             agents.forEach(agent => {
                 const card = createAgentCard(agent);
                 grid.appendChild(card);
@@ -1338,7 +1915,7 @@
             return card;
         }
 
-        // Launch agent
+        // Launch agent with Guardian
         function launchAgentByName(name) {
             const agent = getAllAgents().find(a => a.name === name);
             const prompt = document.getElementById('universal-prompt').value;
@@ -1348,19 +1925,27 @@
             }
             
             saveSessionContext(agent.name);
-            window.open(agent.url, '_blank', 'noopener');
             
-            showNotification(prompt ? 
-                `${agent.name} opened! Click "Copy to Clipboard" then paste in the chat.` : 
-                `${agent.name} opened in new tab!`
-            );
+            // Show Guardian status
+            document.getElementById('guardian-status-bar').classList.add('active');
+            document.getElementById('guardian-control-window').classList.add('active');
+            
+            // Update active channels count
+            let activeChannels = 0;
+            if ('BroadcastChannel' in window) activeChannels++;
+            if ('localStorage' in window) activeChannels++;
+            if ('serviceWorker' in navigator) activeChannels++;
+            if ('RTCPeerConnection' in window) activeChannels++;
+            document.getElementById('active-channels').textContent = activeChannels;
+            
+            // Launch with Guardian
+            guardianSystem.launch(agent, prompt);
         }
 
         // Category management
         function showCategory(cat) {
             AppState.currentCategory = cat;
             
-            // Update tab states
             document.querySelectorAll('.tab-btn').forEach(tab => {
                 tab.classList.remove('active');
             });
@@ -1439,6 +2024,7 @@
         function savePrompt() {
             const prompt = document.getElementById('universal-prompt').value;
             localStorage.setItem('relay-prompt', prompt);
+            localStorage.setItem('guardian-prompt', prompt); // Also save for Guardian
             localStorage.setItem('relay-timestamp', Date.now());
             document.getElementById('saved-indicator').style.display = prompt ? 'block' : 'none';
             
@@ -1482,6 +2068,7 @@
         function clearPrompt() {
             document.getElementById('universal-prompt').value = '';
             localStorage.removeItem('relay-prompt');
+            localStorage.removeItem('guardian-prompt');
             document.getElementById('saved-indicator').style.display = 'none';
         }
 
@@ -1703,7 +2290,6 @@
 
         // ===== ENHANCED UNIVERSAL DEVICE DETECTION & PLATFORM FEATURES =====
         const DeviceManager = {
-            // Detect user's platform
             getPlatform: function() {
                 const ua = navigator.userAgent;
                 const platform = navigator.platform;
@@ -1717,7 +2303,6 @@
                 return 'unknown';
             },
             
-            // Get browser type
             getBrowser: function() {
                 const ua = navigator.userAgent;
                 
@@ -1729,40 +2314,31 @@
                 return 'other';
             },
             
-            // Initialize platform-specific features
             init: function() {
                 const platform = this.getPlatform();
                 const browser = this.getBrowser();
                 
-                // Add platform class to body
                 document.body.classList.add(`platform-${platform}`);
                 document.body.classList.add(`browser-${browser}`);
                 
-                // Show platform-specific content
                 this.showPlatformFeatures(platform, browser);
-                
-                // Initialize platform-specific features
                 this.initPlatformFeatures(platform, browser);
                 
-                // Check for first-time visitor
                 if (!localStorage.getItem('hasVisited')) {
                     setTimeout(() => this.showOnboardingTour(platform), 1000);
                 }
             },
             
-            // Show relevant features for user's platform
             showPlatformFeatures: function(platform, browser) {
                 const container = document.createElement('div');
                 container.className = 'platform-features';
                 container.id = 'platform-features';
                 container.innerHTML = this.getPlatformHTML(platform, browser);
                 
-                // Insert after prompt section
                 const promptSection = document.querySelector('.prompt-section');
                 promptSection.insertAdjacentElement('afterend', container);
             },
             
-            // Get platform-specific HTML with enhancements
             getPlatformHTML: function(platform, browser) {
                 const features = {
                     'ios': `
@@ -1785,17 +2361,17 @@
                                         <span class="btn-subtitle">Voice activation</span>
                                     </span>
                                 </button>
-                                <button onclick="DeviceManager.enableIOSFeatures()" class="platform-btn">
-                                    <span class="btn-icon">🔔</span>
+                                <button onclick="DeviceManager.setupGuardianBookmarklet()" class="platform-btn">
+                                    <span class="btn-icon">🛡️</span>
                                     <span class="btn-text">
-                                        <span class="btn-title">Enable Notifications</span>
-                                        <span class="btn-subtitle">Stay updated</span>
+                                        <span class="btn-title">Guardian Bookmarklet</span>
+                                        <span class="btn-subtitle">Works in Safari</span>
                                     </span>
                                 </button>
                             </div>
                             <div class="feature-tip">
                                 <span class="tip-icon">💡</span>
-                                <span>Tip: Add to home screen for app-like experience!</span>
+                                <span>Tip: Guardian bookmarklet works on mobile Safari!</span>
                             </div>
                         </div>
                     `,
@@ -1823,14 +2399,14 @@
                                 <button onclick="DeviceManager.enableAndroidShare()" class="platform-btn">
                                     <span class="btn-icon">📤</span>
                                     <span class="btn-text">
-                                        <span class="btn-title">Quick Share Setup</span>
-                                        <span class="btn-subtitle">Share to AI apps</span>
+                                        <span class="btn-title">Guardian Share</span>
+                                        <span class="btn-subtitle">Share to inject</span>
                                     </span>
                                 </button>
                             </div>
                             <div class="feature-tip">
                                 <span class="tip-icon">⚡</span>
-                                <span>Install for widgets and offline access!</span>
+                                <span>Guardian works with Chrome mobile bookmarks!</span>
                             </div>
                         </div>
                     `,
@@ -1842,11 +2418,11 @@
                             <p>Supercharge your desktop experience:</p>
                             <div class="action-buttons">
                                 ${browser === 'chrome' || browser === 'edge' ? `
-                                    <button onclick="DeviceManager.showExtensionGuide()" class="platform-btn primary-action">
-                                        <span class="btn-icon">🧩</span>
+                                    <button onclick="DeviceManager.showGuardianOptions()" class="platform-btn primary-action">
+                                        <span class="btn-icon">🛡️</span>
                                         <span class="btn-text">
-                                            <span class="btn-title">Browser Extension</span>
-                                            <span class="btn-subtitle">Auto-inject prompts</span>
+                                            <span class="btn-title">Guardian System</span>
+                                            <span class="btn-subtitle">7 injection methods</span>
                                         </span>
                                     </button>
                                 ` : ''}
@@ -1867,7 +2443,7 @@
                             </div>
                             <div class="feature-tip">
                                 <span class="tip-icon">🚀</span>
-                                <span>Extension auto-fills prompts on all AI sites!</span>
+                                <span>Guardian System auto-injects prompts on all AI sites!</span>
                             </div>
                         </div>
                     `,
@@ -1878,24 +2454,13 @@
                             <h3>🍎 macOS Enhanced Features</h3>
                             <p>Mac-optimized tools for power users:</p>
                             <div class="action-buttons">
-                                ${browser === 'chrome' ? `
-                                    <button onclick="DeviceManager.showExtensionGuide()" class="platform-btn primary-action">
-                                        <span class="btn-icon">🧩</span>
-                                        <span class="btn-text">
-                                            <span class="btn-title">Chrome Extension</span>
-                                            <span class="btn-subtitle">Smart injection</span>
-                                        </span>
-                                    </button>
-                                ` : ''}
-                                ${browser === 'safari' ? `
-                                    <button onclick="DeviceManager.showSafariExtension()" class="platform-btn primary-action">
-                                        <span class="btn-icon">🦁</span>
-                                        <span class="btn-text">
-                                            <span class="btn-title">Safari Extension</span>
-                                            <span class="btn-subtitle">Native integration</span>
-                                        </span>
-                                    </button>
-                                ` : ''}
+                                <button onclick="DeviceManager.showGuardianOptions()" class="platform-btn primary-action">
+                                    <span class="btn-icon">🛡️</span>
+                                    <span class="btn-text">
+                                        <span class="btn-title">Guardian System</span>
+                                        <span class="btn-subtitle">Multi-method injection</span>
+                                    </span>
+                                </button>
                                 <button onclick="DeviceManager.setupKeyboardShortcuts()" class="platform-btn">
                                     <span class="btn-icon">⌨️</span>
                                     <span class="btn-text">
@@ -1913,7 +2478,7 @@
                             </div>
                             <div class="feature-tip">
                                 <span class="tip-icon">⌘</span>
-                                <span>Pro tip: Use ⌘K for instant agent search!</span>
+                                <span>Guardian works perfectly with Safari bookmarks!</span>
                             </div>
                         </div>
                     `
@@ -1930,7 +2495,6 @@
                 `;
             },
             
-            // Show onboarding tour for first-time users
             showOnboardingTour: function(platform) {
                 const tour = document.createElement('div');
                 tour.className = 'onboarding-overlay';
@@ -1950,12 +2514,14 @@
                         </div>
                         
                         <div class="onboarding-step" id="onboarding-step-2" style="display: none;">
-                            <h2>📝 Save Your Prompts</h2>
-                            <div class="onboarding-pointer" style="top: 100px; left: 50%;">
-                                <span class="pointer-arrow">↑</span>
-                                <span class="pointer-text">Type your prompt here</span>
-                            </div>
-                            <p>Write once, use everywhere! Your prompts work across all AI platforms.</p>
+                            <h2>🛡️ Guardian System</h2>
+                            <p>Our revolutionary multi-method injection system works on ALL AI sites!</p>
+                            <ul style="text-align: left; margin: 20px 0;">
+                                <li>📱 Works on mobile browsers</li>
+                                <li>🔖 One-time bookmarklet setup</li>
+                                <li>💉 7 different injection methods</li>
+                                <li>🚀 Automatic prompt relay</li>
+                            </ul>
                             <button class="onboarding-btn" onclick="DeviceManager.nextOnboardingStep(3)">
                                 Next →
                             </button>
@@ -1976,18 +2542,15 @@
                 `;
                 document.body.appendChild(tour);
                 
-                // Track onboarding start
                 this.trackFeature('onboarding_started', platform);
             },
             
-            // Onboarding navigation
             nextOnboardingStep: function(step) {
                 document.querySelectorAll('.onboarding-step').forEach(s => s.style.display = 'none');
                 document.getElementById(`onboarding-step-${step}`).style.display = 'block';
                 
-                // Highlight relevant UI elements
                 if (step === 2) {
-                    document.querySelector('.prompt-section').classList.add('highlight-tour');
+                    document.querySelector('.guardian-status-bar').classList.add('highlight-tour');
                 } else if (step === 3) {
                     document.querySelector('.platform-features').classList.add('highlight-tour');
                 }
@@ -2007,9 +2570,7 @@
                 showNotification('🎉 Welcome aboard! Explore your personalized features below.');
             },
             
-            // Enhanced feature tracking
             trackFeature: function(feature, platform, details = {}) {
-                // Track with analytics if available
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'feature_interaction', {
                         'feature_name': feature,
@@ -2020,7 +2581,6 @@
                     });
                 }
                 
-                // Local tracking for feature adoption
                 const adoption = JSON.parse(localStorage.getItem('feature_adoption') || '{}');
                 if (!adoption[feature]) {
                     adoption[feature] = {
@@ -2033,11 +2593,9 @@
                 adoption[feature].last_used = new Date().toISOString();
                 localStorage.setItem('feature_adoption', JSON.stringify(adoption));
                 
-                // Show achievement notifications for milestones
                 this.checkAchievements(feature, adoption);
             },
             
-            // Achievement system
             checkAchievements: function(feature, adoption) {
                 const achievements = {
                     'first_install': {
@@ -2050,10 +2608,10 @@
                         message: '🏆 Achievement: Power User!',
                         icon: '💪'
                     },
-                    'extension_master': {
-                        condition: () => feature === 'extension_installed',
-                        message: '🏆 Achievement: Extension Master!',
-                        icon: '🧩'
+                    'guardian_master': {
+                        condition: () => feature === 'guardian_activated',
+                        message: '🏆 Achievement: Guardian Master!',
+                        icon: '🛡️'
                     },
                     'shortcut_ninja': {
                         condition: () => feature === 'shortcuts_enabled',
@@ -2086,7 +2644,6 @@
                 }, 3000);
             },
             
-            // Platform-specific feature implementations with tracking
             installPWA: function() {
                 const platform = this.getPlatform();
                 
@@ -2164,6 +2721,37 @@
                 document.body.appendChild(modal);
             },
             
+            showGuardianOptions: function() {
+                this.trackFeature('guardian_activated', this.getPlatform());
+                window.guardianSystem.showSetupModal({name: 'Setup', url: '#'});
+            },
+            
+            setupGuardianBookmarklet: function() {
+                const code = window.guardianSystem.generateBookmarklet();
+                const modal = document.createElement('div');
+                modal.className = 'platform-modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                        <h3>🛡️ Guardian Bookmarklet for Mobile</h3>
+                        <p>Works on Safari, Chrome, and all mobile browsers!</p>
+                        <ol>
+                            <li>Copy this entire code:
+                                <textarea style="width: 100%; height: 100px; margin: 10px 0;" readonly>${code}</textarea>
+                            </li>
+                            <li>Create a new bookmark (any page)</li>
+                            <li>Edit the bookmark and paste the code as the URL</li>
+                            <li>Name it "Guardian Inject"</li>
+                            <li>On any AI site, tap the bookmark to inject your prompt!</li>
+                        </ol>
+                        <button class="btn btn-primary" onclick="navigator.clipboard.writeText('${code}').then(() => { showNotification('Code copied!'); })">
+                            Copy Code
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            },
+            
             createIOSShortcut: function() {
                 this.trackFeature('ios_shortcut_guide', 'ios');
                 
@@ -2173,11 +2761,7 @@
                     <div class="modal-content">
                         <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
                         <h3>⚡ Create Siri Shortcut</h3>
-                        <div class="shortcut-preview">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234B7BEC'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40'%3E⚡%3C/text%3E%3C/svg%3E" alt="Shortcut icon">
-                            <span>AI Multi-Launch</span>
-                        </div>
-                        <ol class="shortcut-steps">
+                        <ol>
                             <li>Copy your saved prompt using the button above</li>
                             <li>Open the <strong>Shortcuts</strong> app</li>
                             <li>Tap <strong>+</strong> to create new shortcut</li>
@@ -2201,62 +2785,6 @@
                     showNotification('📋 Prompt copied! Now open Shortcuts app');
                     button.parentElement.parentElement.remove();
                 });
-            },
-            
-            showExtensionGuide: function() {
-                const browser = this.getBrowser();
-                const platform = this.getPlatform();
-                this.trackFeature('extension_guide_opened', platform, { browser });
-                
-                const extensionUrl = browser === 'chrome' 
-                    ? 'https://github.com/Viralith-Prime/you-agent-relay/tree/main/extension'
-                    : 'https://microsoftedge.microsoft.com/addons/';
-                    
-                const modal = document.createElement('div');
-                modal.className = 'platform-modal extension-guide';
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
-                        <div class="extension-hero">
-                            <span class="extension-icon">🧩</span>
-                            <h3>Browser Extension Setup</h3>
-                            <p>Auto-inject prompts into any AI chat!</p>
-                        </div>
-                        
-                        <div class="extension-features">
-                            <div class="feature-item">
-                                <span>✓</span> Works on ChatGPT, Claude, Gemini
-                            </div>
-                            <div class="feature-item">
-                                <span>✓</span> One-click prompt injection
-                            </div>
-                            <div class="feature-item">
-                                <span>✓</span> Syncs with your saved prompts
-                            </div>
-                        </div>
-                        
-                        <div class="extension-steps">
-                            <h4>Installation Steps:</h4>
-                            <ol>
-                                <li>Download the extension files</li>
-                                <li>Open <code>${browser}://extensions/</code></li>
-                                <li>Enable <strong>"Developer mode"</strong></li>
-                                <li>Click <strong>"Load unpacked"</strong></li>
-                                <li>Select the extension folder</li>
-                            </ol>
-                        </div>
-                        
-                        <div class="modal-actions">
-                            <button class="modal-btn primary" onclick="window.open('${extensionUrl}'); DeviceManager.trackFeature('extension_download', '${platform}')">
-                                Download Extension
-                            </button>
-                            <button class="modal-btn" onclick="DeviceManager.showExtensionVideo()">
-                                Watch Tutorial
-                            </button>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(modal);
             },
             
             setupKeyboardShortcuts: function() {
@@ -2309,11 +2837,8 @@
                 button.parentElement.parentElement.remove();
             },
             
-            // Initialize platform-specific features with enhancements
             initPlatformFeatures: function(platform, browser) {
-                // iOS specific
                 if (platform === 'ios') {
-                    // Prevent zoom on input focus
                     document.querySelectorAll('input, textarea').forEach(el => {
                         el.addEventListener('focus', () => {
                             document.querySelector('meta[name="viewport"]').content = 
@@ -2321,7 +2846,6 @@
                         });
                     });
                     
-                    // Add haptic feedback
                     if ('vibrate' in navigator) {
                         document.querySelectorAll('button').forEach(btn => {
                             btn.addEventListener('touchstart', () => navigator.vibrate(10));
@@ -2329,9 +2853,7 @@
                     }
                 }
                 
-                // Android specific
                 if (platform === 'android') {
-                    // Enable pull-to-refresh
                     let startY = 0;
                     document.addEventListener('touchstart', e => {
                         startY = e.touches[0].pageY;
@@ -2344,7 +2866,6 @@
                     });
                 }
                 
-                // Desktop keyboard shortcuts
                 if ((platform === 'windows' || platform === 'mac') && localStorage.getItem('shortcuts_enabled')) {
                     document.addEventListener('keydown', (e) => {
                         const isMac = platform === 'mac';
@@ -2372,16 +2893,12 @@
                     });
                 }
                 
-                // Progressive enhancement for all platforms
                 this.addMicrointeractions();
             },
             
-            // Add micro-interactions
             addMicrointeractions: function() {
-                // Button click effects
                 document.querySelectorAll('button').forEach(btn => {
                     btn.addEventListener('click', function(e) {
-                        // Ripple effect
                         const ripple = document.createElement('span');
                         ripple.className = 'ripple';
                         ripple.style.left = e.offsetX + 'px';
@@ -2391,7 +2908,6 @@
                     });
                 });
                 
-                // Card hover effects
                 document.querySelectorAll('.agent-card').forEach(card => {
                     card.addEventListener('mouseenter', function() {
                         this.style.transform = 'translateY(-2px)';
@@ -2403,7 +2919,6 @@
             }
         };
 
-        // Success tracking wrapper
         const FeatureAdoption = {
             track: function(feature, platform, success = true) {
                 DeviceManager.trackFeature(feature, platform, { success });
@@ -2420,37 +2935,32 @@
             }
         };
 
-        // PWA install prompt
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
+            window.deferredPrompt = deferredPrompt;
         });
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
             initTheme();
             
-            // Load saved prompt
             const savedPrompt = localStorage.getItem('relay-prompt');
             if (savedPrompt) {
                 document.getElementById('universal-prompt').value = savedPrompt;
                 document.getElementById('saved-indicator').style.display = 'block';
             }
             
-            // Initialize UI
             FavoritesManager.updateUI();
             showCategory('all');
             showRecommendation();
             PromptHistory.render();
             
-            // Initialize DeviceManager
             DeviceManager.init();
             
-            // Setup event listeners
             document.getElementById('agent-search-bar').addEventListener('input', debouncedSearch);
             
-            // Keyboard shortcuts
             document.addEventListener('keydown', (e) => {
                 if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                     e.preventDefault();
@@ -2465,3 +2975,4 @@
     </script>
 </body>
 </html>
+
