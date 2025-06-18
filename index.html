@@ -892,6 +892,80 @@ textarea:focus-visible {
     100% { transform: rotate(360deg); }
 }
 
+        .agent-search-bar-wrapper {
+  position: relative;
+  margin: 18px 0 0 0;
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.agent-search-bar {
+  width: 100%;
+  min-height: 44px;
+  padding-right: 40px;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+.agent-search-bar:focus {
+  border-color: #1976d2;
+  outline: none;
+}
+.agent-search-clear-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  transition: color 0.15s;
+  z-index: 2;
+}
+.agent-search-clear-btn:focus, .agent-search-clear-btn:hover {
+  color: #1976d2;
+}
+@media (max-width: 600px) {
+  .agent-search-bar-wrapper {
+    margin: 12px 0 0 0;
+  }
+  .agent-search-bar {
+    min-height: 36px;
+    font-size: 15px;
+    border-radius: 6px;
+    padding-right: 36px;
+  }
+}
+[data-theme="dark"] .agent-search-bar {
+  background: var(--prompt-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+[data-theme="dark"] .agent-search-clear-btn {
+  color: #bbb;
+}
+[data-theme="dark"] .agent-search-clear-btn:focus, [data-theme="dark"] .agent-search-clear-btn:hover {
+  color: #ffc107;
+}
+.agent-search-empty {
+  font-size: 18px;
+  color: #666;
+  margin-top: 30px;
+  padding: 60px 0;
+}
+[data-theme="dark"] .agent-search-empty {
+  color: #aaa;
+}
     </style>
 </head>
 <!-- Cloudflare Web Analytics -->
@@ -953,10 +1027,35 @@ textarea:focus-visible {
       <button class="tab-btn" onclick="showCategory('research')" id="tab-research">Research</button>
       <button class="tab-btn" onclick="showCategory('creative')" id="tab-creative">Creative</button>
     </div>
+
+    <!-- Agent Search Bar -->
+<div class="agent-search-bar-wrapper">
+  <input
+    type="text"
+    id="agent-search-bar"
+    class="prompt-textarea agent-search-bar"
+    placeholder="Search agents by name, provider, or features..."
+    autocomplete="off"
+    onkeyup="filterAgentCards()"
+    aria-label="Search agents"
+  />
+  <button
+    id="agent-search-clear"
+    class="agent-search-clear-btn"
+    type="button"
+    aria-label="Clear search"
+    onclick="clearAgentSearch()"
+    style="display:none"
+  >&#10005;</button>
+</div>
+<!-- End Agent Search Bar -->
     
     <h2 style="margin-top: 40px;">🤖 Agent Directory</h2>
     <div id="agent-grid" class="agent-grid" aria-live="polite">
         <!-- Agent cards will be inserted here -->
+    </div>
+    <div id="agent-search-empty" class="agent-search-empty" style="display:none;text-align:center;color:#666;padding:40px;">
+     No agents found
     </div>
     
         <!-- Accordion for Quick Comparison -->
