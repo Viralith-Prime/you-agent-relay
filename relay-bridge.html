@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Guardian Relay Bridge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 72px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .status {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: #2a2a2a;
+            border-radius: 8px;
+        }
+        
+        .status-label {
+            font-weight: 600;
+            color: #aaa;
+        }
+        
+        .status-value {
+            color: #667eea;
+            font-family: monospace;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #333;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .success {
+            color: #4caf50;
+        }
+        
+        .error {
+            color: #f44336;
+        }
+        
+        .actions {
+            margin-top: 30px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #2a2a2a;
+            border: 1px solid #444;
+        }
+        
+        .btn-secondary:hover {
+            background: #333;
+            border-color: #667eea;
+        }
+        
+        .log {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+            text-align: left;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .log.visible {
+            display: block;
+        }
+        
+        .log-entry {
+            margin: 4px 0;
+            color: #888;
+        }
+        
+        .log-entry.info { color: #2196f3; }
+        .log-entry.success { color: #4caf50; }
+        .log-entry.error { color: #f44336; }
+        
+        /* Fancy background */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .pulse-ring {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulseRing 2s infinite;
+        }
+        
+        @keyframes pulseRing {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    
+    <div class="container">
+        <div class="logo">🌉</div>
+        <h1>Guardian Relay Bridge</h1>
+        <p>Establishing secure connection to inject your prompt...</p>
+        
+        <div class="status">
+            <div class="status-item">
+                <span class="status-label">Target Site:</span>
+                <span class="status-value" id="target-site">
+                    <span class="loading"></span>
+                </span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Prompt Status:</span>
+                <span class="status-value" id="prompt-status">
+                    <span class="loading"></span>
+                </span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Bridge Status:</span>
+                <span class="status-value" id="bridge-status">
+                    Initializing...
+                </span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Connection:</span>
+                <span class="status-value" id="connection-status">
+                    Establishing...
+                </span>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <button class="btn" onclick="retryInjection()" id="retry-btn" style="display:none;">
+                🔄 Retry Injection
+            </button>
+            <button class="btn btn-secondary" onclick="showLogs()">
+                📋 Show Logs
+            </button>
+            <a href="/" class="btn btn-secondary">
+                🏠 Back to Hub
+            </a>
+        </div>
+        
+        <div class="log" id="log-container">
+            <strong>Bridge Activity Log:</strong>
+            <div id="log-entries"></div>
+        </div>
+    </div>
+    
+    <div class="pulse-ring"></div>
+    
+    <script>
+        // Relay Bridge Logic
+        class RelayBridge {
+            constructor() {
+                this.config = null;
+                this.targetUrl = '';
+                this.prompt = '';
+                this.targetWindow = null;
+                this.attempts = 0;
+                this.maxAttempts = 5;
+                
+                this.init();
+            }
+            
+            init() {
+                this.log('Relay Bridge initializing...', 'info');
+                
+                // Parse configuration from URL
+                const params = new URLSearchParams(window.location.search);
+                const data = params.get('data');
+                
+                if (data) {
+                    try {
+                        this.config = JSON.parse(atob(data));
+                        this.targetUrl = this.config.url;
+                        this.prompt = this.config.prompt;
+                        
+                        this.updateUI('target-site', new URL(this.targetUrl).hostname);
+                        this.updateUI('prompt-status', this.prompt ? 'Ready' : 'No prompt', this.prompt ? 'success' : 'error');
+                        
+                        this.log(`Target: ${this.targetUrl}`, 'info');
+                        this.log(`Prompt length: ${this.prompt.length} chars`, 'info');
+                        
+                        // Start bridge process
+                        this.establishBridge();
+                    } catch (e) {
+                        this.handleError('Failed to parse configuration', e);
+                    }
+                } else {
+                    this.handleError('No configuration provided');
+                }
+            }
+            
+            establishBridge() {
+                this.updateUI('bridge-status', 'Establishing bridge...');
+                this.log('Setting up relay channels...', 'info');
+                
+                // Set up multiple communication channels
+                this.setupStorageBridge();
+                this.setupBroadcastBridge();
+                this.setupPostMessageBridge();
+                
+                // Open target site
+                setTimeout(() => {
+                    this.openTargetSite();
+                }, 1000);
+            }
+            
+            setupStorageBridge() {
+                // Store prompt and metadata in localStorage
+                const bridgeData = {
+                    prompt: this.prompt,
+                    targetUrl: this.targetUrl,
+                    timestamp: Date.now(),
+                    bridgeId: this.generateId(),
+                    source: 'guardian-relay-bridge'
+                };
+                
+                localStorage.setItem('guardian-bridge', JSON.stringify(bridgeData));
+                localStorage.setItem('guardian-bridge-active', 'true');
+                
+                // Monitor for response
+                this.storageMonitor = setInterval(() => {
+                    const response = localStorage.getItem('guardian-bridge-response');
+                    if (response) {
+                        try {
+                            const data = JSON.parse(response);
+                            if (data.success) {
+                                this.handleSuccess(data);
+                            }
+                        } catch (e) {
+                            this.log('Invalid response format', 'error');
+                        }
+                    }
+                }, 500);
+                
+                this.log('Storage bridge established', 'success');
+            }
+            
+            setupBroadcastBridge() {
+                try {
+                    this.broadcastChannel = new BroadcastChannel('guardian-relay');
+                    
+                    this.broadcastChannel.onmessage = (event) => {
+                        this.log(`Broadcast received: ${event.data.type}`, 'info');
+                        
+                        if (event.data.type === 'INJECTION_SUCCESS') {
+                            this.handleSuccess(event.data);
+                        } else if (event.data.type === 'INJECTION_FAILED') {
+                            this.handleFailure(event.data);
+                        }
+                    };
+                    
+                    // Announce bridge
+                    this.broadcastChannel.postMessage({
+                        type: 'BRIDGE_READY',
+                        targetUrl: this.targetUrl,
+                        timestamp: Date.now()
+                    });
+                    
+                    this.log('Broadcast channel ready', 'success');
+                } catch (e) {
+                    this.log('BroadcastChannel not supported', 'error');
+                }
+            }
+            
+            setupPostMessageBridge() {
+                window.addEventListener('message', (event) => {
+                    // Verify origin
+                    if (event.origin !== new URL(this.targetUrl).origin) return;
+                    
+                    this.log(`PostMessage received: ${event.data.type}`, 'info');
+                    
+                    if (event.data.type === 'GUARDIAN_READY') {
+                        this.sendPromptViaPostMessage();
+                    } else if (event.data.type === 'INJECTION_SUCCESS') {
+                        this.handleSuccess(event.data);
+                    }
+                });
+                
+                this.log('PostMessage bridge ready', 'success');
+            }
+            
+            openTargetSite() {
+                this.updateUI('connection-status', 'Opening target site...');
+                this.log(`Opening ${this.targetUrl}`, 'info');
+                
+                // Add guardian flag to URL
+                const url = new URL(this.targetUrl);
+                url.searchParams.set('_guardian_bridge', '1');
+                url.searchParams.set('_bridge_id', this.generateId());
+                
+                // Open in new window/tab
+                this.targetWindow = window.open(url.toString(), '_blank');
+                
+                if (this.targetWindow) {
+                    this.updateUI('connection-status', 'Target opened', 'success');
+                    this.log('Target window opened successfully', 'success');
+                    
+                    // Start injection attempts
+                    setTimeout(() => {
+                        this.attemptInjection();
+                    }, 3000);
+                } else {
+                    this.handleError('Failed to open target window - popup blocked?');
+                }
+            }
+            
+            attemptInjection() {
+                this.attempts++;
+                this.log(`Injection attempt ${this.attempts}/${this.maxAttempts}`, 'info');
+                
+                if (this.attempts > this.maxAttempts) {
+                    this.handleFailure({
+                        reason: 'Max attempts reached',
+                        attempts: this.attempts
+                    });
+                    return;
+                }
+                
+                // Try all injection methods
+                this.sendPromptViaStorage();
+                this.sendPromptViaBroadcast();
+                this.sendPromptViaPostMessage();
+                
+                // Retry after delay
+                this.retryTimeout = setTimeout(() => {
+                    this.attemptInjection();
+                }, 5000);
+            }
+            
+            sendPromptViaStorage() {
+                const command = {
+                    type: 'INJECT_PROMPT',
+                    prompt: this.prompt,
+                    method: 'storage-bridge',
+                    timestamp: Date.now()
+                };
+                
+                localStorage.setItem('guardian-command', JSON.stringify(command));
+                localStorage.setItem('guardian-command-id', Date.now().toString());
+                
+                this.log('Sent via localStorage', 'info');
+            }
+            
+            sendPromptViaBroadcast() {
+                if (this.broadcastChannel) {
+                    this.broadcastChannel.postMessage({
+                        type: 'INJECT_PROMPT',
+                        prompt: this.prompt,
+                        targetUrl: this.targetUrl,
+                        method: 'broadcast-bridge',
+                        timestamp: Date.now()
+                    });
+                    
+                    this.log('Sent via BroadcastChannel', 'info');
+                }
+            }
+            
+            sendPromptViaPostMessage() {
+                if (this.targetWindow) {
+                    try {
+                        this.targetWindow.postMessage({
+                            type: 'INJECT_PROMPT',
+                            prompt: this.prompt,
+                            source: 'guardian-relay-bridge',
+                            method: 'postmessage-bridge',
+                            timestamp: Date.now()
+                        }, new URL(this.targetUrl).origin);
+                        
+                        this.log('Sent via PostMessage', 'info');
+                    } catch (e) {
+                        this.log('PostMessage failed: ' + e.message, 'error');
+                    }
+                }
+            }
+            
+            handleSuccess(data) {
+                // Clear timers
+                clearInterval(this.storageMonitor);
+                clearTimeout(this.retryTimeout);
+                
+                this.updateUI('bridge-status', 'Injection successful!', 'success');
+                this.updateUI('connection-status', `Via ${data.method || 'unknown'}`, 'success');
+                
+                this.log(`SUCCESS: Prompt injected via ${data.method}`, 'success');
+                
+                // Show success animation
+                this.showSuccessAnimation();
+                
+                // Clean up
+                this.cleanup();
+                
+                // Auto-close after delay
+                setTimeout(() => {
+                    if (window.opener) {
+                        window.close();
+                    }
+                }, 3000);
+            }
+            
+            handleFailure(data) {
+                clearInterval(this.storageMonitor);
+                clearTimeout(this.retryTimeout);
+                
+                this.updateUI('bridge-status', 'Injection failed', 'error');
+                this.updateUI('connection-status', data.reason || 'Unknown error', 'error');
+                
+                this.log(`FAILED: ${data.reason || 'Unknown error'}`, 'error');
+                
+                // Show retry button
+                document.getElementById('retry-btn').style.display = 'inline-block';
+            }
+            
+            handleError(message, error) {
+                this.log(message + (error ? ': ' + error.message : ''), 'error');
+                this.updateUI('bridge-status', 'Error', 'error');
+                this.updateUI('connection-status', message, 'error');
+            }
+            
+            updateUI(elementId, text, status = '') {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.textContent = text;
+                    element.className = 'status-value ' + status;
+                }
+            }
+            
+            log(message, type = 'info') {
+                const timestamp = new Date().toLocaleTimeString();
+                const entry = document.createElement('div');
+                entry.className = `log-entry ${type}`;
+                entry.textContent = `[${timestamp}] ${message}`;
+                
+                const container = document.getElementById('log-entries');
+                container.appendChild(entry);
+                container.scrollTop = container.scrollHeight;
+                
+                console.log(`[Relay Bridge] ${message}`);
+            }
+            
+            generateId() {
+                return Date.now().toString(36) + Math.random().toString(36).substr(2);
+            }
+            
+            showSuccessAnimation() {
+                const logo = document.querySelector('.logo');
+                logo.textContent = '✅';
+                logo.style.color = '#4caf50';
+                
+                // Add extra pulse rings
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        const ring = document.createElement('div');
+                        ring.className = 'pulse-ring';
+                        ring.style.borderColor = 'rgba(76, 175, 80, 0.5)';
+                        document.body.appendChild(ring);
+                        setTimeout(() => ring.remove(), 2000);
+                    }, i * 300);
+                }
+            }
+            
+            cleanup() {
+                // Clear localStorage items
+                localStorage.removeItem('guardian-bridge');
+                localStorage.removeItem('guardian-bridge-active');
+                localStorage.removeItem('guardian-bridge-response');
+                
+                // Close channels
+                if (this.broadcastChannel) {
+                    this.broadcastChannel.close();
+                }
+                
+                this.log('Cleanup completed', 'info');
+            }
+            
+            retry() {
+                this.attempts = 0;
+                this.updateUI('bridge-status', 'Retrying...');
+                this.updateUI('connection-status', 'Establishing...');
+                document.getElementById('retry-btn').style.display = 'none';
+                
+                this.log('Retrying injection...', 'info');
+                this.establishBridge();
+            }
+        }
+        
+        // Initialize bridge
+        const bridge = new RelayBridge();
+        
+        // Global functions for onclick handlers
+        function retryInjection() {
+            bridge.retry();
+        }
+        
+        function showLogs() {
+            const logContainer = document.getElementById('log-container');
+            logContainer.classList.toggle('visible');
+        }
+        
+        // Handle page unload
+        window.addEventListener('beforeunload', () => {
+            bridge.cleanup();
+        });
+    </script>
+</body>
+</html>
