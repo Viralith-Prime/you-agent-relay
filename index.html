@@ -213,7 +213,6 @@
                 gap: 4px;
             }
         }
-        /* Visually hidden utility for accessibility */
         .visually-hidden {
             position: absolute !important;
             height: 1px; width: 1px;
@@ -221,8 +220,6 @@
             clip: rect(1px, 1px, 1px, 1px);
             white-space: nowrap;
         }
-
-        /* Dark mode variables */
         [data-theme="dark"] {
             --bg-color: #121212;
             --card-bg: #1e1e1e;
@@ -232,53 +229,41 @@
             --prompt-bg: #2a2a2a;
             --button-hover: #2a2a2a;
         }
-
-        /* Apply dark mode */
         [data-theme="dark"] body {
             background: var(--bg-color);
             color: var(--text-color);
         }
-
         [data-theme="dark"] .agent-card {
             background: var(--card-bg);
             box-shadow: 0 2px 8px var(--shadow-color);
         }
-
         [data-theme="dark"] .prompt-section {
             background: var(--card-bg);
             box-shadow: 0 2px 8px var(--shadow-color);
         }
-
         [data-theme="dark"] .prompt-textarea {
             background: var(--prompt-bg);
             border-color: var(--border-color);
             color: var(--text-color);
         }
-
         [data-theme="dark"] .comparison-table {
             background: var(--card-bg);
         }
-
         [data-theme="dark"] .comparison-table th {
             background: var(--prompt-bg);
         }
-
         [data-theme="dark"] .url-display {
             background: var(--prompt-bg);
             color: #aaa;
         }
-
         [data-theme="dark"] .tab-btn {
             background: var(--prompt-bg);
             color: var(--text-color);
         }
-
         [data-theme="dark"] .btn-secondary {
             background: var(--prompt-bg);
             color: var(--text-color);
         }
-
-        /* Dark mode toggle button */
         .theme-toggle {
             position: fixed;
             bottom: 20px;
@@ -295,17 +280,13 @@
             z-index: 999;
             transition: all 0.3s;
         }
-
         .theme-toggle:hover {
             transform: scale(1.1);
         }
-
         [data-theme="dark"] .theme-toggle {
             background: #ffc107;
             color: #333;
         }
-
-        /* Prompt History Styles */
         .prompt-history-section {
             background: white;
             padding: 20px;
@@ -313,7 +294,6 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             margin-top: 20px;
         }
-
         .history-item {
             border: 1px solid #e0e0e0;
             border-radius: 8px;
@@ -322,19 +302,16 @@
             position: relative;
             transition: all 0.2s;
         }
-
         .history-item:hover {
             border-color: #1976d2;
             box-shadow: 0 2px 8px rgba(25, 118, 210, 0.1);
         }
-
         .history-prompt {
             color: #333;
             margin-bottom: 8px;
             font-size: 14px;
             line-height: 1.4;
         }
-
         .history-meta {
             display: flex;
             justify-content: space-between;
@@ -342,12 +319,10 @@
             font-size: 12px;
             color: #666;
         }
-
         .history-actions {
             display: flex;
             gap: 8px;
         }
-
         .history-btn {
             padding: 4px 12px;
             border: 1px solid #ddd;
@@ -357,12 +332,10 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-
         .history-btn:hover {
             background: #f5f5f5;
             border-color: #1976d2;
         }
-
         .history-search {
             width: 100%;
             padding: 10px;
@@ -371,611 +344,541 @@
             margin-bottom: 15px;
             font-size: 14px;
         }
-
         .history-search:focus {
             outline: none;
             border-color: #1976d2;
         }
-
         .history-empty {
             text-align: center;
             color: #666;
             padding: 40px;
         }
-
-        /* Dark mode support for history */
         [data-theme="dark"] .prompt-history-section {
             background: var(--card-bg);
         }
-
         [data-theme="dark"] .history-item {
             border-color: var(--border-color);
         }
-
         [data-theme="dark"] .history-item:hover {
             border-color: #1976d2;
         }
-
         [data-theme="dark"] .history-prompt {
             color: var(--text-color);
         }
-
         [data-theme="dark"] .history-btn {
             background: var(--prompt-bg);
             border-color: var(--border-color);
             color: var(--text-color);
         }
-
         [data-theme="dark"] .history-search {
             background: var(--prompt-bg);
             border-color: var(--border-color);
             color: var(--text-color);
         }
         /* ===== ENHANCED PLATFORM-SPECIFIC STYLES ===== */
-
-/* Platform features base styles */
-.platform-features {
-    margin: 20px 0;
-    opacity: 0;
-    animation: fadeInUp 0.6s ease forwards;
-    animation-delay: 0.3s;
-}
-
-.feature-card {
-    background: white;
-    padding: 24px;
-    border-radius: 16px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.feature-card:hover {
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    transform: translateY(-2px);
-}
-
-.platform-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    background: rgba(0,0,0,0.05);
-}
-
-/* Platform-specific accent colors */
-.ios-feature {
-    border-left: 4px solid #007AFF;
-}
-.ios-feature .platform-badge {
-    background: #007AFF;
-    color: white;
-}
-
-.android-feature {
-    border-left: 4px solid #4CAF50;
-}
-.android-feature .platform-badge {
-    background: #4CAF50;
-    color: white;
-}
-
-.windows-feature {
-    border-left: 4px solid #0078D4;
-}
-.windows-feature .platform-badge {
-    background: #0078D4;
-    color: white;
-}
-
-.mac-feature {
-    border-left: 4px solid #000000;
-}
-.mac-feature .platform-badge {
-    background: #000000;
-    color: white;
-}
-
-/* Enhanced button styles */
-.platform-btn {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    padding: 16px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 12px;
-    background: #f5f5f5;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.platform-btn:hover {
-    background: #e8e8e8;
-    transform: translateX(4px);
-}
-
-.platform-btn.primary-action {
-    background: #1976d2;
-    color: white;
-    animation: pulse 2s infinite;
-}
-
-.platform-btn.primary-action:hover {
-    background: #1565c0;
-}
-
-.btn-icon {
-    font-size: 24px;
-    flex-shrink: 0;
-}
-
-.btn-text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex: 1;
-}
-
-.btn-title {
-    font-weight: 600;
-    font-size: 16px;
-}
-
-.btn-subtitle {
-    font-size: 13px;
-    opacity: 0.8;
-    margin-top: 2px;
-}
-
-/* Feature tip styles */
-.feature-tip {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 20px;
-    padding: 12px 16px;
-    background: rgba(25, 118, 210, 0.1);
-    border-radius: 8px;
-    font-size: 14px;
-}
-
-.tip-icon {
-    font-size: 18px;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 2px 12px rgba(25, 118, 210, 0.2);
-    }
-    50% {
-        transform: scale(1.02);
-        box-shadow: 0 4px 20px rgba(25, 118, 210, 0.3);
-    }
-}
-
-.animate-in {
-    animation: fadeInUp 0.6s ease forwards;
-}
-
-/* Onboarding tour styles */
-.onboarding-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: fadeIn 0.3s ease;
-}
-
-.onboarding-content {
-    background: white;
-    border-radius: 20px;
-    padding: 40px;
-    max-width: 500px;
-    width: 90%;
-    position: relative;
-    animation: slideIn 0.4s ease;
-}
-
-.onboarding-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    border: none;
-    background: #f5f5f5;
-    border-radius: 50%;
-    font-size: 24px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.onboarding-close:hover {
-    background: #e0e0e0;
-    transform: rotate(90deg);
-}
-
-.onboarding-step h2 {
-    margin: 0 0 20px 0;
-    font-size: 28px;
-}
-
-.onboarding-illustration {
-    text-align: center;
-    margin: 30px 0;
-}
-
-.big-emoji {
-    font-size: 80px;
-    animation: bounce 2s infinite;
-}
-
-.onboarding-btn {
-    background: #1976d2;
-    color: white;
-    border: none;
-    padding: 14px 28px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: all 0.2s;
-}
-
-.onboarding-btn:hover {
-    background: #1565c0;
-    transform: translateY(-2px);
-}
-
-.onboarding-pointer {
-    position: absolute;
-    animation: pointBounce 1s infinite;
-}
-
-.pointer-arrow {
-    font-size: 24px;
-    display: block;
-    text-align: center;
-}
-
-.pointer-text {
-    background: #1976d2;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 14px;
-    white-space: nowrap;
-}
-
-/* Highlight during tour */
-.highlight-tour {
-    position: relative;
-    z-index: 10001;
-    box-shadow: 0 0 0 4px #1976d2, 0 0 20px rgba(25, 118, 210, 0.5);
-    animation: tourPulse 1s infinite;
-}
-
-@keyframes tourPulse {
-    0%, 100% {
-        box-shadow: 0 0 0 4px #1976d2, 0 0 20px rgba(25, 118, 210, 0.5);
-    }
-    50% {
-        box-shadow: 0 0 0 8px #1976d2, 0 0 40px rgba(25, 118, 210, 0.8);
-    }
-}
-
-/* Modal styles */
-.platform-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: fadeIn 0.3s ease;
-}
-
-.modal-content {
-    background: white;
-    border-radius: 16px;
-    padding: 32px;
-    max-width: 500px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
-    animation: slideIn 0.4s ease;
-}
-
-.modal-close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 32px;
-    height: 32px;
-    border: none;
-    background: #f5f5f5;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.modal-close:hover {
-    background: #e0e0e0;
-    transform: rotate(90deg);
-}
-
-/* Achievement popup */
-.achievement-popup {
-    position: fixed;
-    bottom: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 16px 24px;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    transition: all 0.5s ease;
-    z-index: 10000;
-}
-
-.achievement-popup.achievement-show {
-    bottom: 30px;
-}
-
-.achievement-icon {
-    font-size: 24px;
-    animation: achievementBounce 0.6s ease;
-}
-
-.achievement-text {
-    font-weight: 600;
-}
-
-@keyframes achievementBounce {
-    0%, 100% { transform: scale(1) rotate(0deg); }
-    25% { transform: scale(1.2) rotate(-10deg); }
-    75% { transform: scale(1.2) rotate(10deg); }
-}
-
-/* Ripple effect */
-.ripple {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.6);
-    transform: scale(0);
-    animation: rippleEffect 0.6s ease;
-    pointer-events: none;
-}
-
-@keyframes rippleEffect {
-    to {
-        transform: scale(4);
-        opacity: 0;
-    }
-}
-
-/* Dark mode adjustments */
-[data-theme="dark"] .feature-card {
-    background: var(--card-bg);
-}
-
-[data-theme="dark"] .platform-btn {
-    background: var(--prompt-bg);
-    color: var(--text-color);
-}
-
-[data-theme="dark"] .platform-btn.primary-action {
-    background: #1976d2;
-    color: white;
-}
-
-[data-theme="dark"] .onboarding-content,
-[data-theme="dark"] .modal-content {
-    background: var(--card-bg);
-    color: var(--text-color);
-}
-
-[data-theme="dark"] .modal-close,
-[data-theme="dark"] .onboarding-close {
-    background: var(--prompt-bg);
-    color: var(--text-color);
-}
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-    .feature-card {
-        padding: 20px;
-    }
-    
-    .platform-btn {
-        padding: 14px 16px;
-    }
-    
-    .btn-icon {
-        font-size: 20px;
-    }
-    
-    .btn-title {
-        font-size: 15px;
-    }
-    
-    .btn-subtitle {
-        font-size: 12px;
-    }
-    
-    .onboarding-content,
-    .modal-content {
-        padding: 24px;
-        width: 95%;
-    }
-}
-
-/* Accessibility improvements */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* Focus styles for keyboard navigation */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-    outline: 3px solid #1976d2;
-    outline-offset: 2px;
-}
-
-/* Loading states */
-.loading {
-    position: relative;
-    color: transparent;
-}
-
-.loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    margin: -10px 0 0 -10px;
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid #1976d2;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
+        .platform-features {
+            margin: 20px 0;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            animation-delay: 0.3s;
+        }
+        .feature-card {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+        .platform-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(0,0,0,0.05);
+        }
+        .ios-feature {
+            border-left: 4px solid #007AFF;
+        }
+        .ios-feature .platform-badge {
+            background: #007AFF;
+            color: white;
+        }
+        .android-feature {
+            border-left: 4px solid #4CAF50;
+        }
+        .android-feature .platform-badge {
+            background: #4CAF50;
+            color: white;
+        }
+        .windows-feature {
+            border-left: 4px solid #0078D4;
+        }
+        .windows-feature .platform-badge {
+            background: #0078D4;
+            color: white;
+        }
+        .mac-feature {
+            border-left: 4px solid #000000;
+        }
+        .mac-feature .platform-badge {
+            background: #000000;
+            color: white;
+        }
+        .platform-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 12px;
+            background: #f5f5f5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .platform-btn:hover {
+            background: #e8e8e8;
+            transform: translateX(4px);
+        }
+        .platform-btn.primary-action {
+            background: #1976d2;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        .platform-btn.primary-action:hover {
+            background: #1565c0;
+        }
+        .btn-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .btn-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex: 1;
+        }
+        .btn-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .btn-subtitle {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+        .feature-tip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 12px 16px;
+            background: rgba(25, 118, 210, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .tip-icon {
+            font-size: 18px;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 2px 12px rgba(25, 118, 210, 0.2);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 4px 20px rgba(25, 118, 210, 0.3);
+            }
+        }
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .onboarding-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .onboarding-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: slideIn 0.4s ease;
+        }
+        .onboarding-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .onboarding-close:hover {
+            background: #e0e0e0;
+            transform: rotate(90deg);
+        }
+        .onboarding-step h2 {
+            margin: 0 0 20px 0;
+            font-size: 28px;
+        }
+        .onboarding-illustration {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .big-emoji {
+            font-size: 80px;
+            animation: bounce 2s infinite;
+        }
+        .onboarding-btn {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.2s;
+        }
+        .onboarding-btn:hover {
+            background: #1565c0;
+            transform: translateY(-2px);
+        }
+        .onboarding-pointer {
+            position: absolute;
+            animation: pointBounce 1s infinite;
+        }
+        .pointer-arrow {
+            font-size: 24px;
+            display: block;
+            text-align: center;
+        }
+        .pointer-text {
+            background: #1976d2;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        .highlight-tour {
+            position: relative;
+            z-index: 10001;
+            box-shadow: 0 0 0 4px #1976d2, 0 0 20px rgba(25, 118, 210, 0.5);
+            animation: tourPulse 1s infinite;
+        }
+        @keyframes tourPulse {
+            0%, 100% {
+                box-shadow: 0 0 0 4px #1976d2, 0 0 20px rgba(25, 118, 210, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 0 8px #1976d2, 0 0 40px rgba(25, 118, 210, 0.8);
+            }
+        }
+        .platform-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.4s ease;
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .modal-close:hover {
+            background: #e0e0e0;
+            transform: rotate(90deg);
+        }
+        .achievement-popup {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s ease;
+            z-index: 10000;
+        }
+        .achievement-popup.achievement-show {
+            bottom: 30px;
+        }
+        .achievement-icon {
+            font-size: 24px;
+            animation: achievementBounce 0.6s ease;
+        }
+        .achievement-text {
+            font-weight: 600;
+        }
+        @keyframes achievementBounce {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-10deg); }
+            75% { transform: scale(1.2) rotate(10deg); }
+        }
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: rippleEffect 0.6s ease;
+            pointer-events: none;
+        }
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        [data-theme="dark"] .feature-card {
+            background: var(--card-bg);
+        }
+        [data-theme="dark"] .platform-btn {
+            background: var(--prompt-bg);
+            color: var(--text-color);
+        }
+        [data-theme="dark"] .platform-btn.primary-action {
+            background: #1976d2;
+            color: white;
+        }
+        [data-theme="dark"] .onboarding-content,
+        [data-theme="dark"] .modal-content {
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+        [data-theme="dark"] .modal-close,
+        [data-theme="dark"] .onboarding-close {
+            background: var(--prompt-bg);
+            color: var(--text-color);
+        }
+        @media (max-width: 768px) {
+            .feature-card {
+                padding: 20px;
+            }
+            .platform-btn {
+                padding: 14px 16px;
+            }
+            .btn-icon {
+                font-size: 20px;
+            }
+            .btn-title {
+                font-size: 15px;
+            }
+            .btn-subtitle {
+                font-size: 12px;
+            }
+            .onboarding-content,
+            .modal-content {
+                padding: 24px;
+                width: 95%;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible {
+            outline: 3px solid #1976d2;
+            outline-offset: 2px;
+        }
+        .loading {
+            position: relative;
+            color: transparent;
+        }
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #1976d2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
         .agent-search-bar-wrapper {
-  position: relative;
-  margin: 18px 0 0 0;
-  max-width: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-.agent-search-bar {
-  width: 100%;
-  min-height: 44px;
-  padding-right: 40px;
-  font-size: 16px;
-  box-sizing: border-box;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  background: #fff;
-  transition: border-color 0.2s;
-}
-.agent-search-bar:focus {
-  border-color: #1976d2;
-  outline: none;
-}
-.agent-search-clear-btn {
-  position: absolute;
-  right: 12px;
-  background: none;
-  border: none;
-  color: #888;
-  font-size: 22px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  padding: 0;
-  height: 100%;
-  top: 0;
-  bottom: 0;
-  transition: color 0.15s;
-  z-index: 2;
-}
-.agent-search-clear-btn:focus, .agent-search-clear-btn:hover {
-  color: #1976d2;
-}
-@media (max-width: 600px) {
-  .agent-search-bar-wrapper {
-    margin: 12px 0 0 0;
-  }
-  .agent-search-bar {
-    min-height: 36px;
-    font-size: 15px;
-    border-radius: 6px;
-    padding-right: 36px;
-  }
-}
-[data-theme="dark"] .agent-search-bar {
-  background: var(--prompt-bg);
-  color: var(--text-color);
-  border-color: var(--border-color);
-}
-[data-theme="dark"] .agent-search-clear-btn {
-  color: #bbb;
-}
-[data-theme="dark"] .agent-search-clear-btn:focus, [data-theme="dark"] .agent-search-clear-btn:hover {
-  color: #ffc107;
-}
-.agent-search-empty {
-  font-size: 18px;
-  color: #666;
-  margin-top: 30px;
-  padding: 60px 0;
-}
-[data-theme="dark"] .agent-search-empty {
-  color: #aaa;
-}
+            position: relative;
+            margin: 18px 0 0 0;
+            max-width: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .agent-search-bar {
+            width: 100%;
+            min-height: 44px;
+            padding-right: 40px;
+            font-size: 16px;
+            box-sizing: border-box;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+            transition: border-color 0.2s;
+        }
+        .agent-search-bar:focus {
+            border-color: #1976d2;
+            outline: none;
+        }
+        .agent-search-clear-btn {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0;
+            height: 100%;
+            top: 0;
+            bottom: 0;
+            transition: color 0.15s;
+            z-index: 2;
+        }
+        .agent-search-clear-btn:focus, .agent-search-clear-btn:hover {
+            color: #1976d2;
+        }
+        @media (max-width: 600px) {
+            .agent-search-bar-wrapper {
+                margin: 12px 0 0 0;
+            }
+            .agent-search-bar {
+                min-height: 36px;
+                font-size: 15px;
+                border-radius: 6px;
+                padding-right: 36px;
+            }
+        }
+        [data-theme="dark"] .agent-search-bar {
+            background: var(--prompt-bg);
+            color: var(--text-color);
+            border-color: var(--border-color);
+        }
+        [data-theme="dark"] .agent-search-clear-btn {
+            color: #bbb;
+        }
+        [data-theme="dark"] .agent-search-clear-btn:focus, [data-theme="dark"] .agent-search-clear-btn:hover {
+            color: #ffc107;
+        }
+        .agent-search-empty {
+            font-size: 18px;
+            color: #666;
+            margin-top: 30px;
+            padding: 60px 0;
+        }
+        [data-theme="dark"] .agent-search-empty {
+            color: #aaa;
+        }
+        /* Favorites styles */
+        .favorite-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 1;
+            color: #ccc;
+        }
+        .favorite-btn:hover {
+            transform: scale(1.2);
+        }
+        .favorite-btn.favorited {
+            color: #ffc107;
+        }
     </style>
 </head>
-<!-- Cloudflare Web Analytics -->
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3aebc7040ae5458e90aa4e6059bc20af"}'></script>
-<!-- End Cloudflare Web Analytics -->
 <body>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
         <span id="theme-icon">🌙</span>
     </button>
-    <h1>🚀 Universal Free AI Agent Hub</h1>
+    <h1>🤖 Universal Free AI Agent Hub</h1>
     
     <div class="prompt-section">
         <h2>📝 Universal Prompt Relay</h2>
@@ -1004,7 +907,6 @@ textarea:focus-visible {
         </div>
     </div>
 
-    <!-- Prompt History Section -->
     <div class="prompt-history-section" id="prompt-history-section">
         <h3>📜 Prompt History</h3>
         <input 
@@ -1019,33 +921,33 @@ textarea:focus-visible {
         </div>
     </div>
 
-    <!-- CATEGORY TABS (Snippet 2) -->
     <div class="category-tabs" id="category-tabs">
-      <button class="tab-btn active" onclick="showCategory('all')" id="tab-all">All Agents</button>
-      <button class="tab-btn" onclick="showCategory('general')" id="tab-general">General Purpose</button>
-      <button class="tab-btn" onclick="showCategory('coding')" id="tab-coding">Coding</button>
-      <button class="tab-btn" onclick="showCategory('research')" id="tab-research">Research</button>
-      <button class="tab-btn" onclick="showCategory('creative')" id="tab-creative">Creative</button>
+        <button class="tab-btn active" onclick="showCategory('all')" id="tab-all">All Agents</button>
+        <button class="tab-btn" onclick="showCategory('general')" id="tab-general">General Purpose</button>
+        <button class="tab-btn" onclick="showCategory('coding')" id="tab-coding">Coding</button>
+        <button class="tab-btn" onclick="showCategory('research')" id="tab-research">Research</button>
+        <button class="tab-btn" onclick="showCategory('creative')" id="tab-creative">Creative</button>
+        <button class="tab-btn" onclick="showCategory('favorites')" id="tab-favorites">Favorites</button>
     </div>
 
     <div class="agent-search-bar-wrapper">
-  <input
-    type="text"
-    id="agent-search-bar"
-    class="prompt-textarea agent-search-bar"
-    placeholder="Search agents by name, provider, or features..."
-    autocomplete="off"
-    aria-label="Search agents"
-  />
-  <button
-    id="agent-search-clear"
-    class="agent-search-clear-btn"
-    type="button"
-    aria-label="Clear search"
-    onclick="clearAgentSearch()"
-    style="display:none"
-  >&#10005;</button>
-</div>
+        <input
+            type="text"
+            id="agent-search-bar"
+            class="prompt-textarea agent-search-bar"
+            placeholder="Search agents by name, provider, or features..."
+            autocomplete="off"
+            aria-label="Search agents"
+        />
+        <button
+            id="agent-search-clear"
+            class="agent-search-clear-btn"
+            type="button"
+            aria-label="Clear search"
+            onclick="clearAgentSearch()"
+            style="display:none"
+        >✕</button>
+    </div>
     
     <h2 style="margin-top: 40px;">🤖 Agent Directory</h2>
     <div id="agent-grid" class="agent-grid" aria-live="polite">
@@ -1053,188 +955,166 @@ textarea:focus-visible {
     </div>
 
     <div id="agent-search-empty" class="agent-search-empty" style="display:none;text-align:center;color:#666;padding:40px;">
-  No agents found
-</div>
+        No agents found
+    </div>
     
-        <!-- Accordion for Quick Comparison -->
-<div class="comparison-accordion">
-  <button
-    id="comparison-toggle"
-    class="btn btn-secondary"
-    style="margin-bottom: 12px;"
-    aria-expanded="false"
-    aria-controls="comparison-content"
-    onclick="toggleComparisonAccordion()"
-  >
-    Show Quick Comparison
-  </button>
-  <div
-    id="comparison-content"
-    class="comparison-table"
-    style="display: none;"
-    aria-hidden="true"
-  >
-    <h3>Quick Comparison</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Agent</th>
-          <th>Best For</th>
-          <th>Login Required</th>
-          <th>Daily Limit</th>
-        </tr>
-      </thead>
-      <tbody id="comparison-body">
-        <!-- Dynamically populated -->
-      </tbody>
-    </table>
-  </div>
-</div>
+    <div class="comparison-accordion">
+        <button
+            id="comparison-toggle"
+            class="btn btn-secondary"
+            style="margin-bottom: 12px;"
+            aria-expanded="false"
+            aria-controls="comparison-content"
+            onclick="toggleComparisonAccordion()"
+        >
+            Show Quick Comparison
+        </button>
+        <div
+            id="comparison-content"
+            class="comparison-table"
+            style="display: none;"
+            aria-hidden="true"
+        >
+            <h3>Quick Comparison</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Agent</th>
+                        <th>Best For</th>
+                        <th>Login Required</th>
+                        <th>Daily Limit</th>
+                    </tr>
+                </thead>
+                <tbody id="comparison-body">
+                    <!-- Dynamically populated -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-<script>
-function toggleComparisonAccordion() {
-  const content = document.getElementById('comparison-content');
-  const toggle = document.getElementById('comparison-toggle');
-  const expanded = toggle.getAttribute('aria-expanded') === 'true';
-  if (expanded) {
-    content.style.display = 'none';
-    toggle.setAttribute('aria-expanded', 'false');
-    content.setAttribute('aria-hidden', 'true');
-    toggle.textContent = 'Show Quick Comparison';
-  } else {
-    content.style.display = '';
-    toggle.setAttribute('aria-expanded', 'true');
-    content.setAttribute('aria-hidden', 'false');
-    toggle.textContent = 'Hide Quick Comparison';
-  }
-}
-</script>       
-       
-    <!-- Agent Recommendation Quick-Pick -->
     <div style="margin: 32px 0 10px 0;">
-      <label for="user-task" style="font-weight: 500;">Need help picking an agent? Tell us your task:</label>
-      <select id="user-task" style="margin-left: 10px; padding: 8px; font-size: 16px;" onchange="showRecommendation()">
-        <option value="general">General Purpose</option>
-        <option value="coding">Coding</option>
-        <option value="research">Research</option>
-        <option value="creative">Creative</option>
-      </select>
-      <span id="agent-recommendation" style="margin-left: 20px; font-weight: 600;"></span>
+        <label for="user-task" style="font-weight: 500;">Need help picking an agent? Tell us your task:</label>
+        <select id="user-task" style="margin-left: 10px; padding: 8px; font-size: 16px;" onchange="showRecommendation()">
+            <option value="general">General Purpose</option>
+            <option value="coding">Coding</option>
+            <option value="research">Research</option>
+            <option value="creative">Creative</option>
+        </select>
+        <span id="agent-recommendation" style="margin-left: 20px; font-weight: 600;"></span>
     </div>
 
     <script>
-        // ---- SNIPPET 1: Unified Agent Data Structure ----
-        // Custom and You.com agents, realistic URLs, plus mainstream & specialized from the provided list
+        // Agent data
         const freeAIAgents = {
-          mainstream: [
-            {
-              name: "ChatGPT",
-              provider: "OpenAI",
-              url: "https://chatgpt.com",
-              icon: "🤖",
-              description: "GPT-4o free tier, no login required",
-              features: ["General chat", "Code generation", "Creative writing"],
-              limitations: ["Usage limits on GPT-4o", "No plugins in free tier"],
-              type: "mainstream",
-              bestFor: ["general", "coding", "creative"],
-              loginRequired: "No",
-              dailyLimit: "Unknown"
-            },
-            {
-              name: "Gemini", 
-              provider: "Google",
-              url: "https://gemini.google.com",
-              icon: "✨",
-              description: "Google's latest AI, free with Google account",
-              features: ["Web search integration", "Image understanding", "Long context"],
-              limitations: ["Requires Google account", "Some features Pro-only"],
-              type: "mainstream",
-              bestFor: ["general", "research"],
-              loginRequired: "Yes",
-              dailyLimit: "Unknown"
-            },
-            {
-              name: "Claude",
-              provider: "Anthropic",
-              url: "https://claude.ai",
-              icon: "🧠",
-              description: "100k token context window, privacy-focused",
-              features: ["Large documents", "Code analysis", "Research"],
-              limitations: ["Daily message limit", "Email signup required"],
-              type: "mainstream",
-              bestFor: ["research", "creative", "general"],
-              loginRequired: "Yes",
-              dailyLimit: "50 messages/day"
-            },
-            {
-              name: "Copilot",
-              provider: "Microsoft", 
-              url: "https://copilot.microsoft.com",
-              icon: "🎯",
-              description: "GPT-4 Turbo via Microsoft, completely free",
-              features: ["Web browsing", "Image generation", "No signup"],
-              limitations: ["Bing integration", "Microsoft branding"],
-              type: "mainstream",
-              bestFor: ["general", "creative"],
-              loginRequired: "No",
-              dailyLimit: "Unknown"
-            },
-            {
-              name: "Perplexity",
-              provider: "Perplexity AI",
-              url: "https://www.perplexity.ai",
-              icon: "🔍",
-              description: "AI-powered search with citations",
-              features: ["Real-time web search", "Source citations", "Follow-up questions"],
-              limitations: ["5 Pro searches/day", "Limited file uploads"],
-              type: "mainstream",
-              bestFor: ["research", "general"],
-              loginRequired: "No",
-              dailyLimit: "Unknown"
-            },
-            {
-              name: "Meta AI",
-              provider: "Meta",
-              url: "https://www.meta.ai",
-              icon: "📘",
-              description: "Meta's Llama-based assistant",
-              features: ["Image generation", "Social integration", "No account needed"],
-              limitations: ["US only", "Less capable than GPT-4"],
-              type: "mainstream",
-              bestFor: ["creative", "general"],
-              loginRequired: "No",
-              dailyLimit: "Unknown"
-            }
-          ],
-          specialized: [
-            {
-              name: "HuggingChat",
-              provider: "Hugging Face",
-              url: "https://huggingface.co/chat",
-              icon: "🤗",
-              description: "Open source models including Llama, Mistral",
-              features: ["Multiple models", "Open source", "No tracking"],
-              limitations: ["Less polished UI", "Variable performance"],
-              type: "specialized",
-              bestFor: ["research", "general"],
-              loginRequired: "No",
-              dailyLimit: "Unknown"
-            },
-            {
-              name: "Phind",
-              provider: "Phind",
-              url: "https://www.phind.com",
-              icon: "👨‍💻",
-              description: "Developer-focused AI search",
-              features: ["Code examples", "Technical docs", "VS Code extension"],
-              limitations: ["Developer-focused only", "Limited general chat"],
-              type: "specialized",
-              bestFor: ["coding"],
-              loginRequired: "No",
-              dailyLimit: "Unknown"
-            }
-          ],
-          youcom: [
+            mainstream: [
+                {
+                    name: "ChatGPT",
+                    provider: "OpenAI",
+                    url: "https://chatgpt.com",
+                    icon: "🤖",
+                    description: "GPT-4o free tier, no login required",
+                    features: ["General chat", "Code generation", "Creative writing"],
+                    limitations: ["Usage limits on GPT-4o", "No plugins in free tier"],
+                    type: "mainstream",
+                    bestFor: ["general", "coding", "creative"],
+                    loginRequired: "No",
+                    dailyLimit: "Unknown"
+                },
+                {
+                    name: "Gemini", 
+                    provider: "Google",
+                    url: "https://gemini.google.com",
+                    icon: "✨",
+                    description: "Google's latest AI, free with Google account",
+                    features: ["Web search integration", "Image understanding", "Long context"],
+                    limitations: ["Requires Google account", "Some features Pro-only"],
+                    type: "mainstream",
+                    bestFor: ["general", "research"],
+                    loginRequired: "Yes",
+                    dailyLimit: "Unknown"
+                },
+                {
+                    name: "Claude",
+                    provider: "Anthropic",
+                    url: "https://claude.ai",
+                    icon: "🧠",
+                    description: "100k token context window, privacy-focused",
+                    features: ["Large documents", "Code analysis", "Research"],
+                    limitations: ["Daily message limit", "Email signup required"],
+                    type: "mainstream",
+                    bestFor: ["research", "creative", "general"],
+                    loginRequired: "Yes",
+                    dailyLimit: "50 messages/day"
+                },
+                {
+                    name: "Copilot",
+                    provider: "Microsoft", 
+                    url: "https://copilot.microsoft.com",
+                    icon: "🎯",
+                    description: "GPT-4 Turbo via Microsoft, completely free",
+                    features: ["Web browsing", "Image generation", "No signup"],
+                    limitations: ["Bing integration", "Microsoft branding"],
+                    type: "mainstream",
+                    bestFor: ["general", "creative"],
+                    loginRequired: "No",
+                    dailyLimit: "Unknown"
+                },
+                {
+                    name: "Perplexity",
+                    provider: "Perplexity AI",
+                    url: "https://www.perplexity.ai",
+                    icon: "🔍",
+                    description: "AI-powered search with citations",
+                    features: ["Real-time web search", "Source citations", "Follow-up questions"],
+                    limitations: ["5 Pro searches/day", "Limited file uploads"],
+                    type: "mainstream",
+                    bestFor: ["research", "general"],
+                    loginRequired: "No",
+                    dailyLimit: "Unknown"
+                },
+                {
+                    name: "Meta AI",
+                    provider: "Meta",
+                    url: "https://www.meta.ai",
+                    icon: "📘",
+                    description: "Meta's Llama-based assistant",
+                    features: ["Image generation", "Social integration", "No account needed"],
+                    limitations: ["US only", "Less capable than GPT-4"],
+                    type: "mainstream",
+                    bestFor: ["creative", "general"],
+                    loginRequired: "No",
+                    dailyLimit: "Unknown"
+                }
+            ],
+            specialized: [
+                {
+                    name: "HuggingChat",
+                    provider: "Hugging Face",
+                    url: "https://huggingface.co/chat",
+                    icon: "🤗",
+                    description: "Open source models including Llama, Mistral",
+                    features: ["Multiple models", "Open source", "No tracking"],
+                    limitations: ["Less polished UI", "Variable performance"],
+                    type: "specialized",
+                    bestFor: ["research", "general"],
+                    loginRequired: "No",
+                    dailyLimit: "Unknown"
+                },
+                {
+                    name: "Phind",
+                    provider: "Phind",
+                    url: "https://www.phind.com",
+                    icon: "👨‍💻",
+                    description: "Developer-focused AI search",
+                    features: ["Code examples", "Technical docs", "VS Code extension"],
+                    limitations: ["Developer-focused only", "Limited general chat"],
+                    type: "specialized",
+                    bestFor: ["coding"],
+                    loginRequired: "No",
+                    dailyLimit: "Unknown"
+                }
+            ],
+            youcom: [
                 {
                     name: "You.com Research",
                     provider: "You.com",
@@ -1316,174 +1196,259 @@ function toggleComparisonAccordion() {
             ]
         };
 
-        // ---- CATEGORY FILTER LOGIC (Snippet 2) ----
-        // Supported categories and their mapping to agent "bestFor" tags
-        const categoryMap = {
-          all: null,
-          general: "general",
-          coding: "coding",
-          research: "research",
-          creative: "creative"
+        // State management
+        const AppState = {
+            currentCategory: 'all',
+            searchQuery: '',
+            favorites: JSON.parse(localStorage.getItem('favorite-agents') || '[]')
         };
 
-        // Combine all agent arrays for unified listing/comparison
+        // Utility functions
         function getAllAgents() {
-          return [
-            ...freeAIAgents.mainstream,
-            ...freeAIAgents.specialized,
-            ...freeAIAgents.youcom
-          ];
+            return [
+                ...freeAIAgents.mainstream,
+                ...freeAIAgents.specialized,
+                ...freeAIAgents.youcom
+            ];
         }
 
-        // Show agents by category
-        function showCategory(cat) {
-          // Set tab active state
-          Object.keys(categoryMap).forEach(key => {
-            const tab = document.getElementById('tab-' + key);
-            if (tab) tab.classList.toggle('active', cat === key);
-          });
-          renderAgents(cat);
-          renderComparisonTable(cat);
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
         }
 
-        // Initial render on load
-        window.addEventListener('DOMContentLoaded', function() {
-          showCategory('all');
-          // Load saved prompt
-          const savedPrompt = localStorage.getItem('relay-prompt');
-          if (savedPrompt) {
-              document.getElementById('universal-prompt').value = savedPrompt;
-              document.getElementById('saved-indicator').style.display = 'block';
-          } else {
-              document.getElementById('saved-indicator').style.display = 'none';
-          }
-          // Recommendation on load
-          showRecommendation();
-          // Render prompt history on load
-          PromptHistory.render();
-        });
-
-        // Render agent cards
-        function renderAgents(category) {
-  const grid = document.getElementById('agent-grid');
-  grid.innerHTML = '';
-  let agents = getAllAgents();
-
-  // CATEGORY filter
-  if (categoryMap[category]) {
-    agents = agents.filter(a => a.bestFor && a.bestFor.includes(categoryMap[category]));
-  }
-
-  // SEARCH filter
-  const searchInput = document.getElementById('agent-search-bar');
-  const filter = searchInput ? searchInput.value.trim().toLowerCase() : '';
-  if (filter) {
-    agents = agents.filter(agent => {
-      const haystack = [
-        agent.name,
-        agent.provider,
-        agent.description,
-        ...(agent.features || [])
-      ].join(' ').toLowerCase();
-      return haystack.includes(filter);
-    });
-  }
-
-  // NO AGENTS FOUND message
-  if (!agents.length) {
-    document.getElementById('agent-search-empty').style.display = 'block';
-    return;
-  } else {
-    document.getElementById('agent-search-empty').style.display = 'none';
-  }
-
-  // RENDER CARDS
-  agents.forEach((agent) => {
-    const card = document.createElement('div');
-    card.className = 'agent-card';
-    card.innerHTML = `
-      <span class="agent-type type-${agent.type}">${agent.type ? agent.type.toUpperCase() : ''}</span>
-      <h3 style="font-size: 24px; margin: 0 0 10px 0;">
-        ${agent.icon} ${agent.name}
-      </h3>
-      <p style="color: #666; margin: 10px 0;">
-        ${agent.description}
-      </p>
-      <div style="margin-bottom: 8px;">
-        <strong>Provider:</strong> ${agent.provider}
-      </div>
-      <div>
-        <strong>Features:</strong> ${agent.features.join(", ")}
-      </div>
-      <div>
-        <strong>Limitations:</strong> ${agent.limitations.join(", ")}
-      </div>
-      <div class="url-display" tabindex="0" aria-label="Agent URL (focus to expand)">
-        ${agent.url}
-      </div>
-      <button class="btn btn-primary launch-btn" onclick="launchAgentByName('${agent.name}')" aria-label="Launch ${agent.name}">
-        🚀 Launch Agent
-      </button>
-    `;
-    grid.appendChild(card);
-  });
-}
-
-        // For launching by name (IDs are not unique across merged arrays)
-        let originalLaunchAgentByName = function(name) {
-          const all = getAllAgents();
-          const agent = all.find(a => a.name === name);
-          const prompt = document.getElementById('universal-prompt').value;
-          // Save current state
-          if (prompt) {
-              savePrompt();
-          }
-          // Store launch metadata
-          localStorage.setItem('last-launched-agent', JSON.stringify({
-              name: agent.name,
-              url: agent.url,
-              timestamp: Date.now()
-          }));
-          // Save session context (Snippet 3)
-          saveSessionContext(agent.name);
-          // Open agent
-          window.open(agent.url, '_blank', 'noopener');
-          if (prompt) {
-              showNotification(`${agent.name} opened! Click "Copy to Clipboard" then paste in the chat.`);
-          } else {
-              showNotification(`${agent.name} opened in new tab!`);
-          }
+        // Favorites Manager
+        const FavoritesManager = {
+            getFavorites: function() {
+                return AppState.favorites;
+            },
+            
+            toggleFavorite: function(agentName) {
+                const index = AppState.favorites.indexOf(agentName);
+                
+                if (index > -1) {
+                    AppState.favorites.splice(index, 1);
+                } else {
+                    AppState.favorites.push(agentName);
+                }
+                
+                localStorage.setItem('favorite-agents', JSON.stringify(AppState.favorites));
+                this.updateUI();
+                showNotification(index > -1 ? '⭐ Removed from favorites' : '⭐ Added to favorites!');
+                
+                // Re-render if on favorites tab
+                if (AppState.currentCategory === 'favorites') {
+                    renderAgents();
+                }
+            },
+            
+            isFavorite: function(agentName) {
+                return AppState.favorites.includes(agentName);
+            },
+            
+            updateUI: function() {
+                const favTab = document.getElementById('tab-favorites');
+                if (favTab) {
+                    const count = AppState.favorites.length;
+                    favTab.textContent = count > 0 ? `Favorites (${count})` : 'Favorites';
+                }
+            }
         };
 
-        // ---- COMPARISON TABLE (Snippet 2) ----
-        function renderComparisonTable(category) {
-          const tbody = document.getElementById('comparison-body');
-          tbody.innerHTML = '';
-          let agents = getAllAgents();
-          if (categoryMap[category]) {
-            agents = agents.filter(a => a.bestFor && a.bestFor.includes(categoryMap[category]));
-          }
-          agents.forEach(agent => {
-            // For demo, "best for" is joined, login/daily as in agent meta
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-              <td>${agent.icon} ${agent.name}</td>
-              <td>${agent.bestFor ? agent.bestFor.map(cat => cat.charAt(0).toUpperCase() + cat.slice(1)).join(', ') : ''}</td>
-              <td>${agent.loginRequired || 'No'}</td>
-              <td>${agent.dailyLimit || 'Unknown'}</td>
-            `;
-            tbody.appendChild(tr);
-          });
+        // Unified render function
+        function renderAgents() {
+            const grid = document.getElementById('agent-grid');
+            const emptyMsg = document.getElementById('agent-search-empty');
+            
+            let agents = getAllAgents();
+            
+            // Apply category filter
+            if (AppState.currentCategory === 'favorites') {
+                agents = agents.filter(a => FavoritesManager.isFavorite(a.name));
+            } else if (AppState.currentCategory !== 'all') {
+                agents = agents.filter(a => a.bestFor && a.bestFor.includes(AppState.currentCategory));
+            }
+            
+            // Apply search filter
+            if (AppState.searchQuery) {
+                const query = AppState.searchQuery.toLowerCase();
+                agents = agents.filter(agent => {
+                    const searchableText = [
+                        agent.name,
+                        agent.provider,
+                        agent.description,
+                        ...(agent.features || [])
+                    ].join(' ').toLowerCase();
+                    return searchableText.includes(query);
+                });
+            }
+            
+            // Show/hide empty message
+            emptyMsg.style.display = agents.length === 0 ? 'block' : 'none';
+            grid.innerHTML = '';
+            
+            // Render agent cards
+            agents.forEach(agent => {
+                const card = createAgentCard(agent);
+                grid.appendChild(card);
+            });
         }
 
-        // ---- PROMPT RELAY LOGIC ----
-        let originalSavePrompt = function() {
+        // Create agent card
+        function createAgentCard(agent) {
+            const isFavorite = FavoritesManager.isFavorite(agent.name);
+            const card = document.createElement('div');
+            card.className = 'agent-card';
+            card.innerHTML = `
+                <button class="favorite-btn ${isFavorite ? 'favorited' : ''}" 
+                        onclick="FavoritesManager.toggleFavorite('${agent.name}')" 
+                        aria-label="Toggle favorite">
+                    ${isFavorite ? '⭐' : '☆'}
+                </button>
+                <span class="agent-type type-${agent.type}">${agent.type ? agent.type.toUpperCase() : ''}</span>
+                <h3 style="font-size: 24px; margin: 0 0 10px 0;">
+                    ${agent.icon} ${agent.name}
+                </h3>
+                <p style="color: #666; margin: 10px 0;">
+                    ${agent.description}
+                </p>
+                <div style="margin-bottom: 8px;">
+                    <strong>Provider:</strong> ${agent.provider}
+                </div>
+                <div>
+                    <strong>Features:</strong> ${agent.features.join(", ")}
+                </div>
+                <div>
+                    <strong>Limitations:</strong> ${agent.limitations.join(", ")}
+                </div>
+                <div class="url-display" tabindex="0" aria-label="Agent URL (focus to expand)">
+                    ${agent.url}
+                </div>
+                <button class="btn btn-primary launch-btn" onclick="launchAgentByName('${agent.name}')" aria-label="Launch ${agent.name}">
+                    🚀 Launch Agent
+                </button>
+            `;
+            return card;
+        }
+
+        // Launch agent
+        function launchAgentByName(name) {
+            const agent = getAllAgents().find(a => a.name === name);
+            const prompt = document.getElementById('universal-prompt').value;
+            
+            if (prompt.trim()) {
+                PromptHistory.add(prompt, name);
+            }
+            
+            saveSessionContext(agent.name);
+            window.open(agent.url, '_blank', 'noopener');
+            
+            showNotification(prompt ? 
+                `${agent.name} opened! Click "Copy to Clipboard" then paste in the chat.` : 
+                `${agent.name} opened in new tab!`
+            );
+        }
+
+        // Category management
+        function showCategory(cat) {
+            AppState.currentCategory = cat;
+            
+            // Update tab states
+            document.querySelectorAll('.tab-btn').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(`tab-${cat}`)?.classList.add('active');
+            
+            renderAgents();
+            renderComparisonTable();
+        }
+
+        // Comparison table
+        function renderComparisonTable() {
+            const tbody = document.getElementById('comparison-body');
+            tbody.innerHTML = '';
+            
+            let agents = getAllAgents();
+            
+            if (AppState.currentCategory === 'favorites') {
+                agents = agents.filter(a => FavoritesManager.isFavorite(a.name));
+            } else if (AppState.currentCategory !== 'all') {
+                agents = agents.filter(a => a.bestFor && a.bestFor.includes(AppState.currentCategory));
+            }
+            
+            agents.forEach(agent => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${agent.icon} ${agent.name}</td>
+                    <td>${agent.bestFor ? agent.bestFor.map(cat => cat.charAt(0).toUpperCase() + cat.slice(1)).join(', ') : ''}</td>
+                    <td>${agent.loginRequired || 'No'}</td>
+                    <td>${agent.dailyLimit || 'Unknown'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function toggleComparisonAccordion() {
+            const content = document.getElementById('comparison-content');
+            const toggle = document.getElementById('comparison-toggle');
+            const expanded = toggle.getAttribute('aria-expanded') === 'true';
+            
+            if (expanded) {
+                content.style.display = 'none';
+                toggle.setAttribute('aria-expanded', 'false');
+                content.setAttribute('aria-hidden', 'true');
+                toggle.textContent = 'Show Quick Comparison';
+            } else {
+                content.style.display = '';
+                toggle.setAttribute('aria-expanded', 'true');
+                content.setAttribute('aria-hidden', 'false');
+                toggle.textContent = 'Hide Quick Comparison';
+            }
+        }
+
+        // Search functionality
+        function handleSearch() {
+            const searchInput = document.getElementById('agent-search-bar');
+            AppState.searchQuery = searchInput.value.trim();
+            
+            const clearBtn = document.getElementById('agent-search-clear');
+            clearBtn.style.display = AppState.searchQuery ? 'flex' : 'none';
+            
+            renderAgents();
+        }
+
+        const debouncedSearch = debounce(handleSearch, 300);
+
+        function clearAgentSearch() {
+            const searchInput = document.getElementById('agent-search-bar');
+            searchInput.value = '';
+            AppState.searchQuery = '';
+            document.getElementById('agent-search-clear').style.display = 'none';
+            renderAgents();
+            searchInput.focus();
+        }
+
+        // Prompt management
+        function savePrompt() {
             const prompt = document.getElementById('universal-prompt').value;
             localStorage.setItem('relay-prompt', prompt);
             localStorage.setItem('relay-timestamp', Date.now());
             document.getElementById('saved-indicator').style.display = prompt ? 'block' : 'none';
+            
+            if (prompt.trim()) {
+                PromptHistory.add(prompt, null);
+            }
+            
             showNotification('✓ Prompt saved! Ready for relay to agents.');
-        };
+        }
+
         function copyPrompt() {
             const prompt = document.getElementById('universal-prompt').value;
             if (navigator.clipboard) {
@@ -1496,6 +1461,7 @@ function toggleComparisonAccordion() {
                 fallbackCopyTextToClipboard(prompt);
             }
         }
+
         function fallbackCopyTextToClipboard(text) {
             const textarea = document.createElement("textarea");
             textarea.value = text;
@@ -1508,17 +1474,18 @@ function toggleComparisonAccordion() {
                 document.execCommand('copy');
                 showNotification('📋 Copied! Paste in the agent chat.');
             } catch (err) {
-                showNotification('❌ Copy failed. Please copy manually.');
+                showNotification('⚠ Copy failed. Please copy manually.');
             }
             document.body.removeChild(textarea);
         }
+
         function clearPrompt() {
             document.getElementById('universal-prompt').value = '';
             localStorage.removeItem('relay-prompt');
             document.getElementById('saved-indicator').style.display = 'none';
         }
 
-        // ---- NOTIFICATION SYSTEM ----
+        // Notifications
         function showNotification(message, duration = 3000) {
             const notification = document.createElement('div');
             notification.className = 'notification';
@@ -1530,153 +1497,8 @@ function toggleComparisonAccordion() {
             }, duration);
         }
 
-        // ---- AGENT RECOMMENDATION ENGINE (Snippet 3) ----
-        function recommendAgent(userTask) {
-          // Note: "GitHub Copilot" is not in the current agent list, so it will be omitted in recommendation output.
-          const recommendations = {
-            'coding': ['Phind', 'Code Helper', 'ChatGPT'],
-            'research': ['Perplexity', 'Claude', 'Gemini', 'Research Assistant'],
-            'creative': ['ChatGPT', 'Meta AI', 'Claude', 'Writing Coach'],
-            'general': ['ChatGPT', 'Gemini', 'Copilot', 'Smart Routing']
-          };
-          return recommendations[userTask] || recommendations['general'];
-        }
-
-        function showRecommendation() {
-          const select = document.getElementById('user-task');
-          const recs = recommendAgent(select.value);
-          // Filter to only agents present in the current agent list
-          const all = getAllAgents();
-          const validRecs = recs.filter(name => all.find(a => a.name === name));
-          document.getElementById('agent-recommendation').textContent = 
-            validRecs.length > 0 ? 
-              "Recommendation: " + validRecs.map(name => {
-                const agent = all.find(a => a.name === name);
-                return agent ? agent.icon + " " + agent.name : name;
-              }).join(", ")
-              : "";
-        }
-
-        // ---- SESSION CONTINUITY HELPER (Snippet 3) ----
-        function saveSessionContext(currentAgent) {
-          const context = {
-            lastAgent: currentAgent,
-            prompt: document.getElementById('universal-prompt').value,
-            timestamp: Date.now()
-          };
-          localStorage.setItem('agent-session', JSON.stringify(context));
-        }
-
-        // ---- AGENT SEARCH BAR LOGIC ----
-
-function getActiveCategory() {
-  const tabs = document.querySelectorAll('.tab-btn');
-  for (const tab of tabs) {
-    if (tab.classList.contains('active')) {
-      return tab.id.replace('tab-', '');
-    }
-  }
-  return 'all';
-}
-
-function filterAndRenderAgents() {
-  const searchInput = document.getElementById('agent-search-bar');
-  const filter = searchInput.value.trim().toLowerCase();
-  const clearBtn = document.getElementById('agent-search-clear');
-  const emptyMsg = document.getElementById('agent-search-empty');
-  clearBtn.style.display = filter ? 'flex' : 'none';
-
-  // Get the currently selected category
-  const activeCategory = getActiveCategory();
-
-  // Get all agents
-  let agents = getAllAgents();
-  // Filter by category if not "all"
-  if (categoryMap[activeCategory]) {
-    agents = agents.filter(a => a.bestFor && a.bestFor.includes(categoryMap[activeCategory]));
-  }
-  // Filter by search query
-  if (filter) {
-    agents = agents.filter(agent => {
-      const haystack = [
-        agent.name,
-        agent.provider,
-        agent.description,
-        ...(agent.features || [])
-      ].join(' ').toLowerCase();
-      return haystack.includes(filter);
-    });
-  }
-  // Render filtered agents
-  renderAgentsRaw(agents);
-
-  // Show/hide "No agents found" message
-  emptyMsg.style.display = (agents.length === 0) ? 'block' : 'none';
-}
-
-// Renders just the supplied agents array (no filtering)
-function renderAgentsRaw(agentArr) {
-  const grid = document.getElementById('agent-grid');
-  grid.innerHTML = '';
-  agentArr.forEach((agent, index) => {
-    const card = document.createElement('div');
-    card.className = 'agent-card';
-    card.innerHTML = `
-      <span class="agent-type type-${agent.type}">${agent.type ? agent.type.toUpperCase() : ''}</span>
-      <h3 style="font-size: 24px; margin: 0 0 10px 0;">
-        ${agent.icon} ${agent.name}
-      </h3>
-      <p style="color: #666; margin: 10px 0;">
-        ${agent.description}
-      </p>
-      <div style="margin-bottom: 8px;">
-        <strong>Provider:</strong> ${agent.provider}
-      </div>
-      <div>
-        <strong>Features:</strong> ${agent.features.join(", ")}
-      </div>
-      <div>
-        <strong>Limitations:</strong> ${agent.limitations.join(", ")}
-      </div>
-      <div class="url-display" tabindex="0" aria-label="Agent URL (focus to expand)">
-        ${agent.url}
-      </div>
-      <button class="btn btn-primary launch-btn" onclick="launchAgentByName('${agent.name}')" aria-label="Launch ${agent.name}">
-        🚀 Launch Agent
-      </button>
-    `;
-    grid.appendChild(card);
-  });
-}
-
-// Clear search and re-render
-function clearAgentSearch() {
-  const searchInput = document.getElementById('agent-search-bar');
-  searchInput.value = '';
-  document.getElementById('agent-search-clear').style.display = 'none';
-  filterAndRenderAgents();
-  searchInput.focus();
-}
-
-// Hook up search event
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('agent-search-bar').addEventListener('input', filterAndRenderAgents);
-  document.getElementById('agent-search-clear').addEventListener('click', clearAgentSearch);
-});
-
-// Patch category tab logic to use new filter
-function showCategory(cat) {
-  Object.keys(categoryMap).forEach(key => {
-    const tab = document.getElementById('tab-' + key);
-    if (tab) tab.classList.toggle('active', cat === key);
-  });
-  filterAndRenderAgents();
-  renderComparisonTable(cat);
-}
-        
-        // Dark mode implementation
+        // Theme management
         function initTheme() {
-            // Check for saved theme preference or default to 'light'
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
             updateThemeIcon(savedTheme);
@@ -1686,16 +1508,10 @@ function showCategory(cat) {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
-            // Update DOM
             document.documentElement.setAttribute('data-theme', newTheme);
-            
-            // Save preference
             localStorage.setItem('theme', newTheme);
-            
-            // Update icon
             updateThemeIcon(newTheme);
             
-            // Show notification
             showNotification(`${newTheme === 'dark' ? '🌙 Dark' : '☀️ Light'} mode activated!`);
         }
 
@@ -1704,17 +1520,50 @@ function showCategory(cat) {
             icon.textContent = theme === 'dark' ? '☀️' : '🌙';
         }
 
-        // ===== PROMPT HISTORY MANAGEMENT =====
-        const PromptHistory = {
-            maxItems: 50, // Keep last 50 prompts
+        // Recommendations
+        function recommendAgent(userTask) {
+            const recommendations = {
+                'coding': ['Phind', 'You.com Code Helper', 'ChatGPT'],
+                'research': ['Perplexity', 'Claude', 'Gemini', 'You.com Research'],
+                'creative': ['ChatGPT', 'Meta AI', 'Claude', 'You.com Writing Coach'],
+                'general': ['ChatGPT', 'Gemini', 'Copilot', 'You.com Smart Routing']
+            };
+            return recommendations[userTask] || recommendations['general'];
+        }
+
+        function showRecommendation() {
+            const select = document.getElementById('user-task');
+            const recs = recommendAgent(select.value);
+            const all = getAllAgents();
+            const validRecs = recs.filter(name => all.find(a => a.name === name));
             
-            // Get all history
+            document.getElementById('agent-recommendation').textContent = 
+                validRecs.length > 0 ? 
+                    "Recommendation: " + validRecs.map(name => {
+                        const agent = all.find(a => a.name === name);
+                        return agent ? agent.icon + " " + agent.name : name;
+                    }).join(", ")
+                    : "";
+        }
+
+        function saveSessionContext(currentAgent) {
+            const context = {
+                lastAgent: currentAgent,
+                prompt: document.getElementById('universal-prompt').value,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('agent-session', JSON.stringify(context));
+        }
+
+        // Prompt History
+        const PromptHistory = {
+            maxItems: 50,
+            
             getAll: function() {
                 const history = localStorage.getItem('prompt-history');
                 return history ? JSON.parse(history) : [];
             },
             
-            // Add new prompt to history
             add: function(prompt, agentName) {
                 if (!prompt.trim()) return;
                 
@@ -1727,21 +1576,17 @@ function showCategory(cat) {
                     uses: 1
                 };
                 
-                // Check if prompt already exists
                 const existingIndex = history.findIndex(h => h.prompt === prompt);
                 if (existingIndex !== -1) {
-                    // Update use count and move to top
                     history[existingIndex].uses++;
                     history[existingIndex].timestamp = new Date().toISOString();
                     history[existingIndex].agent = agentName || history[existingIndex].agent;
                     const existing = history.splice(existingIndex, 1)[0];
                     history.unshift(existing);
                 } else {
-                    // Add new prompt to beginning
                     history.unshift(newEntry);
                 }
                 
-                // Keep only last N items
                 if (history.length > this.maxItems) {
                     history.length = this.maxItems;
                 }
@@ -1750,7 +1595,6 @@ function showCategory(cat) {
                 this.render();
             },
             
-            // Delete a prompt from history
             delete: function(id) {
                 const history = this.getAll();
                 const filtered = history.filter(h => h.id !== id);
@@ -1758,25 +1602,21 @@ function showCategory(cat) {
                 this.render();
             },
             
-            // Use a prompt from history
             use: function(id) {
                 const history = this.getAll();
                 const item = history.find(h => h.id === id);
                 if (item) {
                     document.getElementById('universal-prompt').value = item.prompt;
                     savePrompt();
-                    // Scroll to top
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     showNotification('📜 Prompt loaded from history!');
                 }
             },
             
-            // Render history list
             render: function(filter = '') {
                 const container = document.getElementById('history-container');
                 const history = this.getAll();
                 
-                // Filter if search term provided
                 const filtered = filter 
                     ? history.filter(h => 
                         h.prompt.toLowerCase().includes(filter.toLowerCase()) ||
@@ -1823,7 +1663,6 @@ function showCategory(cat) {
                 }).join('');
             },
             
-            // Helper: Get relative time
             getTimeAgo: function(date) {
                 const seconds = Math.floor((new Date() - date) / 1000);
                 
@@ -1845,7 +1684,6 @@ function showCategory(cat) {
                 return "Just now";
             },
             
-            // Helper: Escape HTML
             escapeHtml: function(text) {
                 const map = {
                     '&': '&amp;',
@@ -1858,771 +1696,772 @@ function showCategory(cat) {
             }
         };
 
-        // Filter history based on search
         function filterHistory() {
             const searchTerm = document.getElementById('history-search').value;
             PromptHistory.render(searchTerm);
         }
 
-        // Update the existing savePrompt function to include history
-        let savePrompt = function() {
-            originalSavePrompt();
-            const prompt = document.getElementById('universal-prompt').value;
-            if (prompt.trim()) {
-                // Don't add agent name yet - will be added when launching
-                PromptHistory.add(prompt, null);
-            }
-        };
-
-        // Update launchAgentByName to track which agent was used
-        let launchAgentByName = function(name) {
-            const prompt = document.getElementById('universal-prompt').value;
-            if (prompt.trim()) {
-                PromptHistory.add(prompt, name);
-            }
-            originalLaunchAgentByName(name);
-        };
-
-        // Initialize theme on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            initTheme();
-        });
         // ===== ENHANCED UNIVERSAL DEVICE DETECTION & PLATFORM FEATURES =====
-const DeviceManager = {
-    // Detect user's platform
-    getPlatform: function() {
-        const ua = navigator.userAgent;
-        const platform = navigator.platform;
-        
-        if (/iPhone|iPad|iPod/.test(ua) && !window.MSStream) return 'ios';
-        if (/Android/.test(ua)) return 'android';
-        if (/Win/.test(platform)) return 'windows';
-        if (/Mac/.test(platform)) return 'mac';
-        if (/Linux/.test(platform)) return 'linux';
-        
-        return 'unknown';
-    },
-    
-    // Get browser type
-    getBrowser: function() {
-        const ua = navigator.userAgent;
-        
-        if (/Chrome/.test(ua) && !/Edg/.test(ua)) return 'chrome';
-        if (/Safari/.test(ua) && !/Chrome/.test(ua)) return 'safari';
-        if (/Firefox/.test(ua)) return 'firefox';
-        if (/Edg/.test(ua)) return 'edge';
-        
-        return 'other';
-    },
-    
-    // Initialize platform-specific features
-    init: function() {
-        const platform = this.getPlatform();
-        const browser = this.getBrowser();
-        
-        // Add platform class to body
-        document.body.classList.add(`platform-${platform}`);
-        document.body.classList.add(`browser-${browser}`);
-        
-        // Show platform-specific content
-        this.showPlatformFeatures(platform, browser);
-        
-        // Initialize platform-specific features
-        this.initPlatformFeatures(platform, browser);
-        
-        // Check for first-time visitor
-        if (!localStorage.getItem('hasVisited')) {
-            setTimeout(() => this.showOnboardingTour(platform), 1000);
-        }
-    },
-    
-    // Show relevant features for user's platform
-    showPlatformFeatures: function(platform, browser) {
-        const container = document.createElement('div');
-        container.className = 'platform-features';
-        container.id = 'platform-features';
-        container.innerHTML = this.getPlatformHTML(platform, browser);
-        
-        // Insert after prompt section
-        const promptSection = document.querySelector('.prompt-section');
-        promptSection.insertAdjacentElement('afterend', container);
-    },
-    
-    // Get platform-specific HTML with enhancements
-    getPlatformHTML: function(platform, browser) {
-        const features = {
-            'ios': `
-                <div class="feature-card ios-feature animate-in">
-                    <div class="platform-badge">iOS Optimized</div>
-                    <h3>📱 iOS Quick Actions</h3>
-                    <p>Enhance your experience on iPhone/iPad:</p>
-                    <div class="action-buttons">
-                        <button onclick="DeviceManager.installPWA()" class="platform-btn primary-action">
-                            <span class="btn-icon">📲</span>
-                            <span class="btn-text">
-                                <span class="btn-title">Add to Home Screen</span>
-                                <span class="btn-subtitle">One-tap access</span>
-                            </span>
-                        </button>
-                        <button onclick="DeviceManager.createIOSShortcut()" class="platform-btn">
-                            <span class="btn-icon">⚡</span>
-                            <span class="btn-text">
-                                <span class="btn-title">Create Siri Shortcut</span>
-                                <span class="btn-subtitle">Voice activation</span>
-                            </span>
-                        </button>
-                        <button onclick="DeviceManager.enableIOSFeatures()" class="platform-btn">
-                            <span class="btn-icon">🔔</span>
-                            <span class="btn-text">
-                                <span class="btn-title">Enable Notifications</span>
-                                <span class="btn-subtitle">Stay updated</span>
-                            </span>
-                        </button>
-                    </div>
-                    <div class="feature-tip">
-                        <span class="tip-icon">💡</span>
-                        <span>Tip: Add to home screen for app-like experience!</span>
-                    </div>
-                </div>
-            `,
+        const DeviceManager = {
+            // Detect user's platform
+            getPlatform: function() {
+                const ua = navigator.userAgent;
+                const platform = navigator.platform;
+                
+                if (/iPhone|iPad|iPod/.test(ua) && !window.MSStream) return 'ios';
+                if (/Android/.test(ua)) return 'android';
+                if (/Win/.test(platform)) return 'windows';
+                if (/Mac/.test(platform)) return 'mac';
+                if (/Linux/.test(platform)) return 'linux';
+                
+                return 'unknown';
+            },
             
-            'android': `
-                <div class="feature-card android-feature animate-in">
-                    <div class="platform-badge">Android Enhanced</div>
-                    <h3>🤖 Android Power Features</h3>
-                    <p>Get the most from your Android device:</p>
-                    <div class="action-buttons">
-                        <button onclick="DeviceManager.installPWA()" class="platform-btn primary-action">
-                            <span class="btn-icon">📲</span>
-                            <span class="btn-text">
-                                <span class="btn-title">Install App</span>
-                                <span class="btn-subtitle">Works offline</span>
-                            </span>
-                        </button>
-                        <button onclick="DeviceManager.createAndroidWidget()" class="platform-btn">
-                            <span class="btn-icon">📊</span>
-                            <span class="btn-text">
-                                <span class="btn-title">Add Widget</span>
-                                <span class="btn-subtitle">Quick access</span>
-                            </span>
-                        </button>
-                        <button onclick="DeviceManager.enableAndroidShare()" class="platform-btn">
-                            <span class="btn-icon">📤</span>
-                            <span class="btn-text">
-                                <span class="btn-title">Quick Share Setup</span>
-                                <span class="btn-subtitle">Share to AI apps</span>
-                            </span>
-                        </button>
-                    </div>
-                    <div class="feature-tip">
-                        <span class="tip-icon">⚡</span>
-                        <span>Install for widgets and offline access!</span>
-                    </div>
-                </div>
-            `,
+            // Get browser type
+            getBrowser: function() {
+                const ua = navigator.userAgent;
+                
+                if (/Chrome/.test(ua) && !/Edg/.test(ua)) return 'chrome';
+                if (/Safari/.test(ua) && !/Chrome/.test(ua)) return 'safari';
+                if (/Firefox/.test(ua)) return 'firefox';
+                if (/Edg/.test(ua)) return 'edge';
+                
+                return 'other';
+            },
             
-            'windows': `
-                <div class="feature-card windows-feature animate-in">
-                    <div class="platform-badge">Windows Ready</div>
-                    <h3>💻 Windows Desktop Features</h3>
-                    <p>Supercharge your desktop experience:</p>
-                    <div class="action-buttons">
-                        ${browser === 'chrome' || browser === 'edge' ? `
-                            <button onclick="DeviceManager.showExtensionGuide()" class="platform-btn primary-action">
-                                <span class="btn-icon">🧩</span>
-                                <span class="btn-text">
-                                    <span class="btn-title">Browser Extension</span>
-                                    <span class="btn-subtitle">Auto-inject prompts</span>
-                                </span>
-                            </button>
-                        ` : ''}
+            // Initialize platform-specific features
+            init: function() {
+                const platform = this.getPlatform();
+                const browser = this.getBrowser();
+                
+                // Add platform class to body
+                document.body.classList.add(`platform-${platform}`);
+                document.body.classList.add(`browser-${browser}`);
+                
+                // Show platform-specific content
+                this.showPlatformFeatures(platform, browser);
+                
+                // Initialize platform-specific features
+                this.initPlatformFeatures(platform, browser);
+                
+                // Check for first-time visitor
+                if (!localStorage.getItem('hasVisited')) {
+                    setTimeout(() => this.showOnboardingTour(platform), 1000);
+                }
+            },
+            
+            // Show relevant features for user's platform
+            showPlatformFeatures: function(platform, browser) {
+                const container = document.createElement('div');
+                container.className = 'platform-features';
+                container.id = 'platform-features';
+                container.innerHTML = this.getPlatformHTML(platform, browser);
+                
+                // Insert after prompt section
+                const promptSection = document.querySelector('.prompt-section');
+                promptSection.insertAdjacentElement('afterend', container);
+            },
+            
+            // Get platform-specific HTML with enhancements
+            getPlatformHTML: function(platform, browser) {
+                const features = {
+                    'ios': `
+                        <div class="feature-card ios-feature animate-in">
+                            <div class="platform-badge">iOS Optimized</div>
+                            <h3>📱 iOS Quick Actions</h3>
+                            <p>Enhance your experience on iPhone/iPad:</p>
+                            <div class="action-buttons">
+                                <button onclick="DeviceManager.installPWA()" class="platform-btn primary-action">
+                                    <span class="btn-icon">📲</span>
+                                    <span class="btn-text">
+                                        <span class="btn-title">Add to Home Screen</span>
+                                        <span class="btn-subtitle">One-tap access</span>
+                                    </span>
+                                </button>
+                                <button onclick="DeviceManager.createIOSShortcut()" class="platform-btn">
+                                    <span class="btn-icon">⚡</span>
+                                    <span class="btn-text">
+                                        <span class="btn-title">Create Siri Shortcut</span>
+                                        <span class="btn-subtitle">Voice activation</span>
+                                    </span>
+                                </button>
+                                <button onclick="DeviceManager.enableIOSFeatures()" class="platform-btn">
+                                    <span class="btn-icon">🔔</span>
+                                    <span class="btn-text">
+                                        <span class="btn-title">Enable Notifications</span>
+                                        <span class="btn-subtitle">Stay updated</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="feature-tip">
+                                <span class="tip-icon">💡</span>
+                                <span>Tip: Add to home screen for app-like experience!</span>
+                            </div>
+                        </div>
+                    `,
+                    
+                    'android': `
+                        <div class="feature-card android-feature animate-in">
+                            <div class="platform-badge">Android Enhanced</div>
+                            <h3>🤖 Android Power Features</h3>
+                            <p>Get the most from your Android device:</p>
+                            <div class="action-buttons">
+                                <button onclick="DeviceManager.installPWA()" class="platform-btn primary-action">
+                                    <span class="btn-icon">📲</span>
+                                    <span class="btn-text">
+                                        <span class="btn-title">Install App</span>
+                                        <span class="btn-subtitle">Works offline</span>
+                                    </span>
+                                </button>
+                                <button onclick="DeviceManager.createAndroidWidget()" class="platform-btn">
+                                    <span class="btn-icon">📊</span>
+                                    <span class="btn-text">
+                                        <span class="btn-title">Add Widget</span>
+                                        <span class="btn-subtitle">Quick access</span>
+                                    </span>
+                                </button>
+                                <button onclick="DeviceManager.enableAndroidShare()" class="platform-btn">
+                                    <span class="btn-icon">📤</span>
+                                    <span class="btn-text">
+                                        <span class="btn-title">Quick Share Setup</span>
+                                        <span class="btn-subtitle">Share to AI apps</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="feature-tip">
+                                <span class="tip-icon">⚡</span>
+                                <span>Install for widgets and offline access!</span>
+                            </div>
+                        </div>
+                    `,
+                    
+                    'windows': `
+                        <div class="feature-card windows-feature animate-in">
+                            <div class="platform-badge">Windows Ready</div>
+                            <h3>💻 Windows Desktop Features</h3>
+                            <p>Supercharge your desktop experience:</p>
+                            <div class="action-buttons">
+                                ${browser === 'chrome' || browser === 'edge' ? `
+                                    <button onclick="DeviceManager.showExtensionGuide()" class="platform-btn primary-action">
+                                        <span class="btn-icon">🧩</span>
+                                        <span class="btn-text">
+                                            <span class="btn-title">Browser Extension</span>
+                                            <span class="btn-subtitle">Auto-inject prompts</span>
+                                        </span>
+                                    </button>
+                                ` : ''}
+                                <button onclick="DeviceManager.installPWA()" class="platform-btn">
+                                    <span class="btn-icon">💾</span>
+                                    <span class="btn-text">
+                                        <span class="btn-title">Install Desktop App</span>
+                                        <span class="btn-subtitle">Native experience</span>
+                                    </span>
+                                </button>
+                                <button onclick="DeviceManager.setupKeyboardShortcuts()" class="platform-btn">
+                                    <span class="btn-icon">⌨️</span>
+                                    <span class="btn-text">
+                                        <span class="btn-title">Keyboard Shortcuts</span>
+                                        <span class="btn-subtitle">Ctrl+K to search</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="feature-tip">
+                                <span class="tip-icon">🚀</span>
+                                <span>Extension auto-fills prompts on all AI sites!</span>
+                            </div>
+                        </div>
+                    `,
+                    
+                    'mac': `
+                        <div class="feature-card mac-feature animate-in">
+                            <div class="platform-badge">macOS Optimized</div>
+                            <h3>🍎 macOS Enhanced Features</h3>
+                            <p>Mac-optimized tools for power users:</p>
+                            <div class="action-buttons">
+                                ${browser === 'chrome' ? `
+                                    <button onclick="DeviceManager.showExtensionGuide()" class="platform-btn primary-action">
+                                        <span class="btn-icon">🧩</span>
+                                        <span class="btn-text">
+                                            <span class="btn-title">Chrome Extension</span>
+                                            <span class="btn-subtitle">Smart injection</span>
+                                        </span>
+                                    </button>
+                                ` : ''}
+                                ${browser === 'safari' ? `
+                                    <button onclick="DeviceManager.showSafariExtension()" class="platform-btn primary-action">
+                                        <span class="btn-icon">🦁</span>
+                                        <span class="btn-text">
+                                            <span class="btn-title">Safari Extension</span>
+                                            <span class="btn-subtitle">Native integration</span>
+                                        </span>
+                                    </button>
+                                ` : ''}
+                                <button onclick="DeviceManager.setupKeyboardShortcuts()" class="platform-btn">
+                                    <span class="btn-icon">⌨️</span>
+                                    <span class="btn-text">
+                                        <span class="btn-title">Keyboard Shortcuts</span>
+                                        <span class="btn-subtitle">⌘K to search</span>
+                                    </span>
+                                </button>
+                                <button onclick="DeviceManager.addToDock()" class="platform-btn">
+                                    <span class="btn-icon">🚀</span>
+                                    <span class="btn-text">
+                                        <span class="btn-title">Add to Dock</span>
+                                        <span class="btn-subtitle">Quick launch</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="feature-tip">
+                                <span class="tip-icon">⌘</span>
+                                <span>Pro tip: Use ⌘K for instant agent search!</span>
+                            </div>
+                        </div>
+                    `
+                };
+                
+                return features[platform] || `
+                    <div class="feature-card default-feature animate-in">
+                        <h3>🌐 Web Features</h3>
+                        <p>Using ${browser} browser on ${platform}</p>
                         <button onclick="DeviceManager.installPWA()" class="platform-btn">
-                            <span class="btn-icon">💾</span>
-                            <span class="btn-text">
-                                <span class="btn-title">Install Desktop App</span>
-                                <span class="btn-subtitle">Native experience</span>
-                            </span>
-                        </button>
-                        <button onclick="DeviceManager.setupKeyboardShortcuts()" class="platform-btn">
-                            <span class="btn-icon">⌨️</span>
-                            <span class="btn-text">
-                                <span class="btn-title">Keyboard Shortcuts</span>
-                                <span class="btn-subtitle">Ctrl+K to search</span>
-                            </span>
+                            Install Web App
                         </button>
                     </div>
-                    <div class="feature-tip">
-                        <span class="tip-icon">🚀</span>
-                        <span>Extension auto-fills prompts on all AI sites!</span>
-                    </div>
-                </div>
-            `,
+                `;
+            },
             
-            'mac': `
-                <div class="feature-card mac-feature animate-in">
-                    <div class="platform-badge">macOS Optimized</div>
-                    <h3>🍎 macOS Enhanced Features</h3>
-                    <p>Mac-optimized tools for power users:</p>
-                    <div class="action-buttons">
-                        ${browser === 'chrome' ? `
-                            <button onclick="DeviceManager.showExtensionGuide()" class="platform-btn primary-action">
-                                <span class="btn-icon">🧩</span>
-                                <span class="btn-text">
-                                    <span class="btn-title">Chrome Extension</span>
-                                    <span class="btn-subtitle">Smart injection</span>
-                                </span>
+            // Show onboarding tour for first-time users
+            showOnboardingTour: function(platform) {
+                const tour = document.createElement('div');
+                tour.className = 'onboarding-overlay';
+                tour.innerHTML = `
+                    <div class="onboarding-content">
+                        <button class="onboarding-close" onclick="DeviceManager.closeOnboarding()">×</button>
+                        <div class="onboarding-step" id="onboarding-step-1">
+                            <h2>👋 Welcome to AI Agent Hub!</h2>
+                            <p>Your universal gateway to all free AI assistants.</p>
+                            <div class="onboarding-illustration">
+                                <span class="big-emoji">🤖</span>
+                            </div>
+                            <p>We've detected you're using <strong>${platform}</strong> - let's optimize your experience!</p>
+                            <button class="onboarding-btn" onclick="DeviceManager.nextOnboardingStep(2)">
+                                Get Started →
                             </button>
-                        ` : ''}
-                        ${browser === 'safari' ? `
-                            <button onclick="DeviceManager.showSafariExtension()" class="platform-btn primary-action">
-                                <span class="btn-icon">🦁</span>
-                                <span class="btn-text">
-                                    <span class="btn-title">Safari Extension</span>
-                                    <span class="btn-subtitle">Native integration</span>
-                                </span>
+                        </div>
+                        
+                        <div class="onboarding-step" id="onboarding-step-2" style="display: none;">
+                            <h2>📝 Save Your Prompts</h2>
+                            <div class="onboarding-pointer" style="top: 100px; left: 50%;">
+                                <span class="pointer-arrow">↑</span>
+                                <span class="pointer-text">Type your prompt here</span>
+                            </div>
+                            <p>Write once, use everywhere! Your prompts work across all AI platforms.</p>
+                            <button class="onboarding-btn" onclick="DeviceManager.nextOnboardingStep(3)">
+                                Next →
                             </button>
-                        ` : ''}
-                        <button onclick="DeviceManager.setupKeyboardShortcuts()" class="platform-btn">
-                            <span class="btn-icon">⌨️</span>
-                            <span class="btn-text">
-                                <span class="btn-title">Keyboard Shortcuts</span>
-                                <span class="btn-subtitle">⌘K to search</span>
-                            </span>
-                        </button>
-                        <button onclick="DeviceManager.addToDock()" class="platform-btn">
-                            <span class="btn-icon">🚀</span>
-                            <span class="btn-text">
-                                <span class="btn-title">Add to Dock</span>
-                                <span class="btn-subtitle">Quick launch</span>
-                            </span>
-                        </button>
+                        </div>
+                        
+                        <div class="onboarding-step" id="onboarding-step-3" style="display: none;">
+                            <h2>🚀 Platform Features</h2>
+                            <div class="onboarding-pointer" style="top: 300px; left: 50%;">
+                                <span class="pointer-arrow">↓</span>
+                                <span class="pointer-text">Your ${platform} features are here!</span>
+                            </div>
+                            <p>We've prepared special features just for ${platform} users.</p>
+                            <button class="onboarding-btn" onclick="DeviceManager.completeOnboarding()">
+                                Start Using →
+                            </button>
+                        </div>
                     </div>
-                    <div class="feature-tip">
-                        <span class="tip-icon">⌘</span>
-                        <span>Pro tip: Use ⌘K for instant agent search!</span>
-                    </div>
-                </div>
-            `
-        };
-        
-        return features[platform] || `
-            <div class="feature-card default-feature animate-in">
-                <h3>🌐 Web Features</h3>
-                <p>Using ${browser} browser on ${platform}</p>
-                <button onclick="DeviceManager.installPWA()" class="platform-btn">
-                    Install Web App
-                </button>
-            </div>
-        `;
-    },
-    
-    // Show onboarding tour for first-time users
-    showOnboardingTour: function(platform) {
-        const tour = document.createElement('div');
-        tour.className = 'onboarding-overlay';
-        tour.innerHTML = `
-            <div class="onboarding-content">
-                <button class="onboarding-close" onclick="DeviceManager.closeOnboarding()">×</button>
-                <div class="onboarding-step" id="onboarding-step-1">
-                    <h2>👋 Welcome to AI Agent Hub!</h2>
-                    <p>Your universal gateway to all free AI assistants.</p>
-                    <div class="onboarding-illustration">
-                        <span class="big-emoji">🤖</span>
-                    </div>
-                    <p>We've detected you're using <strong>${platform}</strong> - let's optimize your experience!</p>
-                    <button class="onboarding-btn" onclick="DeviceManager.nextOnboardingStep(2)">
-                        Get Started →
-                    </button>
-                </div>
+                `;
+                document.body.appendChild(tour);
                 
-                <div class="onboarding-step" id="onboarding-step-2" style="display: none;">
-                    <h2>📝 Save Your Prompts</h2>
-                    <div class="onboarding-pointer" style="top: 100px; left: 50%;">
-                        <span class="pointer-arrow">↑</span>
-                        <span class="pointer-text">Type your prompt here</span>
-                    </div>
-                    <p>Write once, use everywhere! Your prompts work across all AI platforms.</p>
-                    <button class="onboarding-btn" onclick="DeviceManager.nextOnboardingStep(3)">
-                        Next →
-                    </button>
-                </div>
+                // Track onboarding start
+                this.trackFeature('onboarding_started', platform);
+            },
+            
+            // Onboarding navigation
+            nextOnboardingStep: function(step) {
+                document.querySelectorAll('.onboarding-step').forEach(s => s.style.display = 'none');
+                document.getElementById(`onboarding-step-${step}`).style.display = 'block';
                 
-                <div class="onboarding-step" id="onboarding-step-3" style="display: none;">
-                    <h2>🚀 Platform Features</h2>
-                    <div class="onboarding-pointer" style="top: 300px; left: 50%;">
-                        <span class="pointer-arrow">↓</span>
-                        <span class="pointer-text">Your ${platform} features are here!</span>
-                    </div>
-                    <p>We've prepared special features just for ${platform} users.</p>
-                    <button class="onboarding-btn" onclick="DeviceManager.completeOnboarding()">
-                        Start Using →
-                    </button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(tour);
-        
-        // Track onboarding start
-        this.trackFeature('onboarding_started', platform);
-    },
-    
-    // Onboarding navigation
-    nextOnboardingStep: function(step) {
-        document.querySelectorAll('.onboarding-step').forEach(s => s.style.display = 'none');
-        document.getElementById(`onboarding-step-${step}`).style.display = 'block';
-        
-        // Highlight relevant UI elements
-        if (step === 2) {
-            document.querySelector('.prompt-section').classList.add('highlight-tour');
-        } else if (step === 3) {
-            document.querySelector('.platform-features').classList.add('highlight-tour');
-        }
-    },
-    
-    closeOnboarding: function() {
-        document.querySelector('.onboarding-overlay').remove();
-        document.querySelectorAll('.highlight-tour').forEach(el => {
-            el.classList.remove('highlight-tour');
-        });
-    },
-    
-    completeOnboarding: function() {
-        localStorage.setItem('hasVisited', 'true');
-        this.closeOnboarding();
-        this.trackFeature('onboarding_completed', this.getPlatform());
-        showNotification('🎉 Welcome aboard! Explore your personalized features below.');
-    },
-    
-    // Enhanced feature tracking
-    trackFeature: function(feature, platform, details = {}) {
-        // Track with analytics if available
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'feature_interaction', {
-                'feature_name': feature,
-                'platform': platform,
-                'browser': this.getBrowser(),
-                'timestamp': new Date().toISOString(),
-                ...details
-            });
-        }
-        
-        // Local tracking for feature adoption
-        const adoption = JSON.parse(localStorage.getItem('feature_adoption') || '{}');
-        if (!adoption[feature]) {
-            adoption[feature] = {
-                first_used: new Date().toISOString(),
-                use_count: 0,
-                platform: platform
-            };
-        }
-        adoption[feature].use_count++;
-        adoption[feature].last_used = new Date().toISOString();
-        localStorage.setItem('feature_adoption', JSON.stringify(adoption));
-        
-        // Show achievement notifications for milestones
-        this.checkAchievements(feature, adoption);
-    },
-    
-    // Achievement system
-    checkAchievements: function(feature, adoption) {
-        const achievements = {
-            'first_install': {
-                condition: () => feature === 'pwa_installed',
-                message: '🏆 Achievement: App Installer!',
-                icon: '📲'
+                // Highlight relevant UI elements
+                if (step === 2) {
+                    document.querySelector('.prompt-section').classList.add('highlight-tour');
+                } else if (step === 3) {
+                    document.querySelector('.platform-features').classList.add('highlight-tour');
+                }
             },
-            'power_user': {
-                condition: () => Object.keys(adoption).length >= 5,
-                message: '🏆 Achievement: Power User!',
-                icon: '💪'
+            
+            closeOnboarding: function() {
+                document.querySelector('.onboarding-overlay').remove();
+                document.querySelectorAll('.highlight-tour').forEach(el => {
+                    el.classList.remove('highlight-tour');
+                });
             },
-            'extension_master': {
-                condition: () => feature === 'extension_installed',
-                message: '🏆 Achievement: Extension Master!',
-                icon: '🧩'
+            
+            completeOnboarding: function() {
+                localStorage.setItem('hasVisited', 'true');
+                this.closeOnboarding();
+                this.trackFeature('onboarding_completed', this.getPlatform());
+                showNotification('🎉 Welcome aboard! Explore your personalized features below.');
             },
-            'shortcut_ninja': {
-                condition: () => feature === 'shortcuts_enabled',
-                message: '🏆 Achievement: Shortcut Ninja!',
-                icon: '⚡'
-            }
-        };
-        
-        Object.entries(achievements).forEach(([key, achievement]) => {
-            if (!localStorage.getItem(`achievement_${key}`) && achievement.condition()) {
-                localStorage.setItem(`achievement_${key}`, 'true');
-                this.showAchievement(achievement);
-            }
-        });
-    },
-    
-    showAchievement: function(achievement) {
-        const popup = document.createElement('div');
-        popup.className = 'achievement-popup';
-        popup.innerHTML = `
-            <span class="achievement-icon">${achievement.icon}</span>
-            <span class="achievement-text">${achievement.message}</span>
-        `;
-        document.body.appendChild(popup);
-        
-        setTimeout(() => popup.classList.add('achievement-show'), 100);
-        setTimeout(() => {
-            popup.classList.remove('achievement-show');
-            setTimeout(() => popup.remove(), 500);
-        }, 3000);
-    },
-    
-    // Platform-specific feature implementations with tracking
-    installPWA: function() {
-        const platform = this.getPlatform();
-        
-        if (window.deferredPrompt) {
-            window.deferredPrompt.prompt();
-            window.deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    showNotification('🎉 App installed successfully!');
-                    this.trackFeature('pwa_installed', platform, { method: 'prompt' });
+            
+            // Enhanced feature tracking
+            trackFeature: function(feature, platform, details = {}) {
+                // Track with analytics if available
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'feature_interaction', {
+                        'feature_name': feature,
+                        'platform': platform,
+                        'browser': this.getBrowser(),
+                        'timestamp': new Date().toISOString(),
+                        ...details
+                    });
+                }
+                
+                // Local tracking for feature adoption
+                const adoption = JSON.parse(localStorage.getItem('feature_adoption') || '{}');
+                if (!adoption[feature]) {
+                    adoption[feature] = {
+                        first_used: new Date().toISOString(),
+                        use_count: 0,
+                        platform: platform
+                    };
+                }
+                adoption[feature].use_count++;
+                adoption[feature].last_used = new Date().toISOString();
+                localStorage.setItem('feature_adoption', JSON.stringify(adoption));
+                
+                // Show achievement notifications for milestones
+                this.checkAchievements(feature, adoption);
+            },
+            
+            // Achievement system
+            checkAchievements: function(feature, adoption) {
+                const achievements = {
+                    'first_install': {
+                        condition: () => feature === 'pwa_installed',
+                        message: '🏆 Achievement: App Installer!',
+                        icon: '📲'
+                    },
+                    'power_user': {
+                        condition: () => Object.keys(adoption).length >= 5,
+                        message: '🏆 Achievement: Power User!',
+                        icon: '💪'
+                    },
+                    'extension_master': {
+                        condition: () => feature === 'extension_installed',
+                        message: '🏆 Achievement: Extension Master!',
+                        icon: '🧩'
+                    },
+                    'shortcut_ninja': {
+                        condition: () => feature === 'shortcuts_enabled',
+                        message: '🏆 Achievement: Shortcut Ninja!',
+                        icon: '⚡'
+                    }
+                };
+                
+                Object.entries(achievements).forEach(([key, achievement]) => {
+                    if (!localStorage.getItem(`achievement_${key}`) && achievement.condition()) {
+                        localStorage.setItem(`achievement_${key}`, 'true');
+                        this.showAchievement(achievement);
+                    }
+                });
+            },
+            
+            showAchievement: function(achievement) {
+                const popup = document.createElement('div');
+                popup.className = 'achievement-popup';
+                popup.innerHTML = `
+                    <span class="achievement-icon">${achievement.icon}</span>
+                    <span class="achievement-text">${achievement.message}</span>
+                `;
+                document.body.appendChild(popup);
+                
+                setTimeout(() => popup.classList.add('achievement-show'), 100);
+                setTimeout(() => {
+                    popup.classList.remove('achievement-show');
+                    setTimeout(() => popup.remove(), 500);
+                }, 3000);
+            },
+            
+            // Platform-specific feature implementations with tracking
+            installPWA: function() {
+                const platform = this.getPlatform();
+                
+                if (window.deferredPrompt) {
+                    window.deferredPrompt.prompt();
+                    window.deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            showNotification('🎉 App installed successfully!');
+                            this.trackFeature('pwa_installed', platform, { method: 'prompt' });
+                        } else {
+                            this.trackFeature('pwa_declined', platform);
+                        }
+                    });
                 } else {
-                    this.trackFeature('pwa_declined', platform);
+                    this.showInstallInstructions();
+                    this.trackFeature('pwa_manual_instructions', platform);
                 }
-            });
-        } else {
-            this.showInstallInstructions();
-            this.trackFeature('pwa_manual_instructions', platform);
-        }
-    },
-    
-    showInstallInstructions: function() {
-        const platform = this.getPlatform();
-        const browser = this.getBrowser();
-        const instructions = {
-            'ios': {
-                steps: [
-                    'Tap the Share button <span class="instruction-icon">⬆️</span> at the bottom',
-                    'Scroll down and tap "Add to Home Screen"',
-                    'Name it "AI Hub" and tap "Add"'
-                ],
-                visual: '📱'
             },
-            'android': {
-                steps: [
-                    'Tap the menu button <span class="instruction-icon">⋮</span>',
-                    'Select "Add to Home screen" or "Install app"',
-                    'Confirm installation'
-                ],
-                visual: '🤖'
-            },
-            'windows': {
-                steps: [
-                    'Click the install icon in the address bar',
-                    'Or go to browser menu → Install AI Hub',
-                    'Click "Install" in the popup'
-                ],
-                visual: '💻'
-            },
-            'mac': {
-                steps: [
-                    'Click the install icon in the address bar',
-                    'Or use ' + (browser === 'safari' ? 'Share → Add to Dock' : 'Menu → Install'),
-                    'Confirm installation'
-                ],
-                visual: '🍎'
-            }
-        };
-        
-        const guide = instructions[platform] || instructions['windows'];
-        
-        const modal = document.createElement('div');
-        modal.className = 'platform-modal install-guide';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
-                <div class="install-visual">${guide.visual}</div>
-                <h3>Install AI Hub</h3>
-                <ol class="install-steps">
-                    ${guide.steps.map(step => `<li>${step}</li>`).join('')}
-                </ol>
-                <button class="modal-btn" onclick="this.parentElement.parentElement.remove()">
-                    Got it!
-                </button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    },
-    
-    createIOSShortcut: function() {
-        this.trackFeature('ios_shortcut_guide', 'ios');
-        
-        const modal = document.createElement('div');
-        modal.className = 'platform-modal ios-shortcut-guide';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
-                <h3>⚡ Create Siri Shortcut</h3>
-                <div class="shortcut-preview">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234B7BEC'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40'%3E⚡%3C/text%3E%3C/svg%3E" alt="Shortcut icon">
-                    <span>AI Multi-Launch</span>
-                </div>
-                <ol class="shortcut-steps">
-                    <li>Copy your saved prompt using the button above</li>
-                    <li>Open the <strong>Shortcuts</strong> app</li>
-                    <li>Tap <strong>+</strong> to create new shortcut</li>
-                    <li>Add <strong>"Text"</strong> action with your prompt</li>
-                    <li>Add <strong>"Copy to Clipboard"</strong> action</li>
-                    <li>Add <strong>"Open App"</strong> or <strong>"Open URL"</strong> for each AI</li>
-                    <li>Name it <strong>"AI Multi-Launch"</strong></li>
-                    <li>Say "Hey Siri, AI Multi-Launch" to run!</li>
-                </ol>
-                <button class="modal-btn primary" onclick="DeviceManager.copyPromptAndClose(this)">
-                    Copy Prompt & Continue
-                </button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    },
-    
-    copyPromptAndClose: function(button) {
-        const prompt = document.getElementById('universal-prompt').value;
-        navigator.clipboard.writeText(prompt).then(() => {
-            showNotification('📋 Prompt copied! Now open Shortcuts app');
-            button.parentElement.parentElement.remove();
-        });
-    },
-    
-    showExtensionGuide: function() {
-        const browser = this.getBrowser();
-        const platform = this.getPlatform();
-        this.trackFeature('extension_guide_opened', platform, { browser });
-        
-        const extensionUrl = browser === 'chrome' 
-            ? 'https://github.com/Viralith-Prime/you-agent-relay/tree/main/extension'
-            : 'https://microsoftedge.microsoft.com/addons/';
             
-        const modal = document.createElement('div');
-        modal.className = 'platform-modal extension-guide';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
-                <div class="extension-hero">
-                    <span class="extension-icon">🧩</span>
-                    <h3>Browser Extension Setup</h3>
-                    <p>Auto-inject prompts into any AI chat!</p>
-                </div>
+            showInstallInstructions: function() {
+                const platform = this.getPlatform();
+                const browser = this.getBrowser();
+                const instructions = {
+                    'ios': {
+                        steps: [
+                            'Tap the Share button <span class="instruction-icon">⬆️</span> at the bottom',
+                            'Scroll down and tap "Add to Home Screen"',
+                            'Name it "AI Hub" and tap "Add"'
+                        ],
+                        visual: '📱'
+                    },
+                    'android': {
+                        steps: [
+                            'Tap the menu button <span class="instruction-icon">⋮</span>',
+                            'Select "Add to Home screen" or "Install app"',
+                            'Confirm installation'
+                        ],
+                        visual: '🤖'
+                    },
+                    'windows': {
+                        steps: [
+                            'Click the install icon in the address bar',
+                            'Or go to browser menu → Install AI Hub',
+                            'Click "Install" in the popup'
+                        ],
+                        visual: '💻'
+                    },
+                    'mac': {
+                        steps: [
+                            'Click the install icon in the address bar',
+                            'Or use ' + (browser === 'safari' ? 'Share → Add to Dock' : 'Menu → Install'),
+                            'Confirm installation'
+                        ],
+                        visual: '🍎'
+                    }
+                };
                 
-                <div class="extension-features">
-                    <div class="feature-item">
-                        <span>✓</span> Works on ChatGPT, Claude, Gemini
-                    </div>
-                    <div class="feature-item">
-                        <span>✓</span> One-click prompt injection
-                    </div>
-                    <div class="feature-item">
-                        <span>✓</span> Syncs with your saved prompts
-                    </div>
-                </div>
+                const guide = instructions[platform] || instructions['windows'];
                 
-                <div class="extension-steps">
-                    <h4>Installation Steps:</h4>
-                    <ol>
-                        <li>Download the extension files</li>
-                        <li>Open <code>${browser}://extensions/</code></li>
-                        <li>Enable <strong>"Developer mode"</strong></li>
-                        <li>Click <strong>"Load unpacked"</strong></li>
-                        <li>Select the extension folder</li>
-                    </ol>
-                </div>
-                
-                <div class="modal-actions">
-                    <button class="modal-btn primary" onclick="window.open('${extensionUrl}'); DeviceManager.trackFeature('extension_download', '${platform}')">
-                        Download Extension
-                    </button>
-                    <button class="modal-btn" onclick="DeviceManager.showExtensionVideo()">
-                        Watch Tutorial
-                    </button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    },
-    
-    setupKeyboardShortcuts: function() {
-        const platform = this.getPlatform();
-        this.trackFeature('keyboard_shortcuts_viewed', platform);
-        
-        const isMac = platform === 'mac';
-        const mod = isMac ? '⌘' : 'Ctrl';
-        
-        const modal = document.createElement('div');
-        modal.className = 'platform-modal shortcuts-guide';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
-                <h3>⌨️ Keyboard Shortcuts</h3>
-                <div class="shortcuts-list">
-                    <div class="shortcut-item">
-                        <kbd>${mod}</kbd> + <kbd>K</kbd>
-                        <span>Quick search agents</span>
+                const modal = document.createElement('div');
+                modal.className = 'platform-modal install-guide';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                        <div class="install-visual">${guide.visual}</div>
+                        <h3>Install AI Hub</h3>
+                        <ol class="install-steps">
+                            ${guide.steps.map(step => `<li>${step}</li>`).join('')}
+                        </ol>
+                        <button class="modal-btn" onclick="this.parentElement.parentElement.remove()">
+                            Got it!
+                        </button>
                     </div>
-                    <div class="shortcut-item">
-                        <kbd>${mod}</kbd> + <kbd>S</kbd>
-                        <span>Save current prompt</span>
-                    </div>
-                    <div class="shortcut-item">
-                        <kbd>${mod}</kbd> + <kbd>C</kbd>
-                        <span>Copy prompt</span>
-                    </div>
-                    <div class="shortcut-item">
-                        <kbd>${mod}</kbd> + <kbd>/</kbd>
-                        <span>Focus prompt input</span>
-                    </div>
-                    <div class="shortcut-item">
-                        <kbd>Tab</kbd>
-                        <span>Navigate between agents</span>
-                    </div>
-                </div>
-                <button class="modal-btn primary" onclick="DeviceManager.enableShortcuts(this)">
-                    Enable Shortcuts
-                </button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    },
-    
-    enableShortcuts: function(button) {
-        this.trackFeature('shortcuts_enabled', this.getPlatform());
-        localStorage.setItem('shortcuts_enabled', 'true');
-        showNotification('⌨️ Keyboard shortcuts enabled!');
-        button.parentElement.parentElement.remove();
-    },
-    
-    // Initialize platform-specific features with enhancements
-    initPlatformFeatures: function(platform, browser) {
-        // iOS specific
-        if (platform === 'ios') {
-            // Prevent zoom on input focus
-            document.querySelectorAll('input, textarea').forEach(el => {
-                el.addEventListener('focus', () => {
-                    document.querySelector('meta[name="viewport"]').content = 
-                        'width=device-width, initial-scale=1, maximum-scale=1';
-                });
-            });
+                `;
+                document.body.appendChild(modal);
+            },
             
-            // Add haptic feedback
-            if ('vibrate' in navigator) {
-                document.querySelectorAll('button').forEach(btn => {
-                    btn.addEventListener('touchstart', () => navigator.vibrate(10));
+            createIOSShortcut: function() {
+                this.trackFeature('ios_shortcut_guide', 'ios');
+                
+                const modal = document.createElement('div');
+                modal.className = 'platform-modal ios-shortcut-guide';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                        <h3>⚡ Create Siri Shortcut</h3>
+                        <div class="shortcut-preview">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234B7BEC'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40'%3E⚡%3C/text%3E%3C/svg%3E" alt="Shortcut icon">
+                            <span>AI Multi-Launch</span>
+                        </div>
+                        <ol class="shortcut-steps">
+                            <li>Copy your saved prompt using the button above</li>
+                            <li>Open the <strong>Shortcuts</strong> app</li>
+                            <li>Tap <strong>+</strong> to create new shortcut</li>
+                            <li>Add <strong>"Text"</strong> action with your prompt</li>
+                            <li>Add <strong>"Copy to Clipboard"</strong> action</li>
+                            <li>Add <strong>"Open App"</strong> or <strong>"Open URL"</strong> for each AI</li>
+                            <li>Name it <strong>"AI Multi-Launch"</strong></li>
+                            <li>Say "Hey Siri, AI Multi-Launch" to run!</li>
+                        </ol>
+                        <button class="modal-btn primary" onclick="DeviceManager.copyPromptAndClose(this)">
+                            Copy Prompt & Continue
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            },
+            
+            copyPromptAndClose: function(button) {
+                const prompt = document.getElementById('universal-prompt').value;
+                navigator.clipboard.writeText(prompt).then(() => {
+                    showNotification('📋 Prompt copied! Now open Shortcuts app');
+                    button.parentElement.parentElement.remove();
                 });
-            }
-        }
-        
-        // Android specific
-        if (platform === 'android') {
-            // Enable pull-to-refresh
-            let startY = 0;
-            document.addEventListener('touchstart', e => {
-                startY = e.touches[0].pageY;
-            });
-            document.addEventListener('touchmove', e => {
-                const y = e.touches[0].pageY;
-                if (document.scrollingElement.scrollTop === 0 && y > startY + 50) {
-                    location.reload();
-                }
-            });
-        }
-        
-        // Desktop keyboard shortcuts
-        if ((platform === 'windows' || platform === 'mac') && localStorage.getItem('shortcuts_enabled')) {
-            document.addEventListener('keydown', (e) => {
+            },
+            
+            showExtensionGuide: function() {
+                const browser = this.getBrowser();
+                const platform = this.getPlatform();
+                this.trackFeature('extension_guide_opened', platform, { browser });
+                
+                const extensionUrl = browser === 'chrome' 
+                    ? 'https://github.com/Viralith-Prime/you-agent-relay/tree/main/extension'
+                    : 'https://microsoftedge.microsoft.com/addons/';
+                    
+                const modal = document.createElement('div');
+                modal.className = 'platform-modal extension-guide';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                        <div class="extension-hero">
+                            <span class="extension-icon">🧩</span>
+                            <h3>Browser Extension Setup</h3>
+                            <p>Auto-inject prompts into any AI chat!</p>
+                        </div>
+                        
+                        <div class="extension-features">
+                            <div class="feature-item">
+                                <span>✓</span> Works on ChatGPT, Claude, Gemini
+                            </div>
+                            <div class="feature-item">
+                                <span>✓</span> One-click prompt injection
+                            </div>
+                            <div class="feature-item">
+                                <span>✓</span> Syncs with your saved prompts
+                            </div>
+                        </div>
+                        
+                        <div class="extension-steps">
+                            <h4>Installation Steps:</h4>
+                            <ol>
+                                <li>Download the extension files</li>
+                                <li>Open <code>${browser}://extensions/</code></li>
+                                <li>Enable <strong>"Developer mode"</strong></li>
+                                <li>Click <strong>"Load unpacked"</strong></li>
+                                <li>Select the extension folder</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="modal-actions">
+                            <button class="modal-btn primary" onclick="window.open('${extensionUrl}'); DeviceManager.trackFeature('extension_download', '${platform}')">
+                                Download Extension
+                            </button>
+                            <button class="modal-btn" onclick="DeviceManager.showExtensionVideo()">
+                                Watch Tutorial
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            },
+            
+            setupKeyboardShortcuts: function() {
+                const platform = this.getPlatform();
+                this.trackFeature('keyboard_shortcuts_viewed', platform);
+                
                 const isMac = platform === 'mac';
-                const modKey = isMac ? e.metaKey : e.ctrlKey;
+                const mod = isMac ? '⌘' : 'Ctrl';
                 
-                if (modKey) {
-                    switch(e.key) {
-                        case 'k':
-                            e.preventDefault();
-                            document.querySelector('.history-search')?.focus();
-                            this.trackFeature('shortcut_used', platform, { key: 'search' });
-                            break;
-                        case 's':
-                            e.preventDefault();
-                            savePrompt();
-                            this.trackFeature('shortcut_used', platform, { key: 'save' });
-                            break;
-                        case '/':
-                            e.preventDefault();
-                            document.getElementById('universal-prompt')?.focus();
-                            this.trackFeature('shortcut_used', platform, { key: 'focus' });
-                            break;
+                const modal = document.createElement('div');
+                modal.className = 'platform-modal shortcuts-guide';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                        <h3>⌨️ Keyboard Shortcuts</h3>
+                        <div class="shortcuts-list">
+                            <div class="shortcut-item">
+                                <kbd>${mod}</kbd> + <kbd>K</kbd>
+                                <span>Quick search agents</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>${mod}</kbd> + <kbd>S</kbd>
+                                <span>Save current prompt</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>${mod}</kbd> + <kbd>C</kbd>
+                                <span>Copy prompt</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>${mod}</kbd> + <kbd>/</kbd>
+                                <span>Focus prompt input</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Tab</kbd>
+                                <span>Navigate between agents</span>
+                            </div>
+                        </div>
+                        <button class="modal-btn primary" onclick="DeviceManager.enableShortcuts(this)">
+                            Enable Shortcuts
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            },
+            
+            enableShortcuts: function(button) {
+                this.trackFeature('shortcuts_enabled', this.getPlatform());
+                localStorage.setItem('shortcuts_enabled', 'true');
+                showNotification('⌨️ Keyboard shortcuts enabled!');
+                button.parentElement.parentElement.remove();
+            },
+            
+            // Initialize platform-specific features with enhancements
+            initPlatformFeatures: function(platform, browser) {
+                // iOS specific
+                if (platform === 'ios') {
+                    // Prevent zoom on input focus
+                    document.querySelectorAll('input, textarea').forEach(el => {
+                        el.addEventListener('focus', () => {
+                            document.querySelector('meta[name="viewport"]').content = 
+                                'width=device-width, initial-scale=1, maximum-scale=1';
+                        });
+                    });
+                    
+                    // Add haptic feedback
+                    if ('vibrate' in navigator) {
+                        document.querySelectorAll('button').forEach(btn => {
+                            btn.addEventListener('touchstart', () => navigator.vibrate(10));
+                        });
                     }
                 }
-            });
-        }
-        
-        // Progressive enhancement for all platforms
-        this.addMicrointeractions();
-    },
-    
-    // Add micro-interactions
-    addMicrointeractions: function() {
-        // Button click effects
-        document.querySelectorAll('button').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                // Ripple effect
-                const ripple = document.createElement('span');
-                ripple.className = 'ripple';
-                ripple.style.left = e.offsetX + 'px';
-                ripple.style.top = e.offsetY + 'px';
-                this.appendChild(ripple);
-                setTimeout(() => ripple.remove(), 600);
-            });
-        });
-        
-        // Card hover effects
-        document.querySelectorAll('.agent-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-2px)';
-            });
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-    }
-};
-
-// Success tracking wrapper
-const FeatureAdoption = {
-    track: function(feature, platform, success = true) {
-        DeviceManager.trackFeature(feature, platform, { success });
-    },
-    
-    getStats: function() {
-        const adoption = JSON.parse(localStorage.getItem('feature_adoption') || '{}');
-        return {
-            total_features_used: Object.keys(adoption).length,
-            most_used: Object.entries(adoption).sort((a, b) => b[1].use_count - a[1].use_count)[0],
-            last_feature: Object.entries(adoption).sort((a, b) => 
-                new Date(b[1].last_used) - new Date(a[1].last_used))[0]
+                
+                // Android specific
+                if (platform === 'android') {
+                    // Enable pull-to-refresh
+                    let startY = 0;
+                    document.addEventListener('touchstart', e => {
+                        startY = e.touches[0].pageY;
+                    });
+                    document.addEventListener('touchmove', e => {
+                        const y = e.touches[0].pageY;
+                        if (document.scrollingElement.scrollTop === 0 && y > startY + 50) {
+                            location.reload();
+                        }
+                    });
+                }
+                
+                // Desktop keyboard shortcuts
+                if ((platform === 'windows' || platform === 'mac') && localStorage.getItem('shortcuts_enabled')) {
+                    document.addEventListener('keydown', (e) => {
+                        const isMac = platform === 'mac';
+                        const modKey = isMac ? e.metaKey : e.ctrlKey;
+                        
+                        if (modKey) {
+                            switch(e.key) {
+                                case 'k':
+                                    e.preventDefault();
+                                    document.querySelector('.history-search')?.focus();
+                                    this.trackFeature('shortcut_used', platform, { key: 'search' });
+                                    break;
+                                case 's':
+                                    e.preventDefault();
+                                    savePrompt();
+                                    this.trackFeature('shortcut_used', platform, { key: 'save' });
+                                    break;
+                                case '/':
+                                    e.preventDefault();
+                                    document.getElementById('universal-prompt')?.focus();
+                                    this.trackFeature('shortcut_used', platform, { key: 'focus' });
+                                    break;
+                            }
+                        }
+                    });
+                }
+                
+                // Progressive enhancement for all platforms
+                this.addMicrointeractions();
+            },
+            
+            // Add micro-interactions
+            addMicrointeractions: function() {
+                // Button click effects
+                document.querySelectorAll('button').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        // Ripple effect
+                        const ripple = document.createElement('span');
+                        ripple.className = 'ripple';
+                        ripple.style.left = e.offsetX + 'px';
+                        ripple.style.top = e.offsetY + 'px';
+                        this.appendChild(ripple);
+                        setTimeout(() => ripple.remove(), 600);
+                    });
+                });
+                
+                // Card hover effects
+                document.querySelectorAll('.agent-card').forEach(card => {
+                    card.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateY(-2px)';
+                    });
+                    card.addEventListener('mouseleave', function() {
+                        this.style.transform = 'translateY(0)';
+                    });
+                });
+            }
         };
-    }
-};
 
-// PWA install prompt
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    // Add install button to UI
-    const installBtn = document.querySelector('.pwa-install-btn');
-    if (installBtn) {
-        installBtn.style.display = 'block';
-    }
-});
+        // Success tracking wrapper
+        const FeatureAdoption = {
+            track: function(feature, platform, success = true) {
+                DeviceManager.trackFeature(feature, platform, { success });
+            },
+            
+            getStats: function() {
+                const adoption = JSON.parse(localStorage.getItem('feature_adoption') || '{}');
+                return {
+                    total_features_used: Object.keys(adoption).length,
+                    most_used: Object.entries(adoption).sort((a, b) => b[1].use_count - a[1].use_count)[0],
+                    last_feature: Object.entries(adoption).sort((a, b) => 
+                        new Date(b[1].last_used) - new Date(a[1].last_used))[0]
+                };
+            }
+        };
 
-// Initialize everything on load
-document.addEventListener('DOMContentLoaded', function() {
-    DeviceManager.init();
-});
+        // PWA install prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
 
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+            
+            // Load saved prompt
+            const savedPrompt = localStorage.getItem('relay-prompt');
+            if (savedPrompt) {
+                document.getElementById('universal-prompt').value = savedPrompt;
+                document.getElementById('saved-indicator').style.display = 'block';
+            }
+            
+            // Initialize UI
+            FavoritesManager.updateUI();
+            showCategory('all');
+            showRecommendation();
+            PromptHistory.render();
+            
+            // Initialize DeviceManager
+            DeviceManager.init();
+            
+            // Setup event listeners
+            document.getElementById('agent-search-bar').addEventListener('input', debouncedSearch);
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    document.getElementById('agent-search-bar').focus();
+                }
+                if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                    e.preventDefault();
+                    savePrompt();
+                }
+            });
+        });
     </script>
 </body>
 </html>
